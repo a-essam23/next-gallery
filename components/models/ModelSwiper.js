@@ -4,6 +4,7 @@ import ModelList from "./ModelList";
 export default function ModelSwiper({
     models = [],
     size,
+    activeLink = false,
     showCode = false,
     autoplay = true,
 }) {
@@ -16,11 +17,11 @@ export default function ModelSwiper({
     let modelsArr = [];
     let temp = [];
     for (let i = 0; i < size; i++) {
-        if (modelsArr[i]) {
-            temp.push(modelsArr[i]);
+        if (models[i]) {
+            temp.push(models[i]);
         } else {
             temp.push({
-                image: "/imgs/placeholder.jpg",
+                image: "/imgs/blank.jpg",
                 folder: "",
                 name: i + 1,
             });
@@ -38,6 +39,7 @@ export default function ModelSwiper({
                 return (
                     <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 p-4 mb-8 ">
                         <ModelList
+                            activeLink={activeLink}
                             showCode={showCode}
                             AlbumClassName="h-64 sm:h-64 md:h-72 xl:h-96 2xl:h-144"
                             models={collection}

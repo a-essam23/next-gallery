@@ -15,7 +15,15 @@ export default function Breadcrumb() {
         if (paths.length < 1) return null;
         const crumbList = paths.map((path, index) => {
             const href = "/" + paths.slice(0, index + 1).join("/");
-            return { path: decodeURI(path), href };
+            // console.log(router.query[]);
+            const dynamicPath = path.match(/\[([^)]+)\]/);
+            console.log();
+            return {
+                path: dynamicPath
+                    ? router.query[dynamicPath[1]]
+                    : decodeURI(path),
+                href,
+            };
         });
         return (
             <>

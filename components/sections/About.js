@@ -6,39 +6,13 @@ export default function About({
         description,
         previewImg = "/imgs/placeholder.jpg",
     },
-    imageList = [
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-    ],
+    imageList = [],
 }) {
     return (
         <>
             <div
                 className={
-                    "h-96 md:h-112 lg:h-128 xl:h-144 2xl:h-184  " + className
+                    "h-96 md:h-112 lg:h-128 xl:h-144 2xl:h-184 " + className
                 }
             >
                 <div
@@ -73,7 +47,7 @@ export default function About({
                     <div className="w-full h-full" key={v4()}>
                         <img
                             src={image}
-                            alt={v4()}
+                            alt={"ROMANCLASSIC"}
                             className="object-cover w-full h-full"
                         />
                     </div>

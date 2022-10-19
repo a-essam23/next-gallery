@@ -20,15 +20,18 @@ function NavBar() {
                     Router.push("/");
                 }}
             >
-                <img src="/imgs/logo.png" alt="logo" />
+                <img src="/imgs/logo-placeholder.png" className="" alt="logo" />
                 {/* <img src={phone} alt="whats" /> */}
             </div>
             <div className="flex gap-4">
-                <Link
-                    href="/collections"
-                    className={langContext.isAr ? "order-1" : ""}
-                >
-                    <a className={classes.item}>{pageContent.explore}</a>
+                <Link href="/collections">
+                    <a
+                        className={`${classes.item} ${
+                            langContext.isAr ? "order-1" : ""
+                        }`}
+                    >
+                        {pageContent.explore}
+                    </a>
                 </Link>
                 <Link href="/#about">
                     <a className={classes.item}>{pageContent.about}</a>

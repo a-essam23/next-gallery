@@ -8,7 +8,74 @@ import {
 } from "../components";
 import { useLang } from "../hooks";
 
-export default function Home() {
+export async function getServerSideProps(context) {
+    let groups = [];
+    for (let i = 0; i < 4; i++) {
+        groups.push({
+            image: "/imgs/placeholder.jpg",
+            name: `GROUP${i + 1}`,
+        });
+    }
+    const models = [
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model1`,
+            _id: 0,
+        },
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model2`,
+            _id: 1,
+        },
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model3`,
+            _id: 2,
+        },
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model4`,
+            _id: 3,
+        },
+    ];
+
+    const imageList = [
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+    ];
+    return {
+        props: { groups, models, imageList }, // will be passed to the page component as props
+    };
+}
+
+export default function Home({ groups, models, imageList }) {
     const { langData } = useLang();
     return (
         <Layout>
@@ -28,16 +95,20 @@ export default function Home() {
                         })}
                     className="sm:basis-3/5 h-96 sm:h-full w-full shadow-cd center "
                 />
-                <FourBoxs className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 " />
+                <FourBoxs
+                    activeLink
+                    groups={groups}
+                    className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 "
+                />
             </section>
             <section className="text-3xl 2xl:text-4xl text-center ">
                 {langData.latest.toUpperCase()}
             </section>
             <section>
-                <ModelSwiper size={16} showCode />
+                <ModelSwiper models={models} size={16} showCode activeLink />
             </section>
             <section id="about">
-                <About card={{}} />
+                <About imageList={imageList} card={{}} />
             </section>
             <section id="contact">
                 <Contact />

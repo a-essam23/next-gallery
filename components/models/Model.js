@@ -6,6 +6,7 @@ export default function Model({
     className = "",
     activeLink = false,
     showCode = true,
+    onClick,
 }) {
     const [isHovering, setIsHovering] = useState(false);
     const router = useRouter();
@@ -14,9 +15,13 @@ export default function Model({
             className={`flex w-full h-full relative transition-all cursor-pointer shadow-xl hover:scale-105 ${className}`}
             onMouseLeave={() => setIsHovering(false)}
             onMouseOver={() => setIsHovering(true)}
-            onClick={() => {
-                activeLink && router.push(`/collections/${folder}?ref=${_id}`);
-            }}
+            onClick={
+                onClick ||
+                (() => {
+                    activeLink &&
+                        router.push(`/collections/${folder}?ref=${_id}`);
+                })
+            }
         >
             <div className="w-full h-full">
                 <img

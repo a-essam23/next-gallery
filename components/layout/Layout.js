@@ -10,16 +10,18 @@ import NavBar from "./NavBar/NavBar";
 import Footer from "./Footer";
 import Header from "./Header";
 
-export default function Layout({ children }) {
+export default function Layout({ children, className }) {
     return (
-        <AntLayout>
+        <AntLayout className="bg-white">
             <Header />
             <LanguageSelection />
             <AntHeader className="h-auto p-0 m-0 flex justify-center main-theme sticky z-10 top-0 shadow-lg">
                 <NavBar />
             </AntHeader>
             <Breadcrumb />
-            <AntContent className="container flex flex-col main-theme min-h-screen">
+            <AntContent
+                className={`container flex flex-col main-theme min-h-screen relative ${className}`}
+            >
                 {children}
             </AntContent>
             <AntFooter className="m-0 p-0 mt-16">
