@@ -7,7 +7,10 @@ import { useLang } from "../../hooks";
 export default function Searchbar({ onFinish, className, choices = null }) {
     const { langData, isAr } = useLang();
     return (
-        <Form onFinish={onFinish} className="flex pt-8 pb-16 bg-white gap-2">
+        <Form
+            onFinish={onFinish}
+            className={`flex bg-white gap-2 ${className}`}
+        >
             <FormItem
                 name="value"
                 className={`w-full ${isAr ? "order-2" : ""}`}
@@ -15,21 +18,23 @@ export default function Searchbar({ onFinish, className, choices = null }) {
                 <Input required size="large" dir={isAr ? "rtl" : "ltr"} />
             </FormItem>
 
-            <FormItem
-                initialValue={choices[0]}
-                name="type"
-                className={`${isAr ? "order-1" : ""}`}
-            >
-                <Select size="large" className="">
-                    {choices.map((choice) => {
-                        return (
-                            <Select.Option key={v4()} value={choice}>
-                                {langData[choice].toUpperCase()}
-                            </Select.Option>
-                        );
-                    })}
-                </Select>
-            </FormItem>
+            {choices && (
+                <FormItem
+                    initialValue={choices[0]}
+                    name="type"
+                    className={`${isAr ? "order-1" : ""}`}
+                >
+                    <Select size="large" className="">
+                        {choices.map((choice) => {
+                            return (
+                                <Select.Option key={v4()} value={choice}>
+                                    {langData[choice].toUpperCase()}
+                                </Select.Option>
+                            );
+                        })}
+                    </Select>
+                </FormItem>
+            )}
             <Button
                 htmlType="submit"
                 size="large"

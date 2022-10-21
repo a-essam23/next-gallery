@@ -4,11 +4,8 @@ import {
     Content as AntContent,
     Footer as AntFooter,
 } from "antd/lib/layout/layout";
+import { Breadcrumb, NavBar, Footer, Header } from "../../components";
 import LanguageSelection from "./LanguageSelection";
-import Breadcrumb from "./Breadcrumb";
-import NavBar from "./NavBar/NavBar";
-import Footer from "./Footer";
-import Header from "./Header";
 
 export default function Layout({ children, className }) {
     return (
