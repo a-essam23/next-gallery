@@ -65,7 +65,7 @@ nextServer
     })
     .catch((e) => {
         console.log(e.stack);
-        process.exit(1);
+        // process.exit(1);
     });
 
 //TEST

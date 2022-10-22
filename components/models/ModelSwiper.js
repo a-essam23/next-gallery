@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import SwiperTemplate from "../utils/SwiperTemplate";
 import ModelList from "./ModelList";
 
@@ -37,7 +38,10 @@ export default function ModelSwiper({
             autoplay={autoplay}
             items={modelsArr.map((collection) => {
                 return (
-                    <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 p-4 mb-8 ">
+                    <div
+                        key={v4()}
+                        className="grid gap-4 grid-cols-2 lg:grid-cols-4 p-4 mb-8 "
+                    >
                         <ModelList
                             activeLink={activeLink}
                             showCode={showCode}

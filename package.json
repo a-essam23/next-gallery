@@ -7,7 +7,7 @@
     "dev": "node server/server.js",
     "build": "next build",
     "start": "node server/server.js",
-    "lint": "next lint"
+    "lint": "next lint --no-cache"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",

@@ -21,33 +21,50 @@ export default function Breadcrumb() {
             return {
                 path: dynamicPath
                     ? router.query[dynamicPath[1]]
-                    : decodeURI(path),
+                    : langData[decodeURI(path)] || decodeURI(path),
                 href,
             };
         });
-        return (
+        return isAr ? (
+            <>
+                {crumbList.length > 1 &&
+                    crumbList.reverse().map(({ href, path }, index) => (
+                        <BreadcrumbItem key={v4()}>
+                            <Link href={href}>
+                                <a>{path.toUpperCase()}</a>
+                            </Link>
+                        </BreadcrumbItem>
+                    ))}
+                <BreadcrumbItem key={v4()} className="px-1 ">
+                    <Link href="/">
+                        <a>{langData["home"].toUpperCase()}</a>
+                    </Link>
+                </BreadcrumbItem>
+            </>
+        ) : (
             <>
                 <BreadcrumbItem key={v4()} className="px-1 ">
                     <Link href="/">
                         <a>{langData["home"].toUpperCase()}</a>
                     </Link>
                 </BreadcrumbItem>
-                {crumbList.map(({ href, path }, index) => (
-                    <BreadcrumbItem key={v4()}>
-                        <Link href={href}>
-                            <a>{path.toUpperCase()}</a>
-                        </Link>
-                    </BreadcrumbItem>
-                ))}
+                {crumbList.length > 1 &&
+                    crumbList.map(({ href, path }, index) => (
+                        <BreadcrumbItem key={v4()}>
+                            <Link href={href}>
+                                <a>{path.toUpperCase()}</a>
+                            </Link>
+                        </BreadcrumbItem>
+                    ))}
             </>
         );
     }
-    const crumbs = useMemo(getBreadCrumbs, [pathname, language]);
-
+    // eslint-disable-next-line
+    const crumbs = useMemo(getBreadCrumbs, [pathname, isAr]);
     return (
         <AntBreadcrumb
-            className={`container my-2 md:my-6 2xl:my-8 flex ${
-                isAr ? "justify-end" : ""
+            className={`container my-2 md:my-6 2xl:my-8 flex items-end ${
+                isAr ? "justify-end " : ""
             }`}
         >
             {crumbs}

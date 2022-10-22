@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function EmptyPlaceHolder({ className }) {
     return (
         <div
@@ -6,7 +8,7 @@ export default function EmptyPlaceHolder({ className }) {
             <div className="text-xl lg:text-3xl 2xl:text-6xl p-16 text-center opacity-20">
                 NOTHING TO SEE HERE
             </div>
-            <img alt="null" src={"/imgs/empty.png"} className="opacity-20" />
+            <Image alt="null" src={"/imgs/empty.png"} className="opacity-20" />
         </div>
     );
 }

@@ -64,7 +64,6 @@ export default function FormModal({
             <GroupForm
                 options={options}
                 onFinish={(data) => {
-                    console.log(data);
                     console.log(fileToUpload);
                 }}
             />

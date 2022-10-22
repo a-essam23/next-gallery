@@ -7,6 +7,7 @@ export default function CollectionMasonic({ collections = [], amount = 10 }) {
 
     useEffect(() => {
         setItems(collections);
+        // eslint-disable-next-line
     }, [items]);
 
     const maybeLoadMore = useInfiniteLoader(

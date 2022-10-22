@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import {
     About,
     Contact,
@@ -88,6 +89,8 @@ export default function Home({ groups, models, imageList }) {
                         .map((i) => {
                             return (
                                 <img
+                                    alt={"swiper-template-placeholder"}
+                                    key={v4()}
                                     src="/imgs/placeholder.jpg"
                                     className="h-full w-full object-cover"
                                 />
