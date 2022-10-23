@@ -12,6 +12,7 @@ import {
     Footer,
     NavBar,
 } from "../../components";
+import { useLang } from "../../hooks";
 
 export default function AdminLayout({ children, className = "" }) {
     return (

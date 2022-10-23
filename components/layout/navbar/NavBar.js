@@ -6,16 +6,13 @@ import Router from "next/router";
 
 function NavBar() {
     ////TODO tailwind themes...
-    const langContext = useLang();
-    const pageContent = langContext.langData;
+    const { langData } = useLang();
     return (
         <div
             className={`container flex items-center md:py-1 lg:py-2 xl:py-3 2xl:py-4 gap-4 justify-between `}
         >
             <div
-                className={`flex flex-col cursor-pointer w-20 h-auto md:w-24 xl:w-24 ${
-                    langContext.isAr ? "order-1" : ""
-                }`}
+                className={`flex flex-col cursor-pointer w-20 h-auto md:w-24 xl:w-24 `}
                 onClick={() => {
                     Router.push("/");
                 }}
@@ -25,19 +22,13 @@ function NavBar() {
             </div>
             <div className="flex gap-4">
                 <Link href="/collections">
-                    <a
-                        className={`${classes.item} ${
-                            langContext.isAr ? "order-1" : ""
-                        }`}
-                    >
-                        {pageContent.explore}
-                    </a>
+                    <a className={`${classes.item} `}>{langData.explore}</a>
                 </Link>
                 <Link href="/#about">
-                    <a className={classes.item}>{pageContent.about}</a>
+                    <a className={classes.item}>{langData.about}</a>
                 </Link>
                 <Link href="/#contact">
-                    <a className={classes.item}>{pageContent.contact}</a>
+                    <a className={classes.item}>{langData.contact}</a>
                 </Link>
             </div>
         </div>

@@ -11,19 +11,12 @@ export default function Searchbar({ onFinish, className, choices = null }) {
             onFinish={onFinish}
             className={`flex bg-white gap-2 ${className}`}
         >
-            <FormItem
-                name="value"
-                className={`w-full ${isAr ? "order-2" : ""}`}
-            >
-                <Input required size="large" dir={isAr ? "rtl" : "ltr"} />
+            <FormItem name="value" className={`w-full`}>
+                <Input required size="large" />
             </FormItem>
 
             {choices && (
-                <FormItem
-                    initialValue={choices[0]}
-                    name="type"
-                    className={`${isAr ? "order-1" : ""}`}
-                >
+                <FormItem initialValue={choices[0]} name="type" className={``}>
                     <Select size="large" className="">
                         {choices.map((choice) => {
                             return (

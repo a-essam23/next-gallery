@@ -5,9 +5,12 @@ import {
     Footer as AntFooter,
 } from "antd/lib/layout/layout";
 import { Breadcrumb, NavBar, Footer, Header } from "../../components";
+import { useLang } from "../../hooks";
 import LanguageSelection from "./LanguageSelection";
 
 export default function Layout({ children, className }) {
+    const { isAr } = useLang();
+    //// TODO FIX COMPONENTS
     return (
         <AntLayout className="bg-white">
             <Header />
