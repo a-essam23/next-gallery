@@ -2,6 +2,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper";
 import { v4 } from "uuid";
 import "swiper/css/bundle";
+import { useLang } from "../../hooks";
+import { useMemo, useState } from "react";
 
 export default function SwiperTemplate({
     items,
@@ -11,8 +13,12 @@ export default function SwiperTemplate({
     className,
     pagination,
 }) {
+    const { isAr } = useLang();
     return (
         <Swiper
+            onSwiper={(swiper) => {
+                swiper.changeLanguageDirection(isAr ? "ltr" : "rtl");
+            }}
             modules={[Autoplay, EffectCoverflow, Pagination]}
             effect="coverflow "
             loop={true}
