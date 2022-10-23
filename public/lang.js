@@ -29,6 +29,7 @@ export const arabic = {
     width: "عرض",
     length: "طول",
     depth: "عمق",
+    group: "مجموعة",
     groups: "مجموعات",
     collections: "ألبومات",
     collection: "ألبوم",
