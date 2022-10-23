@@ -1,76 +1,78 @@
 const mongoose = require("mongoose");
 const AppError = require("../utils/appError");
 const slugify = require("slugify");
-const imageSchema = new mongoose.Schema({
+
+const imageSchema = new mongoose.Schema(
+  {
     Key: {
-        type: String,
-        required: true,
-        unique: [true, "Key must be unique"],
-        // select: false,
+      type: String,
+      required: true,
+      unique: [true, "Key must be unique"],
+      // select: false,
     },
     slug: String,
     code: {
-        type: String,
-        lowercase: true,
-        required: [true, "every image must have a code!"],
-        unique: [true, "Code must be unique"],
+      type: String,
+      lowercase: true,
+      required: [true, "every image must have a code!"],
+      unique: [true, "Code must be unique"],
     },
     small300x300: {
-        type: String,
+      type: String,
     },
     originalSize: {
-        type: String,
+      type: String,
     },
     folderCategory: {
-        type: String,
+      type: String,
     },
     folderName: {
-        type: String,
+      type: String,
     },
     groupCategory: {
-        type: String,
+      type: String,
     },
     size: {
-        type: String,
+      type: String,
     },
     groupName: {
-        type: String,
+      type: String,
     },
     images: {
-        type: Array,
+      type: Array,
     },
     folders: {
-        type: Array,
+      type: Array,
     },
     genre: {
-        type: String,
-        required: true,
-        default: "Image",
-        enum: ["Image", "Folder", "Group"],
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-        select: true,
+      type: String,
+      required: true,
+      default: "Image",
+      enum: ["Image", "Folder", "Group"],
     },
     createdBy: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-        select: true,
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      select: true,
     },
-});
+  },
+  {
+    timestamps: true,
+  }
+);
+
 imageSchema.pre(/^find/, function (next) {
-    console.log(this.genre);
-    this.populate({
-        path: "createdBy",
-        select: "name",
-    });
-    next();
+  console.log(this.genre);
+  this.populate({
+    path: "createdBy",
+    select: "name",
+  });
+  next();
 });
 imageSchema.pre("save", function (next) {
-    this.slug = slugify(this.Key, { lower: true });
-    // console.log(this);
-    next();
+  this.slug = slugify(this.Key, { lower: true });
+  // console.log(this);
+  next();
 });
 const Image = mongoose.model("Image", imageSchema);
 // Image.syncIndexes();

@@ -2,50 +2,58 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: [true, "Please provide a password"],
-    minlength: 8,
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    required: [
-      true,
-      "please provide a password confirm that is same as the password",
-    ],
-    validate: {
-      // this only works on save & create
-      validator: function (el) {
-        return el === this.password;
-      },
 
-      message: "passwords are not the same",
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      unique: true,
+      required: true,
     },
+    password: {
+      type: String,
+      required: [true, "Please provide a password"],
+      minlength: 8,
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      required: [
+        true,
+        "please provide a password confirm that is same as the password",
+      ],
+      validate: {
+        // this only works on save & create
+        validator: function (el) {
+          return el === this.password;
+        },
+
+        message: "passwords are not the same",
+      },
+    },
+    email: {
+      type: String,
+      required: [true, "User must have a valid email"],
+      trim: true,
+      lowercase: true,
+      unique: true,
+      validate: [validator.isEmail, "Please provide a valid email"],
+    },
+    facebookId: String,
+    googleId: String,
+    role: {
+      type: String,
+      default: "user",
+      enum: ["admin", "data-entry", "user"],
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
-  email: {
-    type: String,
-    required: [true, "User must have a valid email"],
-    trim: true,
-    lowercase: true,
-    unique: true,
-    validate: [validator.isEmail, "Please provide a valid email"],
-  },
-  role: {
-    type: String,
-    default: "user",
-    enum: ["admin", "data-entry", "user"],
-  },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.pre("save", async function (next) {
   //Only run this function if password was actually modified

@@ -4,8 +4,10 @@ const groupsControllers = require("../controllers/groupsControllers");
 const adminController = require("./../controllers/adminController");
 
 const multerConfig = require("../config/multerConfig");
+const { restrictTo } = require("../middlewares/auth");
 // router.route("/").get(groupControllers.getAllgroup);
 // router.route("/search").get(groupControllers.searchAllgroup);
+
 router.use(adminController.protect);
 router
   .route("/upload")
@@ -16,13 +18,12 @@ router
   .get(groupsControllers.getOneGroup)
   .patch(
     adminController.protect,
-    adminController.restrictTo("admin", "data-entry"),
-
+    restrictTo("admin", "data-entry"),
     groupsControllers.updateGroup
   )
   .delete(
     adminController.protect,
-    adminController.restrictTo("admin", "data-entry"),
+    restrictTo("admin", "data-entry"),
     groupsControllers.deleteManyGroups
   );
 

@@ -4,6 +4,7 @@ const imagesControllers = require("./../controllers/imagesControllers");
 const adminController = require("./../controllers/adminController");
 
 const multerConfig = require("../config/multerConfig");
+const { restrictTo } = require("../middlewares/auth");
 router.use(adminController.protect);
 router.route("/").get(imagesControllers.getAllImages);
 // router.route("/search").get(imagesControllers.searchAllImages);
@@ -17,16 +18,7 @@ router.route("/upload").post(
 router
   .route("/:code")
   .get(imagesControllers.getOneImage)
-  .patch(
-    adminController.protect,
-    adminController.restrictTo("admin", "data-entry"),
-
-    imagesControllers.updateImage
-  )
-  .delete(
-    adminController.protect,
-    adminController.restrictTo("admin", "data-entry"),
-    imagesControllers.deleteImages
-  );
+  .patch(restrictTo("admin", "data-entry"), imagesControllers.updateImage)
+  .delete(restrictTo("admin", "data-entry"), imagesControllers.deleteImages);
 
 module.exports = router;
