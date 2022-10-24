@@ -1,41 +1,48 @@
 const mongoose = require("mongoose");
-
 const Image = require("../models/imageModel");
-const MainSchema = new mongoose.Schema({
+
+const MainSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        unique: true,
+      type: String,
+      unique: true,
     },
     title: {
-        type: String,
+      type: String,
     },
     logo: {
-        type: String,
+      type: String,
     },
     groups: Array,
     images: Array,
     image: String,
     customers: Array,
     facebook: {
-        type: String,
+      type: String,
     },
     whatsapp: {
-        type: String,
+      type: String,
     },
     pinterest: {
-        type: String,
+      type: String,
     },
     data: [{ name: "", value: "", images: [] }],
-});
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const mainSchema = new mon();
 
 MainSchema.pre("save", async function (req, res, next) {
-    const imagesPromises = this.images.map(
-        async (id) => await Image.findById(id)
-    );
-    this.images = await Promise.all(imagesPromises);
-    this.customers = await Promise.all(imagesPromises);
+  const imagesPromises = this.images.map(
+    async (id) => await Image.findById(id)
+  );
+  this.images = await Promise.all(imagesPromises);
+  this.customers = await Promise.all(imagesPromises);
 
-    next();
+  next();
 });
 const Main = mongoose.model("Main", MainSchema);
 

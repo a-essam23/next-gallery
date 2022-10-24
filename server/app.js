@@ -5,11 +5,14 @@ const folderRouter = require("./routers/folderRouter");
 const cookieParser = require("cookie-parser");
 const imageRouter = require("./routers/imageRouter");
 const groupRouter = require("./routers/groupRouter");
-
+const authRouter = require("./routers/authRouter");
 const adminRouter = require("./routers/adminRouter");
 const rateLimit = require("express-rate-limit");
 const mainRouter = require("./routers/mainRouter");
-
+const passport = require("passport");
+const passportConfig = require("./config/passportConfig");
+const session = require("express-session");
+const flash = require("flash");
 const morgan = require("morgan");
 var cors = require("cors");
 // const heroku = require("heroku");
@@ -24,9 +27,9 @@ const multer = require("multer");
 
 // app.use(helmet());
 const limiter = rateLimit({
-    max: 100,
-    windowMs: 60 * 60 * 1000,
-    message: "Too many requests from this IP,please try again in an hour!",
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many requests from this IP,please try again in an hour!",
 });
 app.use(express.json({ limit: "10kb" }));
 app.use("/api", limiter);
@@ -34,17 +37,29 @@ app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
 
 if (process.env.NODE_ENV === "development") {
-    console.log("development");
-    // app.use(morgan("dev"));
+  console.log("development");
+  // app.use(morgan("dev"));
 } else {
-    console.log("production");
+  console.log("production");
 }
 app.use(compression());
 app.use((req, res, next) => {
-    req.requestTime = new Date().toISOString();
+  req.requestTime = new Date().toISOString();
 
-    next();
+  next();
 });
+
+app.use(flash());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 const domainsFromEnv = process.env.CORS_DOMAINS || "";
 
 const whitelist = domainsFromEnv.split(",").map((item) => item.trim());
@@ -61,11 +76,11 @@ const whitelist = domainsFromEnv.split(",").map((item) => item.trim());
 // };
 app.use(cors());
 
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/image", imageRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/folder", folderRouter);
 app.use("/api/v1/group", groupRouter);
-
 app.use("/api/v1/main", mainRouter);
 
 // app.all("*", (req, res, next) => {
