@@ -14,7 +14,7 @@ const factory = require("../our_modules/factoryHandler");
 const Image = require("../models/imageModel");
 const multer = require("multer");
 const upload = require("../config/multerConfig");
-const mongoose = require("../conf");
+
 const deleteFiles = () => {
   const dir = "./files/";
 

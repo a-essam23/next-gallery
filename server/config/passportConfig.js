@@ -40,8 +40,8 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      clientID: "",
-      clientSecret: "",
+      clientID: process.env.GOOGLE_CLIENTID,
+      clientSecret: process.env.GOOGLE_CLIENTSECRET,
       callbackURL: `http://localhost:${process.env.PORT}/auth/google/redirect`,
     },
     async (accessToken, refreshToken, profile, done) => {

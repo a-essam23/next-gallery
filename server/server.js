@@ -10,7 +10,7 @@ nextServer
   .then(() => {
     const mongoose = require("mongoose");
     const app = require("./app");
-
+    console.log(process.env.GOOGLE_CLIENTID);
     process.on("uncaughtException", (err) => {
       console.log("Uncaught expection!");
       console.log(err);
@@ -23,10 +23,9 @@ nextServer
     );
 
     mongoose
-      .connect(
-        process.env.DATABASE_LOCAL
-        // .connect(DB,
-      )
+      .connect(process.env.DATABASE_LOCAL, {
+        // .connect(DB, {
+      })
       .then(() => {
         console.log("DB connection successful!");
       });
@@ -63,8 +62,8 @@ nextServer
     });
   })
   .catch((e) => {
-    console.log(e.stack);
-    process.exit(1);
+    console.log(e);
+    // process.exit(1);
   });
 
 //TEST
