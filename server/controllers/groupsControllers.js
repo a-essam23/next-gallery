@@ -69,7 +69,7 @@ exports.createGroup = catchAsync(async (req, res, next) => {
 
 exports.getOneGroup = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
-  const image = await Image.findOne({ groupName: req.params.groupName });
+  const image = await Image.findOne({ groupName: req.params.code });
 
   if (!image) {
     return next(new AppError(`no image found with the Code provided`, 404));
@@ -114,7 +114,7 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
 
 exports.updateGroup = catchAsync(async (req, res, next) => {
   const doc = await Image.findOneAndUpdate(
-    { groupName: req.params.groupName },
+    { groupName: req.params.code },
     req.body,
     {
       new: true,
@@ -129,5 +129,25 @@ exports.updateGroup = catchAsync(async (req, res, next) => {
     data: {
       doc,
     },
+  });
+});
+exports.hideGroup = catchAsync(async (req, res, next) => {
+  let groups = req.params.code.split(",");
+
+  await Image.updateMany(
+    { groupCategory: { $in: groups } },
+    { active: req.body.active }
+  );
+  await Image.updateMany(
+    { groupName: { $in: groups } },
+    { active: req.body.active }
+  );
+
+  const result = await Image.find({ groupCategory: { $in: groups } });
+  //the array of folders inside group
+
+  res.status(200).json({
+    status: "success",
+    data: result,
   });
 });
