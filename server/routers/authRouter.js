@@ -2,8 +2,6 @@ const router = require("express").Router();
 const passport = require("passport");
 const authController = require("../controllers/authController");
 
-router.get("/login");
-
 router.post(
     "/login",
     passport.authenticate("local", {

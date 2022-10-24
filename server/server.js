@@ -48,17 +48,17 @@ nextServer
         process.on("unhandledRejection", (err) => {
             console.log(err);
             console.log("UNHANDLED REJECTION!");
-            server.close(() => {
-                process.exit(1);
-            });
+            // server.close(() => {
+            //     process.exit(1);
+            // });
         });
 
         process.on("uncaughtException", (err) => {
             console.log("Uncaught expection!");
             console.log(err);
-            server.close(() => {
-                process.exit(1);
-            });
+            // server.close(() => {
+            //     process.exit(1);
+            // });
         });
     })
     .catch((e) => {
