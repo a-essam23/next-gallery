@@ -52,10 +52,7 @@
     "rate-limit": "^0.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-<<<<<<< Updated upstream
-=======
     "react-draggable": "^4.4.5",
->>>>>>> Stashed changes
     "slugify": "^1.6.5",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0",
