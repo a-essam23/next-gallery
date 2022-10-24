@@ -14,6 +14,7 @@ const factory = require("../our_modules/factoryHandler");
 const Image = require("../models/imageModel");
 const multer = require("multer");
 const upload = require("../config/multerConfig");
+const mongoose = require("../conf");
 const deleteFiles = () => {
   const dir = "./files/";
 
@@ -44,6 +45,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
       )
     );
   }
+  //if statement for groupcategory // checker
   const params = {
     Bucket: "failasof",
     Key: `${req.files[0].originalname}`,
@@ -59,7 +61,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
     Key: req.files[0].originalname,
 
     code: req.body.code,
-
+    groupCategory: test2.groupCategory,
     folderCategory: req.body.folderCategory,
     originalSize: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
     small100x100: small,
@@ -175,5 +177,21 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
   });
 });
 exports.getAllImages = factory.getAll(Image);
+
+exports.hideImages = catchAsync(async (req, res, next) => {
+  let images = req.params.code.split(",");
+
+  await Image.updateMany(
+    { code: { $in: images } },
+    { active: req.body.active }
+  );
+  //the array of folders inside group
+  let result = await Image.find({ code: { $in: images } });
+  res.status(200).json({
+    status: "success",
+    data: result,
+  });
+});
+
 //exports.uploadMultipleImages
 //exports.updateMultipleImages
