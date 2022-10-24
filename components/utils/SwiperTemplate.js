@@ -2,8 +2,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper";
 import { v4 } from "uuid";
 import "swiper/css/bundle";
-import { useLang } from "../../hooks";
-import { useEffect } from "react";
 
 export default function SwiperTemplate({
     items,
@@ -13,8 +11,9 @@ export default function SwiperTemplate({
     className,
     pagination,
 }) {
-    ///TODO
-
+    ///TODO FIX DIRECTION
+    ///TODO COMPONENT RENDERS 4 TIMES
+    console.log("swiper rendered");
     return (
         <Swiper
             dir="ltr"

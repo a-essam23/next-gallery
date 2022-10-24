@@ -15,7 +15,6 @@ export default function Breadcrumb() {
         if (paths.length < 1) return null;
         const crumbList = paths.map((path, index) => {
             const href = "/" + paths.slice(0, index + 1).join("/");
-            // console.log(router.query[]);
             const dynamicPath = path.match(/\[([^)]+)\]/);
             console.log();
             return {
@@ -32,14 +31,13 @@ export default function Breadcrumb() {
                         <a>{langData["home"].toUpperCase()}</a>
                     </Link>
                 </BreadcrumbItem>
-                {crumbList.length > 1 &&
-                    crumbList.map(({ href, path }, index) => (
-                        <BreadcrumbItem key={v4()}>
-                            <Link href={href}>
-                                <a>{path.toUpperCase()}</a>
-                            </Link>
-                        </BreadcrumbItem>
-                    ))}
+                {crumbList.map(({ href, path }, index) => (
+                    <BreadcrumbItem key={v4()}>
+                        <Link href={href}>
+                            <a>{path.toUpperCase()}</a>
+                        </Link>
+                    </BreadcrumbItem>
+                ))}
             </>
         );
     }

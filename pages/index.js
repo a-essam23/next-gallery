@@ -82,6 +82,7 @@ export default function Home({ groups, models, imageList }) {
         <Layout>
             <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 xl:h-144 2xl:h-216">
                 <SwiperTemplate
+                    showIndex
                     autoplay
                     delay={10}
                     items={Array(4)

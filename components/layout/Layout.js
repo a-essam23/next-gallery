@@ -10,8 +10,13 @@ import LanguageSelection from "./LanguageSelection";
 
 export default function Layout({ children, className }) {
     const { isAr, language } = useLang();
+    //// TODO FIX COMPONENTS
     return (
-        <AntLayout className="bg-white">
+        <AntLayout
+            dir={isAr ? "rtl" : "ltr"}
+            lang={language}
+            className="bg-white"
+        >
             <Header />
             <LanguageSelection />
             <AntHeader className="h-auto p-0 m-0 flex justify-center main-theme sticky z-10 top-0 shadow-lg">
