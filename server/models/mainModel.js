@@ -33,8 +33,6 @@ const MainSchema = new mongoose.Schema(
   }
 );
 
-const mainSchema = new mon();
-
 MainSchema.pre("save", async function (req, res, next) {
   const imagesPromises = this.images.map(
     async (id) => await Image.findById(id)

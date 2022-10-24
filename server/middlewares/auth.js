@@ -1,16 +1,16 @@
-import AppError from "../utils/appError";
+const AppError = require("../utils/AppError");
 
-export function isAuthMiddleware(req, res, next) {
+exports.isAuthMiddleware = function (req, res, next) {
   return !req.isAuthenticated()
-    ? next(new AppError("You must be log in"))
+    ? next(new AppError("You must be log in", 401))
     : next();
-}
+};
 
-export function restrictTo(...roles) {
+exports.restrictTo = function (...roles) {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(new AppError(`you aren't authorized to do such things!`));
     }
     next();
   };
-}
+};

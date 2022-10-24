@@ -144,16 +144,16 @@ exports.deleteManyFolders = catchAsync(async (req, res, next) => {
   });
 });
 exports.hideFolders = catchAsync(async (req, res, next) => {
-  let test = req.params.code.split(",");
-  console.log(test);
-  const hiddenFolders = await Image.updateMany(
-    { code: { $in: test } },
-    { active: true }
+  let folders = req.params.code.split(",");
+
+  await Image.updateMany(
+    { code: { $in: folders } },
+    { active: req.body.active }
   );
   //the array of folders inside group
-
+  const result = await Image.find({ folderCategory: { $in: folders } });
   res.status(200).json({
     status: "success",
-    data: hiddenFolders,
+    data: result,
   });
 });
