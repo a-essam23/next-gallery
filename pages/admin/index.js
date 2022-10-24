@@ -22,40 +22,11 @@ export async function getServerSideProps(context) {
 
 export default function AdminPage({ content }) {
     return (
-        <AdminLayout className="border-2">
-            <Select
-                defaultValue={content?.misc?.swiper}
-                mode="multiple"
-                className="w-8/12 h-full"
-                tagRender={(props) => {
-                    const { label, value, closable, onClose } = props;
-                    return (
-                        <Tag
-                            className="flex flex-col items-end "
-                            closable={closable}
-                            onClose={onClose}
-                            icon={
-                                <img
-                                    src={value || label.props.value}
-                                    className="order-1 w-20 h-20"
-                                />
-                            }
-                        ></Tag>
-                    );
-                }}
-            >
-                {content?.misc?.swiper &&
-                    content.misc.swiper.map((el, i) => {
-                        return (
-                            <Select.Option
-                                key={el._id}
-                                className="w-40 h-40 items-center border-b-2"
-                            >
-                                <img src={el.value} alt={i} className="" />
-                            </Select.Option>
-                        );
-                    })}
-            </Select>
+        <AdminLayout className="">
+            <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 xl:h-144 2xl:h-216 ">
+                <div className="sm:basis-3/5 h-96 sm:h-full w-full center border-2 "></div>
+                <div className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 border-2 "></div>
+            </section>
         </AdminLayout>
     );
 }

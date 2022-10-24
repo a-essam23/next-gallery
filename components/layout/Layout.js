@@ -9,8 +9,7 @@ import { useLang } from "../../hooks";
 import LanguageSelection from "./LanguageSelection";
 
 export default function Layout({ children, className }) {
-    const { isAr } = useLang();
-    //// TODO FIX COMPONENTS
+    const { isAr, language } = useLang();
     return (
         <AntLayout className="bg-white">
             <Header />

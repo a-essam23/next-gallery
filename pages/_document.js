@@ -1,5 +1,4 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import { useLang } from "../hooks";
 
 export default function Document() {
     const { isAr, language } = useLang();

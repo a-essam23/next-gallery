@@ -2,6 +2,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper";
 import { v4 } from "uuid";
 import "swiper/css/bundle";
+import { useLang } from "../../hooks";
+import { useEffect } from "react";
 
 export default function SwiperTemplate({
     items,
@@ -11,8 +13,11 @@ export default function SwiperTemplate({
     className,
     pagination,
 }) {
+    ///TODO
+
     return (
         <Swiper
+            dir="ltr"
             modules={[Autoplay, EffectCoverflow, Pagination]}
             effect="coverflow "
             loop={true}
@@ -31,7 +36,10 @@ export default function SwiperTemplate({
         >
             {items.map((item, i) => {
                 return (
-                    <SwiperSlide key={item?._id || v4()}>
+                    <SwiperSlide
+                        className="w-full h-full"
+                        key={item?._id || v4()}
+                    >
                         {item}
                         {showIndex && (
                             <span className="absolute top-0 left-0 opacity-75 p-2 text-xl bg-black text-white">
