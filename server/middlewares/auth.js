@@ -1,8 +1,8 @@
-const AppError = require("../utils/AppError");
+const AppError = require("../utils/appError");
 
 exports.isAuthMiddleware = function (req, res, next) {
   return !req.isAuthenticated()
-    ? next(new AppError("You must be log in", 401))
+    ? next(new AppError("You must log in", 401))
     : next();
 };
 

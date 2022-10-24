@@ -27,7 +27,7 @@ nextServer
         // .connect(DB, {
       })
       .then(() => {
-        console.log("DB connection successful!");
+        console.log("DB connection successful!".cyan.underline);
       });
     let server_port = process.env.PORT || 3000;
     let server_host = process.env.HOST || "0.0.0.0";

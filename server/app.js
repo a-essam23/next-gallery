@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const imageRouter = require("./routers/imageRouter");
 const groupRouter = require("./routers/groupRouter");
 const authRouter = require("./routers/authRouter");
-const adminRouter = require("./routers/adminRouter");
+const adminRouter = require("./routers/admin/adminRouter");
 const rateLimit = require("express-rate-limit");
 const mainRouter = require("./routers/mainRouter");
 const passport = require("passport");
@@ -20,8 +20,9 @@ const globalErrorHandler = require("./controllers/errorController");
 const helmet = require("helmet");
 const server = require("./server");
 const compression = require("compression");
-
+const commentRouter = require("./routers/comment/commentRouter");
 const app = express();
+require("colors");
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 const multer = require("multer");
 
@@ -82,6 +83,7 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/folder", folderRouter);
 app.use("/api/v1/group", groupRouter);
 app.use("/api/v1/main", mainRouter);
+app.use("/api/v1/comments", commentRouter);
 
 // app.all("*", (req, res, next) => {
 //   // res.status(404).json({
