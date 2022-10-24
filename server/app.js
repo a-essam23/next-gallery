@@ -22,6 +22,7 @@ const server = require("./server");
 const compression = require("compression");
 const commentRouter = require("./routers/comment/commentRouter");
 const app = express();
+require("colors");
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 const multer = require("multer");
 
