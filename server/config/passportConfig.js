@@ -60,7 +60,7 @@ passport.use(
 );
 
 passport.use(
-  new LocalStrategy({}, async (username, password, done) => {
+  new LocalStrategy(async (username, password, done) => {
     const user = await User.findOne({ email: username }).select("+password");
     if (!user) {
       return done(null, false, { message: "No user found with this email" });

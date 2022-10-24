@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const imagesControllers = require("./../controllers/imagesControllers");
-const adminController = require("./../controllers/adminController");
-
 const multerConfig = require("../config/multerConfig");
-const { restrictTo } = require("../middlewares/auth");
-router.use(adminController.protect);
+const { restrictTo, isAuthMiddleware } = require("../middlewares/auth");
+
+router.use(isAuthMiddleware);
 router.route("/").get(imagesControllers.getAllImages);
 // router.route("/search").get(imagesControllers.searchAllImages);
 

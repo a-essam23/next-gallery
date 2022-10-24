@@ -7,7 +7,6 @@ const {
 } = require("@aws-sdk/client-s3");
 const { s3Client } = require("../config/digitalOceans");
 const fs = require("fs");
-
 const { readdirSync, rmSync } = require("fs");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");

@@ -5,16 +5,14 @@ const folderRouter = require("./routers/folderRouter");
 const cookieParser = require("cookie-parser");
 const imageRouter = require("./routers/imageRouter");
 const groupRouter = require("./routers/groupRouter");
-
+const authRouter = require("./routers/authRouter");
 const adminRouter = require("./routers/adminRouter");
 const rateLimit = require("express-rate-limit");
 const mainRouter = require("./routers/mainRouter");
-
 const passport = require("passport");
 const passportConfig = require("./config/passportConfig");
 const session = require("express-session");
 const flash = require("flash");
-
 const morgan = require("morgan");
 var cors = require("cors");
 // const heroku = require("heroku");
@@ -39,13 +37,8 @@ app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
 
 if (process.env.NODE_ENV === "development") {
-<<<<<<< Updated upstream
-    console.log("development");
-    // app.use(morgan("dev"));
-=======
   console.log("development");
-  app.use(morgan("dev"));
->>>>>>> Stashed changes
+  // app.use(morgan("dev"));
 } else {
   console.log("production");
 }
@@ -83,11 +76,11 @@ const whitelist = domainsFromEnv.split(",").map((item) => item.trim());
 // };
 app.use(cors());
 
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/image", imageRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/folder", folderRouter);
 app.use("/api/v1/group", groupRouter);
-
 app.use("/api/v1/main", mainRouter);
 
 // app.all("*", (req, res, next) => {
