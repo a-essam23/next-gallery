@@ -7,33 +7,21 @@ const MainSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    title: {
-      type: String,
-    },
-    logo: {
-      type: String,
-    },
+    title: String,
+    logo: String,
     groups: Array,
     images: Array,
     image: String,
     customers: Array,
-    facebook: {
-      type: String,
-    },
-    whatsapp: {
-      type: String,
-    },
-    pinterest: {
-      type: String,
-    },
+    facebook: String,
+    whatsapp: String,
+    pinterest: String,
     data: [{ name: "", value: "", images: [] }],
   },
   {
     timestamps: true,
   }
 );
-
-const mainSchema = new mon();
 
 MainSchema.pre("save", async function (req, res, next) {
   const imagesPromises = this.images.map(

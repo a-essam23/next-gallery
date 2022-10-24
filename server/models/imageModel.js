@@ -17,33 +17,16 @@ const imageSchema = new mongoose.Schema(
       required: [true, "every image must have a code!"],
       unique: [true, "Code must be unique"],
     },
-    small300x300: {
-      type: String,
-    },
-    originalSize: {
-      type: String,
-    },
-    folderCategory: {
-      type: String,
-    },
-    folderName: {
-      type: String,
-    },
-    groupCategory: {
-      type: String,
-    },
-    size: {
-      type: String,
-    },
-    groupName: {
-      type: String,
-    },
-    images: {
-      type: Array,
-    },
-    folders: {
-      type: Array,
-    },
+    small300x300: String,
+    originalSize: String,
+    folderCategory: String,
+    folderName: String,
+    groupCategory: String,
+    size: String,
+    groupName: String,
+    images: Array,
+    small300x300Images: Array,
+    folders: Array,
     genre: {
       type: String,
       required: true,
@@ -55,6 +38,7 @@ const imageSchema = new mongoose.Schema(
       ref: "User",
       select: true,
     },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
     timestamps: true,
