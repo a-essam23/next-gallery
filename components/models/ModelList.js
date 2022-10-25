@@ -6,6 +6,7 @@ export default function ModelList({
     AlbumClassName,
     showCode,
     activeLink,
+    
 }) {
     return (
         <>
