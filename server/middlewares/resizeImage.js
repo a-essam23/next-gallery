@@ -4,6 +4,7 @@ const path = require("path");
 exports.resizeImage = (width, height) => {
   return (req, res, next) => {
     const uploadFolder = path.join(__dirname, "../files");
+    console.log(uploadFolder, "uploadFolder");
     req.files.forEach((file) => {
       const imageMimeType = file.mimetype.split("/")[1];
       let smallImages = [];

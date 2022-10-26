@@ -6,7 +6,7 @@ const { restrictTo, isAuthMiddleware } = require("../middlewares/auth");
 const { resizeImage } = require("../middlewares/resizeImage");
 const commentRouter = require("./comment/commentRouter");
 
-router.use(isAuthMiddleware);
+// router.use(isAuthMiddleware);
 router.use("/:code/comments", commentRouter);
 router.route("/").get(imagesControllers.getAllImages);
 // router.route("/search").get(imagesControllers.searchAllImages);
@@ -14,14 +14,14 @@ router.route("/").get(imagesControllers.getAllImages);
 router.route("/upload").post(
   multerConfig.imageUpload.any(),
   // imagesControllers.setUserIds,
-  resizeImage,
+  // resizeImage,
   imagesControllers.createImage
 );
 
 router
   .route("/:code")
   .get(imagesControllers.getOneImage)
-  .patch(restrictTo("admin", "data-entry"), imagesControllers.updateImage)
-  .delete(restrictTo("admin", "data-entry"), imagesControllers.deleteImages);
+  .patch(imagesControllers.updateImage)
+  .delete(imagesControllers.deleteImages);
 
 module.exports = router;

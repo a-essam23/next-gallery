@@ -32,6 +32,7 @@ import ModelWithOptions from "./models/ModelWithOptions";
 
 import About from "./sections/About";
 import Contact from "./sections/Contact";
+import LoginForm from "./forms/LoginForm";
 
 import Grid from "./ui/Grid";
 
@@ -65,4 +66,5 @@ export {
     FormModal,
     Grid,
     ModelWithOptions,
+    LoginForm,
 };

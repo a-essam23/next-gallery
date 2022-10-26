@@ -50,7 +50,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(flash());
+// app.use(flash());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -58,6 +58,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 

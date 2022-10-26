@@ -8,24 +8,28 @@ const imageSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: [true, "Key must be unique"],
-      // select: false,
     },
     slug: String,
-    code: {
+
+    name: {
       type: String,
       lowercase: true,
-      required: [true, "every image must have a code!"],
-      unique: [true, "Code must be unique"],
+      required: [true, "every image must have a name!"],
+      unique: [true, "name must be unique"],
     },
-    small300x300: String,
-    originalSize: String,
-    folderCategory: String,
-    folderName: String,
-    groupCategory: String,
-    size: String,
-    groupName: String,
+
+    sizes: {
+      small: {
+        type: String,
+      },
+      original: {
+        type: String,
+      },
+    },
+    active: { type: Boolean, default: false },
+    folder: String,
+    group: String,
     images: Array,
-    small300x300Images: Array,
     folders: Array,
     genre: {
       type: String,

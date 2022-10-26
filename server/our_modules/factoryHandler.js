@@ -43,6 +43,12 @@ exports.getAll = (Model) =>
     // if (doc.length < 1) {
     //   return next(new AppError(`We couldn't find any results for your input`));
     // }
+    // for (let i = 0; i < doc.length; i++) {
+
+    // console.log(({ name: doc[i].Key } = doc));
+    // }
+    // const test = { name: doc[0].Key };
+    // console.log(test);
     res.status(200).json({
       status: "success",
       results: doc.length,
