@@ -1,9 +1,14 @@
 const AppError = require("../utils/appError");
 
+// exports.isAuthMiddleware = function (req, res, next) {
+//   return !req.isAuthenticated()
+//     ? next(new AppError("You must log in", 401))
+//     : next();
+// };
+
 exports.isAuthMiddleware = function (req, res, next) {
-  return !req.isAuthenticated()
-    ? next(new AppError("You must log in", 401))
-    : next();
+  res.locals.currentUser = req.user;
+  next();
 };
 
 exports.restrictTo = function (...roles) {

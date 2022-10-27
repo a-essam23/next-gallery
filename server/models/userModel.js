@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const passport = require("passport");
+const passportMongoose = require("passport-local-mongoose");
 
 const userSchema = new mongoose.Schema(
   {

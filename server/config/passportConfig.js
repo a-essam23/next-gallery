@@ -1,7 +1,7 @@
 const passport = require("passport");
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const LocalStrategy = require("passport-local").Strategy;
+const LocalStrategy = require("passport-local");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 
@@ -59,16 +59,20 @@ passport.use(
   )
 );
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    const user = await User.findOne({ email: username }).select("+password");
-    if (!user) {
-      return done(null, false, { message: "No user found with this email" });
-    }
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-      return done(null, false, { message: "Password is incorrect" });
-    }
-    return done(null, user);
-  })
-);
+// passport.use(
+//   new LocalStrategy((username, password, done) => {
+//     User.findOne({ user: username }, async (err, user) => {
+//       if (err) {
+//         return done(err);
+//       }
+//       if (!user) {
+//         return done(null, false, { message: "Incorrect username" });
+//       }
+//       const match = await bcrypt.compare(password, user.password);
+//       if (!match) {
+//         return done(null, false, { message: "Incorrect password" });
+//       }
+//       return done(null, user);
+//     }).select("+password");
+//   })
+// );

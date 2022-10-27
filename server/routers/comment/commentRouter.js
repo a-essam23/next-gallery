@@ -30,4 +30,6 @@ router.get(
   commentController.getAllComments
 );
 
+router.delete("/:commentId", commentController.deleteComment);
+
 module.exports = router;

@@ -1,18 +1,19 @@
 const router = require("express").Router();
 const passport = require("passport");
 const authController = require("../controllers/authController");
+const path = require("path");
 
-router.get("/login");
+// router.get("/login");
 
 router.post(
   "/login",
-  passport.authenticate(
-    "local"
-    // , {successRedirect: "",
-    //   failureRedirect: "",
-    //   failureFlash: true,}
-  ),
-  authController.login
+  passport.authenticate("local", {
+    // successRedirect: path.resolve(""),
+    // failureRedirect: "",
+    // failureFlash: true,
+  })
+  // ,
+  // authController.login
 );
 
 router.get("/facebook", passport.authenticate("facebook"));

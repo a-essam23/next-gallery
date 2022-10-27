@@ -95,6 +95,8 @@
 //   next();
 // });
 
+const passport = require("passport");
+
 exports.login = (req, res, next) => {
   res.status(200).json({
     status: "success",
@@ -117,5 +119,6 @@ exports.facebookLogin = (req, res, next) => {
 };
 
 exports.logout = (req, res, next) => {
-  req.logOut();
+  // req.logOut();
+  // req.
 };

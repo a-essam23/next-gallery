@@ -3,7 +3,7 @@ const path = require("path");
 const express = require("express");
 const folderRouter = require("./routers/folderRouter");
 const cookieParser = require("cookie-parser");
-const imageRouter = require("./routers/imageRouter");
+const imageRouter = require("./routers/image/imageRouter");
 const groupRouter = require("./routers/groupRouter");
 const authRouter = require("./routers/authRouter");
 const adminRouter = require("./routers/admin/adminRouter");
@@ -50,16 +50,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(flash());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(flash());
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const domainsFromEnv = process.env.CORS_DOMAINS || "";
 
