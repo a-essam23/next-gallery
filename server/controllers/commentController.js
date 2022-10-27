@@ -1,5 +1,6 @@
 const Comment = require("../models/commentModel");
 const Image = require("../models/imageModel");
+const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
@@ -10,13 +11,14 @@ exports.createComment = catchAsync(async (req, res, next) => {
     createdBy: req.user._id,
     imageCode: req.params.code,
   });
+  console.log(req.params);
   const savedComment = await newComment.save();
-  const image = await Image.findByIdAndUpdate(
-    req.params.imageId,
-    { $push: { comments: savedComment } },
+  const image = await Image.findOneAndUpdate(
+    { name: req.params.code },
+    { $push: { comments: savedComment._id } },
     { new: true }
   );
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     data: savedComment,
   });
@@ -44,6 +46,11 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
     return next(new AppError("no comment found with this id", 404));
   }
   const deletedComment = await Comment.findByIdAndDelete(req.params.commentId);
+  const image = await Image.findOneAndUpdate(
+    { name: req.params.code },
+    { $pull: { comments: comment._id } },
+    { new: true }
+  );
   res.status(200).json({
     status: "success",
   });
@@ -61,7 +68,15 @@ exports.getComment = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllComments = catchAsync(async (req, res, next) => {
-  const comments = await Comment.find({ imageCode: req.params.code });
+  const apiFeatures = new APIFeatures(
+    Comment.find({ imageCode: req.params.code }),
+    req.query
+  )
+    .filter()
+    .limitFields()
+    .paginate()
+    .sort();
+  const comments = await apiFeatures.query;
   res.status(200).json({
     status: "success",
     data: comments,

@@ -7,6 +7,8 @@ const {
 } = require("@aws-sdk/client-s3");
 const { s3Client } = require("../config/digitalOceans");
 const fs = require("fs");
+const { dirname, join } = require("path");
+const path = require("path");
 const { readdirSync, rmSync } = require("fs");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
@@ -15,34 +17,47 @@ const Image = require("../models/imageModel");
 const multer = require("multer");
 const upload = require("../config/multerConfig");
 
+// const Jimp = require("jimp");
 const deleteFiles = () => {
-  const dir = "./files/";
+  const dir = join(dirname(require.main.filename) + "/files");
 
   readdirSync(dir).forEach((f) => rmSync(`${dir}/${f}`));
 };
 
-//CRUD Operations
-exports.createImage = catchAsync(async (req, res, next) => {
-  const test = await Image.findOne({
-    $or: [{ code: req.body.code }, { Key: req.files[0].originalname }],
-  });
-  const test2 = await Image.findOne({
-    folderName: req.body.folderCategory,
-  });
+const Jimp = require("jimp");
 
-  if (test) {
+exports.createImage = catchAsync(async (req, res, next) => {
+  const checker = await Image.findOne({
+    $or: [{ name: req.body.name }, { Key: req.files[0].originalname }],
+  });
+  const folderChecker = await Image.findOne({
+    $and: [{ name: req.body.folder }, { genre: "Folder" }],
+  });
+  // async function resize() {
+  //   // Reading Image
+  //   const image = await Jimp.read(
+  //     dirname(require.main.filename) + `/files/${req.files[0].originalname}`
+  //   );
+
+  //   // Used RESIZE_BEZIER as cb for finer images
+  //   image
+  //     .resize(300, 300, Jimp.RESIZE_BEZIER, function (err) {
+  //       if (err) throw err;
+  //     })
+  //     .write(`./server/files/small/${req.files[0].originalname}`);
+  //   console.log("done");
+  // }
+
+  // resize();
+  console.log("Image is processed successfully");
+  if (checker) {
     deleteFiles();
-    return next(
-      new AppError("there is another file/code with the same code/Key", 409)
-    );
+    return next(new AppError("there is another image with the same name", 409));
   }
-  console.log(test2);
-  if (!test2) {
+
+  if (!folderChecker) {
     return next(
-      new AppError(
-        `every photo must have an existing folder/group category name `,
-        409
-      )
+      new AppError(`every photo must have an existing folder name `, 409)
     );
   }
   //if statement for groupcategory // checker
@@ -52,31 +67,35 @@ exports.createImage = catchAsync(async (req, res, next) => {
     Body: fs.readFileSync(req.files[0].path),
     ACL: "public-read",
   };
-
-  let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-100,h-100/${params.Key}`;
-  // let medium = `https://ik.imagekit.io/rr0ybvdll/tr:w-300,h-300/${params.Key}`;
-  // let random = `https://ik.imagekit.io/rr0ybvdll/tr:w-${width},h-${height}/${params.Key}`;
+  // const params2 = {
+  //   Bucket: "failasof",
+  //   Key: `small${req.files.originalname}`,
+  //   Body: fs.readFileSync(req.files[0].path),
+  //   ACL: "public-read",
+  // };
 
   let newImage = await Image.create({
     Key: req.files[0].originalname,
+    name: req.body.name,
+    // group: folderChecker.group,
+    folder: req.body.folder,
+    sizes: {
+      original: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
+      small: `https://ik.imagekit.io/rr0ybvdll/tr:w-100,h-100/${params.Key}`,
+    },
 
-    code: req.body.code,
-    groupCategory: test2.groupCategory,
-    folderCategory: req.body.folderCategory,
-    originalSize: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
-    small100x100: small,
-    // medium300x300: medium,
-    createdBy: req.user.id,
+    // createdBy: req.user.id,
     size: req.body.size,
-    genre: req.body.genre,
+    genre: "Image",
   });
-
-  const result = s3Client.send(new PutObjectCommand(params));
+  // s3Client.send(new PutObjectCommand(params2));
+  s3Client.send(new PutObjectCommand(params));
   await Image.findOneAndUpdate(
-    { folderName: req.body.folderCategory },
-    { $push: { images: newImage.code } },
+    { name: req.body.folder },
+    { $push: { images: newImage.name } },
     { new: true }
   );
+
   deleteFiles();
   res.status(201).json({
     status: "success",
@@ -86,7 +105,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
 
 exports.updateImage = catchAsync(async (req, res, next) => {
   const doc = await Image.findOneAndUpdate(
-    { code: req.params.code },
+    { name: req.params.code },
     req.body,
     {
       new: true,
@@ -105,7 +124,7 @@ exports.updateImage = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteImage = catchAsync(async (req, res, next) => {
-  const image = await Image.findOne({ code: req.params.code });
+  const image = await Image.findOne({ name: req.params.name });
 
   const params = {
     Bucket: "failasof",
@@ -126,10 +145,10 @@ exports.deleteImage = catchAsync(async (req, res, next) => {
 });
 
 exports.getOneImage = catchAsync(async (req, res, next) => {
-  const image = await Image.findOne({ code: req.params.code });
+  const image = await Image.findOne({ name: req.params.code });
 
   if (!image) {
-    return next(new AppError(`no image found with the Code provided`, 404));
+    return next(new AppError(`no image found with the Name provided`, 404));
   }
 
   res.status(200).json({
@@ -140,14 +159,14 @@ exports.getOneImage = catchAsync(async (req, res, next) => {
 
 exports.deleteImages = catchAsync(async (req, res, next) => {
   let test = req.params.code.split(",");
-
   console.log(test);
-  let test2 = await Image.find({ code: { $in: test } }).select({
+  let test2 = await Image.find({
+    $and: [{ name: { $in: test } }, { genre: "Image" }],
+  }).select({
     Key: 1,
     _id: 0,
   });
-  console.log(test2);
-
+  console.log(test2, "test2");
   const params = {
     Bucket: "failasof",
     Delete: {
@@ -162,15 +181,16 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
       console.log("data", data);
     })
   );
-  let tata = await Image.findOne({ code: test[0] });
-
+  let tata = await Image.findOne({ name: test[0] });
+  console.log(tata.folder, "tata");
+  console.log(test[0].folder, "folder");
   await Image.findOneAndUpdate(
-    { folderName: tata.folderCategory },
+    { name: tata.folder },
     { $pull: { images: { $in: test } } },
     { new: true }
   );
 
-  const images = await Image.deleteMany({ code: { $in: test } });
+  // const images = await Image.deleteMany({ name: { $in: test } });
 
   res.status(204).json({
     status: "success",
@@ -182,16 +202,13 @@ exports.hideImages = catchAsync(async (req, res, next) => {
   let images = req.params.code.split(",");
 
   await Image.updateMany(
-    { code: { $in: images } },
+    { name: { $in: images } },
     { active: req.body.active }
   );
   //the array of folders inside group
-  let result = await Image.find({ code: { $in: images } });
+  let result = await Image.find({ name: { $in: images } });
   res.status(200).json({
     status: "success",
     data: result,
   });
 });
-
-//exports.uploadMultipleImages
-//exports.updateMultipleImages

@@ -5,28 +5,28 @@ const { isAuthMiddleware, restrictTo } = require("../../middlewares/auth");
 
 router.get(
   "/users",
-  isAuthMiddleware,
+  // isAuthMiddleware,
   restrictTo("admin"),
   adminController.getAllUsers
 );
 
 router.get(
   "/users/:userId",
-  isAuthMiddleware,
+  // isAuthMiddleware,
   restrictTo("admin"),
   adminController.getUser
 );
 
 router.patch(
   "/users/:userId",
-  isAuthMiddleware,
+  // isAuthMiddleware,
   restrictTo("admin"),
   adminController.updateUser
 );
 
 router.patch(
   "/users/delete/:userId",
-  isAuthMiddleware,
+  // isAuthMiddleware,
   restrictTo("admin"),
   adminController.deleteUser
 );

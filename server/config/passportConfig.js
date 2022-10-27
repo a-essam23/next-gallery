@@ -45,11 +45,14 @@ passport.use(
       callbackURL: `http://localhost:${process.env.PORT}/auth/google/redirect`,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const user = await User.findOne({ googleId: profile.id });
+      const user = await User.findOne({
+        googleId: profile.id,
+      });
       if (!user) {
         const newUser = new User({
           name: profile.displayName,
           googleId: profile.id,
+          email: profile.email,
         });
         const savedUser = await newUser.save();
         return done(null, savedUser);

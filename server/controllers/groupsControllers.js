@@ -13,18 +13,21 @@ const APIFeatures = require("../utils/apiFeatures");
 const factory = require("../our_modules/factoryHandler");
 const Image = require("../models/imageModel");
 const multer = require("multer");
+const { dirname, join } = require("path");
 const upload = require("../config/multerConfig");
+const { resizeImage } = require("../middlewares/resizeImage");
+// const test = require("../files");
 const deleteFiles = () => {
-  const dir = "./files/";
+  const dir = join(dirname(require.main.filename) + "/files");
 
   readdirSync(dir).forEach((f) => rmSync(`${dir}/${f}`));
 };
 
 exports.createGroup = catchAsync(async (req, res, next) => {
   const test2 = await Image.findOne({
-    $or: [{ code: req.body.code }, { Key: req.files[0].originalname }],
+    $or: [{ name: req.body.name }, { Key: req.files[0].originalname }],
   });
-
+  console.log(test2);
   if (test2) {
     deleteFiles();
     return next(
@@ -43,18 +46,16 @@ exports.createGroup = catchAsync(async (req, res, next) => {
   };
 
   let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-100,h-100/${params.Key}`;
+  console.log(req.files);
 
   let newGroup = await Image.create({
     Key: req.files[0].originalname,
+    name: req.body.name,
+    sizes: {
+      original: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
+      small: small,
+    },
 
-    code: req.body.code,
-    // folderName: req.body.folderName,
-    groupName: req.body.code,
-    // folderCategory: req.body.folderCategory,
-    originalSize: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
-    small300x300: small,
-    // groupCategory: req.body.groupCategory,
-    createdBy: req.user.id,
     genre: "Group",
     size: req.body.size,
   });
@@ -114,7 +115,7 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
 
 exports.updateGroup = catchAsync(async (req, res, next) => {
   const doc = await Image.findOneAndUpdate(
-    { groupName: req.params.code },
+    { name: req.params.code },
     req.body,
     {
       new: true,
@@ -135,16 +136,11 @@ exports.hideGroup = catchAsync(async (req, res, next) => {
   let groups = req.params.code.split(",");
 
   await Image.updateMany(
-    { groupCategory: { $in: groups } },
-    { active: req.body.active }
-  );
-  await Image.updateMany(
-    { groupName: { $in: groups } },
+    { name: { $in: groups } },
     { active: req.body.active }
   );
 
-  const result = await Image.find({ groupCategory: { $in: groups } });
-  //the array of folders inside group
+  const result = await Image.find({ name: { $in: groups } });
 
   res.status(200).json({
     status: "success",

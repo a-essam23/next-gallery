@@ -31,6 +31,7 @@ export const arabic = {
     depth: "عمق",
     group: "مجموعة",
     groups: "مجموعات",
+    group: "مجموعة",
     collections: "ألبومات",
     collection: "ألبوم",
     search: "إبحث",

@@ -7,7 +7,8 @@ const {
 } = require("@aws-sdk/client-s3");
 const { s3Client } = require("../config/digitalOceans");
 const fs = require("fs");
-
+const { dirname, join } = require("path");
+const path = require("path");
 const { readdirSync, rmSync } = require("fs");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
@@ -15,29 +16,34 @@ const factory = require("../our_modules/factoryHandler");
 const Image = require("../models/imageModel");
 const multer = require("multer");
 const upload = require("../config/multerConfig");
+
 const deleteFiles = () => {
-  const dir = "./files/";
+  const dir = join(dirname(require.main.filename) + "/files");
 
   readdirSync(dir).forEach((f) => rmSync(`${dir}/${f}`));
 };
 exports.createFolder = catchAsync(async (req, res, next) => {
-  const test = await Image.findOne({
-    $or: [{ code: req.body.code }, { Key: req.files[0].originalname }],
+  console.log(path.join(path.dirname(require.main.filename) + "/files"));
+
+  const checker = await Image.findOne({
+    $or: [{ name: req.body.name }, { Key: req.files[0].originalname }],
   });
-  const test2 = await Image.findOne({ groupName: req.body.groupCategory });
-  if (test) {
+
+  const groupChecker = await Image.findOne({
+    $and: [{ name: req.body.group }, { genre: "Group" }],
+  });
+
+  if (checker) {
     deleteFiles();
     return next(
-      new AppError("there is another code/Key with the same code/Key name", 409)
-    );
-  }
-  if (!test2) {
-    return next(
       new AppError(
-        "the folder you provided does not belong to any existing group",
-        404
+        "there is another folder with the same name/image that you provided",
+        409
       )
     );
+  }
+  if (!groupChecker) {
+    return next(new AppError("group name does not exist", 404));
   }
   const params = {
     Bucket: "failasof",
@@ -51,20 +57,21 @@ exports.createFolder = catchAsync(async (req, res, next) => {
   let newFolder = await Image.create({
     Key: req.files[0].originalname,
 
-    code: req.body.code,
-    folderName: req.body.code,
-    createdBy: req.user.id,
-    originalSize: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
-    small300x300: small,
-    groupCategory: req.body.groupCategory,
+    name: req.body.name,
+
+    sizes: {
+      original: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
+      small: small,
+    },
+    group: req.body.group,
     genre: "Folder",
-    size: req.body.size,
+    active: req.body.active,
   });
 
   const result = s3Client.send(new PutObjectCommand(params));
   await Image.findOneAndUpdate(
-    { groupName: req.body.groupCategory },
-    { $push: { folders: newFolder.code } },
+    { name: req.body.group },
+    { $push: { folders: newFolder.name } },
     { new: true }
   );
   deleteFiles();
@@ -76,7 +83,7 @@ exports.createFolder = catchAsync(async (req, res, next) => {
 
 exports.getOneFolder = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
-  const folder = await Image.findOne({ folderName: req.params.code });
+  const folder = await Image.findOne({ name: req.params.code });
 
   if (!folder) {
     return next(new AppError(`no folder found with the name provided`, 404));
@@ -90,7 +97,7 @@ exports.getOneFolder = catchAsync(async (req, res, next) => {
 
 exports.updateOneFolder = catchAsync(async (req, res, next) => {
   const folder = await Image.findOneAndUpdate(
-    { folderName: req.params.code },
+    { name: req.params.code },
     req.body,
     {
       new: true,
@@ -111,7 +118,9 @@ exports.updateOneFolder = catchAsync(async (req, res, next) => {
 exports.deleteManyFolders = catchAsync(async (req, res, next) => {
   let test = req.params.code.split(",");
 
-  let test2 = await Image.find({ groupName: { $in: test } }).select({
+  let test2 = await Image.find({
+    $and: [{ name: { $in: test } }, { genre: "Folder" }],
+  }).select({
     Key: 1,
     _id: 0,
   });
@@ -130,28 +139,27 @@ exports.deleteManyFolders = catchAsync(async (req, res, next) => {
       console.log("data", data);
     })
   );
-  let tata = await Image.findOne({ code: test[0] });
-  console.log(tata.groupCategory);
+
   await Image.findOneAndUpdate(
-    { groupName: tata.groupCategory },
+    { group: test[0].group },
     { $pull: { folders: { $in: test } } },
     { new: true }
   );
-  const images = await Image.deleteMany({ folderName: { $in: test } });
 
-  res.status(204).json({
-    status: "success",
-  });
+  await Image.deleteMany({ folder: { $in: test } });
+  await Image.deleteMany({ name: { $in: test } });
+  res.status(204).json({});
 });
+
 exports.hideFolders = catchAsync(async (req, res, next) => {
   let folders = req.params.code.split(",");
 
   await Image.updateMany(
-    { code: { $in: folders } },
+    { name: { $in: folders } },
     { active: req.body.active }
   );
   //the array of folders inside group
-  const result = await Image.find({ folderCategory: { $in: folders } });
+  const result = await Image.find({ name: { $in: folders } });
   res.status(200).json({
     status: "success",
     data: result,
