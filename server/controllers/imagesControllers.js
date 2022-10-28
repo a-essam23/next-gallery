@@ -99,7 +99,7 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
   let imagesnames = req.params.code.split(",");
 
   let arrayOfImages = await Image.find({
-    $and: [{ name: { $in: imagesnames } }, { genre: "Image" }],
+    $and: [{ name: { $in: imagesnames } }, { genre: "image" }],
   }).select({
     Key: 1,
     _id: 0,

@@ -69,22 +69,25 @@ exports.createGroup = catchAsync(async (req, res, next) => {
 
 exports.getOneGroup = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
-  const image = await Image.findOne({ groupName: req.params.code });
+  const group = await Image.findOne({ name: req.params.code });
+  // console.log(image.folders);
+  group.folders = await Image.find({ name: { $in: group.folders } });
 
-  if (!image) {
-    return next(new AppError(`no image found with the Code provided`, 404));
+  if (!group) {
+    return next(new AppError(`no group found with the Code provided`, 404));
   }
 
   res.status(200).json({
     status: "success",
-    data: image,
+    data: group,
   });
 });
+
 exports.deleteManyGroups = catchAsync(async (req, res, next) => {
   let groupsnames = req.params.code.split(",");
 
   let arrayOfGroups = await Image.find({
-    $and: [{ name: { $in: groupsnames } }, { genre: "Group" }],
+    $and: [{ name: { $in: groupsnames } }, { genre: "group" }],
   }).select({
     Key: 1,
     _id: 0,

@@ -83,11 +83,14 @@ exports.createFolder = catchAsync(async (req, res, next) => {
 
 exports.getOneFolder = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
-  const folder = await Image.findOne({ name: req.params.code });
-
+  const folder = await Image.findOne({
+    $and: [{ genre: "Folder" }, { name: req.params.code }],
+  });
   if (!folder) {
     return next(new AppError(`no folder found with the name provided`, 404));
   }
+  console.log(folder);
+  folder.images = await Image.find({ name: { $in: folder.images } });
 
   res.status(200).json({
     status: "success",
@@ -99,7 +102,7 @@ exports.deleteManyFolders = catchAsync(async (req, res, next) => {
   let foldersnames = req.params.code.split(",");
 
   let arrayOfFolders = await Image.find({
-    $and: [{ name: { $in: foldersnames } }, { genre: "Folder" }],
+    $and: [{ name: { $in: foldersnames } }, { genre: "folder" }],
   }).select({
     Key: 1,
     _id: 0,

@@ -36,6 +36,23 @@ exports.getOne = (Model, popOptions) =>
       },
     });
   });
+
+// exports.getOne = (Model, populate ) =>
+//   catchAsync(async (req, res, next) => {
+//     // req.params.code.split(",").forEach((el) => el);
+//     const doc = await Model.findOne({ name: req.params.code });
+//     // console.log(Model.folders);
+//     populate = await Model.find({ name: { $in: populate } });
+
+//     if (!doc) {
+//       return next(new AppError(`no doc found with the Code provided`, 404));
+//     }
+
+//     res.status(200).json({
+//       status: "success",
+//       data: doc,
+//     });
+//   });
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     //EXECUTE QUERY
@@ -153,10 +170,10 @@ exports.deleteElements = (Model, genre) =>
     });
     let container = await Model.findOne({ name: elements[0] });
     let test;
-    if (genre === "Image") {
+    if (genre === "image") {
       test = container.folder;
     }
-    if (genre === "Folder") {
+    if (genre === "folder") {
       test = container.group;
     }
 
