@@ -20,6 +20,6 @@ exports.createMainPage = catchAsync(async (req, res, next) => {
     data: main,
   });
 });
-exports.deleteMainPage = factory.delete(Main);
+exports.deleteMainPage = factory.deleteOne(Main);
 exports.updateMain = factory.update(Main);
 exports.getOneMain = factory.getOne(Main);

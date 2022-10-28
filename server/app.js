@@ -51,16 +51,16 @@ app.use((req, res, next) => {
 });
 
 // app.use(flash());
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-    })
-);
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const domainsFromEnv = process.env.CORS_DOMAINS || "";
 
@@ -84,7 +84,7 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/folder", folderRouter);
 app.use("/api/v1/group", groupRouter);
 app.use("/api/v1/main", mainRouter);
-app.use("/api/v1/comments", commentRouter);
+// app.use("/api/v1/comments", commentRouter);
 
 // app.all("*", (req, res, next) => {
 //   // res.status(404).json({
