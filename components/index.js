@@ -34,7 +34,9 @@ import About from "./sections/About";
 import Contact from "./sections/Contact";
 import LoginForm from "./forms/LoginForm";
 
+import Counter from "./utils/Counter";
 import Grid from "./ui/Grid";
+import ImageInputWall from "./utils/ImageInputWall";
 
 export {
     Layout,
@@ -67,4 +69,6 @@ export {
     Grid,
     ModelWithOptions,
     LoginForm,
+    ImageInputWall,
+    Counter,
 };

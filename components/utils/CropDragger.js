@@ -4,18 +4,20 @@ import { InboxOutlined } from "@ant-design/icons";
 
 export default function CropDragger({
     aspectRatio = 3 / 4,
+    size = 1,
     fileList,
     onChange,
     previewFile,
     className,
+    showUploadList = false,
 }) {
     return (
         <ImgCrop rotate quality={1} aspect={aspectRatio}>
             <Dragger
                 className={className}
-                showUploadList={false}
-                maxCount={1}
-                listType="picture"
+                showUploadList={showUploadList}
+                maxCount={size}
+                listType={"picture-card"}
                 fileList={fileList}
                 onChange={onChange}
                 beforeUpload={previewFile}

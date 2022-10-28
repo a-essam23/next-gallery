@@ -11,6 +11,7 @@ import {
     Breadcrumb,
     Footer,
     NavBar,
+    Counter,
 } from "../../components";
 import { useLang } from "../../hooks";
 
@@ -37,6 +38,7 @@ export default function AdminLayout({ children, className = "" }) {
                     <AntContent
                         className={`${className} xl:mx-6 bg-white min-h-screen h-full `}
                     >
+                        <Counter />
                         {children}
                     </AntContent>
                 </AntLayout>

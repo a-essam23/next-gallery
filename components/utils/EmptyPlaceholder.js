@@ -8,7 +8,7 @@ export default function EmptyPlaceHolder({ className }) {
             <div className="text-xl lg:text-3xl 2xl:text-6xl p-16 text-center opacity-20">
                 NOTHING TO SEE HERE
             </div>
-            <Image alt="null" src={"/imgs/empty.png"} className="opacity-20" />
+            <img alt="null" src={"/imgs/empty.png"} className="opacity-20" />
         </div>
     );
 }

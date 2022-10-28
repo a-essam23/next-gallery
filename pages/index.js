@@ -8,8 +8,10 @@ import {
     SwiperTemplate,
 } from "../components";
 import { useLang } from "../hooks";
+import { getAll } from "../services";
 
 export async function getServerSideProps(context) {
+    console.log("getAll", getAll());
     let groups = [];
     for (let i = 0; i < 4; i++) {
         groups.push({

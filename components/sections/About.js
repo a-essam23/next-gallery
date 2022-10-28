@@ -6,7 +6,7 @@ export default function About({
         description,
         previewImg = "/imgs/placeholder.jpg",
     },
-    imageList = [],
+    imageList = ["/imgs/blank-blue.jpg"],
 }) {
     return (
         <>

@@ -4,7 +4,7 @@ import {
     Content as AntContent,
     Footer as AntFooter,
 } from "antd/lib/layout/layout";
-import { Breadcrumb, NavBar, Footer, Header } from "../../components";
+import { Breadcrumb, NavBar, Footer, Header, Counter } from "../../components";
 import { useLang } from "../../hooks";
 import LanguageSelection from "./LanguageSelection";
 
@@ -26,6 +26,7 @@ export default function Layout({ children, className }) {
             <AntContent
                 className={`container flex flex-col main-theme min-h-screen relative ${className}`}
             >
+                <Counter />
                 {children}
             </AntContent>
             <AntFooter className="m-0 p-0 mt-16">

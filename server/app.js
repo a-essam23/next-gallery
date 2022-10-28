@@ -28,9 +28,9 @@ const multer = require("multer");
 
 // app.use(helmet());
 const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: "Too many requests from this IP,please try again in an hour!",
+    max: 100,
+    windowMs: 60 * 60 * 1000,
+    message: "Too many requests from this IP,please try again in an hour!",
 });
 app.use(express.json({ limit: "10kb" }));
 app.use("/api", limiter);
@@ -38,25 +38,25 @@ app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
 
 if (process.env.NODE_ENV === "development") {
-  console.log("development");
-  // app.use(morgan("dev"));
+    console.log("development");
+    // app.use(morgan("dev"));
 } else {
-  console.log("production");
+    console.log("production");
 }
 app.use(compression());
 app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
+    req.requestTime = new Date().toISOString();
 
-  next();
+    next();
 });
 
 // app.use(flash());
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+    })
 );
 
 app.use(passport.initialize());

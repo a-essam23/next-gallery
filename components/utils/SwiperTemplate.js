@@ -6,47 +6,48 @@ import { useLang } from "../../hooks";
 import { useMemo, useState } from "react";
 
 export default function SwiperTemplate({
-  items,
-  autoplay = false,
-  showIndex = false,
-  delay = 5,
-  className,
-  pagination,
+    items,
+    autoplay = false,
+    showIndex = false,
+    delay = 5,
+    className,
+    pagination,
 }) {
-  const { isAr } = useLang();
-  return (
-    <Swiper
-      onSwiper={(swiper) => {
-        swiper.changeLanguageDirection(isAr ? "ltr" : "rtl");
-      }}
-      modules={[Autoplay, EffectCoverflow, Pagination]}
-      effect="coverflow "
-      loop={true}
-      pagination={pagination}
-      autoplay={
-        autoplay
-          ? {
-              delay: delay * 1000,
-              disableOnInteraction: false,
+    const { isAr } = useLang();
+    return (
+        <Swiper
+            dir="ltr"
+            modules={[Autoplay, EffectCoverflow, Pagination]}
+            effect="coverflow "
+            loop={true}
+            pagination={pagination}
+            autoplay={
+                autoplay
+                    ? {
+                          delay: delay * 1000,
+                          disableOnInteraction: false,
+                      }
+                    : false
             }
-          : false
-      }
-      spaceBetween={5}
-      slidesPerView={1}
-      className={`${className}`}
-    >
-      {items.map((item, i) => {
-        return (
-          <SwiperSlide className="w-full h-full" key={item?._id || v4()}>
-            {item}
-            {showIndex && (
-              <span className="absolute top-0 left-0 opacity-75 p-2 text-xl bg-black text-white">
-                {i + 1}
-              </span>
-            )}
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
-  );
+            spaceBetween={5}
+            slidesPerView={1}
+            className={`${className}`}
+        >
+            {items.map((item, i) => {
+                return (
+                    <SwiperSlide
+                        className="w-full h-full"
+                        key={item?._id || v4()}
+                    >
+                        {item}
+                        {showIndex && (
+                            <span className="absolute top-0 left-0 opacity-75 p-2 text-xl bg-black text-white">
+                                {i + 1}
+                            </span>
+                        )}
+                    </SwiperSlide>
+                );
+            })}
+        </Swiper>
+    );
 }
