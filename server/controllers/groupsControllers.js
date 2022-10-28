@@ -57,7 +57,6 @@ exports.createGroup = catchAsync(async (req, res, next) => {
     },
 
     genre: "Group",
-    size: req.body.size,
   });
 
   const result = s3Client.send(new PutObjectCommand(params));
@@ -82,9 +81,11 @@ exports.getOneGroup = catchAsync(async (req, res, next) => {
   });
 });
 exports.deleteManyGroups = catchAsync(async (req, res, next) => {
-  let test = req.params.code.split(",");
-  console.log(test);
-  let test2 = await Image.find({ code: { $in: test } }).select({
+  let groupsnames = req.params.code.split(",");
+
+  let arrayOfGroups = await Image.find({
+    $and: [{ name: { $in: groupsnames } }, { genre: "Group" }],
+  }).select({
     Key: 1,
     _id: 0,
   });
@@ -92,7 +93,7 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
   const params = {
     Bucket: "failasof",
     Delete: {
-      Objects: test2,
+      Objects: arrayOfGroups,
     },
   };
   await s3Client.send(
@@ -103,9 +104,9 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
       console.log("data", data);
     })
   );
-  const groups = await Image.deleteMany({ groupCategory: { $in: test } });
+  const groups = await Image.deleteMany({ group: { $in: groupsnames } });
   const images = await Image.deleteMany({
-    code: { $in: test },
+    name: { $in: groupsnames },
   });
 
   res.status(204).json({
@@ -113,37 +114,21 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateGroup = catchAsync(async (req, res, next) => {
-  const doc = await Image.findOneAndUpdate(
-    { name: req.params.code },
-    req.body,
-    {
-      new: true,
-    }
-  );
+// exports.hideGroup = catchAsync(async (req, res, next) => {
+//   let groups = req.params.code.split(",");
 
-  if (!doc) {
-    return next(new AppError("No Group found with that ID", 404));
-  }
-  res.status(200).json({
-    status: "success",
-    data: {
-      doc,
-    },
-  });
-});
-exports.hideGroup = catchAsync(async (req, res, next) => {
-  let groups = req.params.code.split(",");
+//   await Image.updateMany(
+//     { name: { $in: groups } },
+//     { active: req.body.active }
+//   );
 
-  await Image.updateMany(
-    { name: { $in: groups } },
-    { active: req.body.active }
-  );
+//   const result = await Image.find({ name: { $in: groups } });
 
-  const result = await Image.find({ name: { $in: groups } });
-
-  res.status(200).json({
-    status: "success",
-    data: result,
-  });
-});
+//   res.status(200).json({
+//     status: "success",
+//     data: result,
+//   });
+// });
+exports.hideGroup = factory.hide(Image);
+exports.deleteGroup = factory.deleteOne(Image);
+exports.updateGroup = factory.update(Image);

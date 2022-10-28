@@ -14,10 +14,10 @@ router.route("/").get(imagesControllers.getAllImages);
 router.route("/upload").post(
   multerConfig.imageUpload.any(),
   // imagesControllers.setUserIds,
-  // resizeImage,
+  // resizeImage(200, 200),
   imagesControllers.createImage
 );
-
+router.route("/test/:code").delete(imagesControllers.deleteOne);
 router
   .route("/:code")
   .get(imagesControllers.getOneImage)
