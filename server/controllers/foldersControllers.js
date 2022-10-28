@@ -64,7 +64,7 @@ exports.createFolder = catchAsync(async (req, res, next) => {
       small: small,
     },
     group: req.body.group,
-    genre: "Folder",
+    genre: "folder",
     active: req.body.active,
   });
 

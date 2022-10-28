@@ -127,7 +127,7 @@ exports.deleteOne = (Model) =>
 
 exports.update = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Image.findOneAndUpdate(
+    const doc = await Model.findOneAndUpdate(
       { name: req.params.code },
       req.body,
       {
@@ -137,7 +137,7 @@ exports.update = (Model) =>
     );
 
     if (!doc) {
-      return next(new AppError("No Image found with that ID", 404));
+      return next(new AppError("No Doc found with that ID", 404));
     }
     res.status(200).json({
       status: "success",

@@ -56,7 +56,7 @@ exports.createGroup = catchAsync(async (req, res, next) => {
       small: small,
     },
 
-    genre: "Group",
+    genre: "group",
   });
 
   const result = s3Client.send(new PutObjectCommand(params));
