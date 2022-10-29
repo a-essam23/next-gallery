@@ -5,6 +5,8 @@ const multerConfig = require("../../config/multerConfig");
 const { restrictTo, isAuthMiddleware } = require("../../middlewares/auth");
 const { resizeImage } = require("../../middlewares/resizeImage");
 const commentRouter = require("../comment/commentRouter");
+const { validation } = require("../../middlewares/validation");
+const validators = require("./imageValidation");
 
 // router.use(isAuthMiddleware);
 
@@ -17,14 +19,23 @@ router.route("/").get(imagesControllers.getAllImages);
 router.route("/upload").post(
   multerConfig.imageUpload.any(),
   // imagesControllers.setUserIds,
-  // resizeImage(100, 100),
+  resizeImage(100, 100),
   imagesControllers.createImage
 );
 
 router
   .route("/:code")
-  .get(imagesControllers.getOneImage)
-  .patch(imagesControllers.updateImage)
-  .delete(imagesControllers.deleteImages);
+  .get(
+    validation(validators.getOneImageValidation),
+    imagesControllers.getOneImage
+  )
+  .patch(
+    validation(validators.updateImageValidation),
+    imagesControllers.updateImage
+  )
+  .delete(
+    validation(validators.deleteImageValidation),
+    imagesControllers.deleteImages
+  );
 
 module.exports = router;
