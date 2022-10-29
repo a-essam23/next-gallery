@@ -34,8 +34,8 @@ const imageSchema = new mongoose.Schema(
     genre: {
       type: String,
       required: true,
-      default: "Image",
-      enum: ["Image", "Folder", "Group"],
+      default: "image",
+      enum: ["image", "folder", "group"],
     },
     createdBy: {
       type: mongoose.Schema.ObjectId,

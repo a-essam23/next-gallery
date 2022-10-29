@@ -31,7 +31,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
     $or: [{ name: req.body.name }, { Key: req.files[0].originalname }],
   });
   const folderChecker = await Image.findOne({
-    $and: [{ name: req.body.folder }, { genre: "Folder" }],
+    $and: [{ name: req.body.folder }, { genre: "folder" }],
   });
 
   console.log(req.body);
@@ -65,7 +65,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
 
     // createdBy: req.user.id,
     size: req.body.size,
-    genre: "Image",
+    genre: "image",
   });
 
   s3Client.send(new PutObjectCommand(params));
@@ -83,11 +83,13 @@ exports.createImage = catchAsync(async (req, res, next) => {
 });
 
 exports.getOneImage = catchAsync(async (req, res, next) => {
-  const image = await Image.findOne({ name: req.params.code });
-
+  const image = await Image.findOne({
+    $and: [{ name: req.params.code }, { genre: "image" }],
+  });
   if (!image) {
     return next(new AppError(`no image found with the Name provided`, 404));
   }
+  image.comments = await Image.find({ name: { $in: image.comments } });
 
   res.status(200).json({
     status: "success",
@@ -99,7 +101,7 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
   let imagesnames = req.params.code.split(",");
 
   let arrayOfImages = await Image.find({
-    $and: [{ name: { $in: imagesnames } }, { genre: "Image" }],
+    $and: [{ name: { $in: imagesnames } }, { genre: "image" }],
   }).select({
     Key: 1,
     _id: 0,
