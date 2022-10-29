@@ -21,6 +21,7 @@ const imageSchema = new mongoose.Schema(
       small: String,
       original: String,
     },
+    size: String,
     active: { type: Boolean, default: false },
     folder: String,
     group: String,
