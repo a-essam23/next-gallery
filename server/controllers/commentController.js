@@ -15,8 +15,6 @@ exports.createComment = catchAsync(async (req, res, next) => {
     createdBy: req.user._id,
     imageCode: req.params.code,
   });
-  // console.log(req.params);
-  console.log(req.user);
   const savedComment = await newComment.save();
   const updatedImage = await Image.findOneAndUpdate(
     { name: req.params.code },

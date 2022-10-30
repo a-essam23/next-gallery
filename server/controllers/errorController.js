@@ -31,6 +31,7 @@ const handleJWTExpiredError = () =>
 const handleDuplicateValuesLocalDB = (err) => {
   new AppError("There is another file with the same name", 409);
 };
+// const unexpectedToken = () => new AppError("Syntax", 400);
 /***********************************/
 
 const sendErrorDevMode = (err, res) => {
@@ -80,7 +81,7 @@ module.exports = (err, req, res, next) => {
     if (err.name === "ValidationError") err = handleValidationErrorDB(err);
     if (err.name === "JsonWebTokenError") err = handleJWTError(err);
     if (err.name === "TokenExpiredError") err = handleJWTExpiredError(err);
-
+    // if (err.name === "Unexpected token") err =
     sendErrorProdMode(err, res);
   }
 };

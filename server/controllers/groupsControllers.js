@@ -70,12 +70,11 @@ exports.createGroup = catchAsync(async (req, res, next) => {
 exports.getOneGroup = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
   const group = await Image.findOne({ name: req.params.code });
-  // console.log(image.folders);
-  group.folders = await Image.find({ name: { $in: group.folders } });
-
   if (!group) {
     return next(new AppError(`no group found with the Code provided`, 404));
   }
+  // console.log(image.folders);
+  group.folders = await Image.find({ name: { $in: group.folders } });
 
   res.status(200).json({
     status: "success",

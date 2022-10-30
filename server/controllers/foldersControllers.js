@@ -66,6 +66,7 @@ exports.createFolder = catchAsync(async (req, res, next) => {
     group: req.body.group,
     genre: "folder",
     active: req.body.active,
+    size: "Sizzze",
   });
 
   const result = s3Client.send(new PutObjectCommand(params));
@@ -91,7 +92,7 @@ exports.getOneFolder = catchAsync(async (req, res, next) => {
   }
   console.log(folder);
   folder.images = await Image.find({ name: { $in: folder.images } });
-
+  console.log(folder.size);
   res.status(200).json({
     status: "success",
     data: folder,
