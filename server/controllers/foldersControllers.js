@@ -66,6 +66,7 @@ exports.createFolder = catchAsync(async (req, res, next) => {
     group: req.body.group,
     genre: "folder",
     active: req.body.active,
+    size: "Sizzze",
   });
 
   const result = s3Client.send(new PutObjectCommand(params));
@@ -84,14 +85,14 @@ exports.createFolder = catchAsync(async (req, res, next) => {
 exports.getOneFolder = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
   const folder = await Image.findOne({
-    $and: [{ genre: "Folder" }, { name: req.params.code }],
+    $and: [{ genre: "folder" }, { name: req.params.code }],
   });
   if (!folder) {
     return next(new AppError(`no folder found with the name provided`, 404));
   }
   console.log(folder);
   folder.images = await Image.find({ name: { $in: folder.images } });
-
+  console.log(folder.size);
   res.status(200).json({
     status: "success",
     data: folder,

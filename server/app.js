@@ -1,10 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const folderRouter = require("./routers/folderRouter");
+const folderRouter = require("./routers/folder/folderRouter");
 const cookieParser = require("cookie-parser");
-const imageRouter = require("./routers/imageRouter");
-const groupRouter = require("./routers/groupRouter");
+const imageRouter = require("./routers/image/imageRouter");
+const groupRouter = require("./routers/group/groupRouter");
 const authRouter = require("./routers/authRouter");
 const adminRouter = require("./routers/admin/adminRouter");
 const rateLimit = require("express-rate-limit");
@@ -84,7 +84,7 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/folder", folderRouter);
 app.use("/api/v1/group", groupRouter);
 app.use("/api/v1/main", mainRouter);
-// app.use("/api/v1/comments", commentRouter);
+app.use("/api/v1/comments", commentRouter);
 
 // app.all("*", (req, res, next) => {
 //   // res.status(404).json({

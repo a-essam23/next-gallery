@@ -129,11 +129,8 @@ exports.update = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findOneAndUpdate(
       { name: req.params.code },
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
+      { $set: req.body },
+      { new: true }
     );
 
     if (!doc) {

@@ -1,29 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const mainController = require("../controllers/mainController");
-const { restrictTo, isAuthMiddleware } = require("../middlewares/auth");
+const { restrictTo, protect } = require("../middlewares/auth");
+
+router.use(protect);
 
 router
   .route("/")
   .get(mainController.getMainPage)
-  .post(
-    isAuthMiddleware,
-    restrictTo("admin", "data-entry"),
-    mainController.createMainPage
-  );
+  .post(restrictTo("admin", "data-entry"), mainController.createMainPage);
 
 router
   .route("/:id")
   .get(mainController.getOneMain)
-  .patch(
-    isAuthMiddleware,
-    restrictTo("admin", "data-entry"),
-    mainController.updateMain
-  )
-  .delete(
-    isAuthMiddleware,
-    restrictTo("admin", "data-entry"),
-    mainController.deleteMainPage
-  );
+  .patch(restrictTo("admin", "data-entry"), mainController.updateMain)
+  .delete(restrictTo("admin", "data-entry"), mainController.deleteMainPage);
 
 module.exports = router;

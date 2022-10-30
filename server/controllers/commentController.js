@@ -1,9 +1,14 @@
 const Comment = require("../models/commentModel");
 const Image = require("../models/imageModel");
+const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createComment = catchAsync(async (req, res, next) => {
+  const image = await Image.findOne({ name: req.params.code });
+  if (image.genre !== "image") {
+    return next(new AppError("Comments are valid on images only", 400));
+  }
   const { content } = req.body;
   const newComment = new Comment({
     content,
@@ -11,18 +16,22 @@ exports.createComment = catchAsync(async (req, res, next) => {
     imageCode: req.params.code,
   });
   const savedComment = await newComment.save();
-  const image = await Image.findByIdAndUpdate(
-    req.params.imageId,
-    { $push: { comments: savedComment } },
+  const updatedImage = await Image.findOneAndUpdate(
+    { name: req.params.code },
+    { $push: { comments: savedComment._id } },
     { new: true }
   );
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     data: savedComment,
   });
 });
 
 exports.updateComment = catchAsync(async (req, res, next) => {
+  const image = await Image.findOne({ name: req.params.code });
+  if (!image) {
+    return next(new AppError("No image found with this image", 404));
+  }
   const comment = await Comment.findById(req.params.commentId);
   if (!comment) {
     return next(new AppError("no comment found with this id", 404));
@@ -39,17 +48,30 @@ exports.updateComment = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteComment = catchAsync(async (req, res, next) => {
+  const image = await Image.findOne({ name: req.params.code });
+  if (!image) {
+    return next(new AppError("No image found with this image", 404));
+  }
   const comment = await Comment.findById(req.params.commentId);
   if (!comment) {
     return next(new AppError("no comment found with this id", 404));
   }
   const deletedComment = await Comment.findByIdAndDelete(req.params.commentId);
+  const updatedImage = await Image.findOneAndUpdate(
+    { name: req.params.code },
+    { $pull: { comments: comment._id } },
+    { new: true }
+  );
   res.status(200).json({
     status: "success",
   });
 });
 
 exports.getComment = catchAsync(async (req, res, next) => {
+  const image = await Image.findOne({ name: req.params.code });
+  if (!image) {
+    return next(new AppError("No image found with this image", 404));
+  }
   const comment = await Comment.findById(req.params.commentId);
   if (!comment) {
     return next(new AppError("no comment found with this id", 404));
@@ -61,7 +83,19 @@ exports.getComment = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllComments = catchAsync(async (req, res, next) => {
-  const comments = await Comment.find({ imageCode: req.params.code });
+  const image = await Image.findOne({ name: req.params.code });
+  if (!image) {
+    return next(new AppError("No image found with this image", 404));
+  }
+  const apiFeatures = new APIFeatures(
+    Comment.find({ imageCode: req.params.code }),
+    req.query
+  )
+    .filter()
+    .limitFields()
+    .paginate()
+    .sort();
+  const comments = await apiFeatures.query;
   res.status(200).json({
     status: "success",
     data: comments,

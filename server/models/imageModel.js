@@ -10,7 +10,6 @@ const imageSchema = new mongoose.Schema(
       unique: [true, "Key must be unique"],
     },
     slug: String,
-
     name: {
       type: String,
       lowercase: true,
@@ -19,13 +18,10 @@ const imageSchema = new mongoose.Schema(
     },
 
     sizes: {
-      small: {
-        type: String,
-      },
-      original: {
-        type: String,
-      },
+      small: String,
+      original: String,
     },
+    size: String,
     active: { type: Boolean, default: false },
     folder: String,
     group: String,
@@ -37,11 +33,7 @@ const imageSchema = new mongoose.Schema(
       default: "image",
       enum: ["image", "folder", "group"],
     },
-    createdBy: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-      select: true,
-    },
+    createdBy: { type: mongoose.Schema.ObjectId, ref: "User" },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
