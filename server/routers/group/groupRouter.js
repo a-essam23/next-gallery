@@ -4,6 +4,8 @@ const groupsControllers = require("../../controllers/groupsControllers");
 const adminController = require("../../controllers/adminController");
 
 const multerConfig = require("../../config/multerConfig");
+const { validation } = require("../../middlewares/validation");
+const validators = require("./groupValidation");
 // const { restrictTo, isAuthMiddleware } = require("../middlewares/auth");
 
 // router.route("/").get(groupControllers.getAllgroup);
@@ -12,15 +14,31 @@ const multerConfig = require("../../config/multerConfig");
 // router.use(isAuthMiddleware);
 router
   .route("/upload")
-  .post(multerConfig.imageUpload.any(), groupsControllers.createGroup);
+  .post(
+    multerConfig.imageUpload.any(),
+    validation(validators.createGroupValidation),
+    groupsControllers.createGroup
+  );
 
 router
   .route("/:code")
-  .get(groupsControllers.getOneGroup)
-  .patch(groupsControllers.updateGroup)
+  .get(
+    validation(validators.getOneGroupValidation),
+    groupsControllers.getOneGroup
+  )
+  .patch(
+    validation(validators.updateGroupValidation),
+    groupsControllers.updateGroup
+  )
   .delete(
     // restrictTo("admin", "data-entry"),
+    validation(validators.deleteGroupValidation),
     groupsControllers.deleteManyGroups
   );
-router.route("/hide/:code").patch(groupsControllers.hideGroup);
+router
+  .route("/hide/:code")
+  .patch(
+    validation(validators.hideGroupsValidation),
+    groupsControllers.hideGroup
+  );
 module.exports = router;

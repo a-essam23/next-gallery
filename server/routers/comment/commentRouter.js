@@ -1,16 +1,9 @@
 const router = require("express").Router({ mergeParams: true });
 const commentController = require("../../controllers/commentController");
-const {
-  isAuthMiddleware,
-  protect,
-  restrictTo,
-} = require("../../middlewares/auth");
+const { protect, restrictTo } = require("../../middlewares/auth");
 const { validation } = require("../../middlewares/validation");
 const validators = require("./commentValidation");
 
-// comments/:commentId
-
-// router.use(isAuthMiddleware);
 router.use(protect);
 
 router.post(

@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, `files`)));
 
 if (process.env.NODE_ENV === "development") {
   console.log("development");
-  // app.use(morgan("dev"));
+  app.use(morgan("dev"));
 } else {
   console.log("production");
 }
