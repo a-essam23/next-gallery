@@ -7,7 +7,7 @@ exports.createImageValidation = {
       name: Joi.string().required(),
       folder: Joi.string().required(),
       size: Joi.string().required(),
-      genre: Joi.string().valid("Image", "Folder", "Group").required(),
+      genre: Joi.string().valid("image", "folder", "group").required(),
     }),
 };
 
@@ -17,8 +17,8 @@ exports.updateImageValidation = {
     .keys({
       name: Joi.string(),
       folder: Joi.string(),
-      size: Joi.string(),
-      genre: Joi.string().valid("Image", "Folder", "Group"),
+      size: Joi.number(),
+      genre: Joi.string().valid("image", "folder", "group"),
     }),
   params: Joi.object()
     .required()
