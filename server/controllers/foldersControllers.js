@@ -64,7 +64,7 @@ exports.createFolder = catchAsync(async (req, res, next) => {
       small: small,
     },
     group: req.body.group,
-    genre: "Folder",
+    genre: "folder",
     active: req.body.active,
   });
 
@@ -83,11 +83,14 @@ exports.createFolder = catchAsync(async (req, res, next) => {
 
 exports.getOneFolder = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
-  const folder = await Image.findOne({ name: req.params.code });
-
+  const folder = await Image.findOne({
+    $and: [{ genre: "Folder" }, { name: req.params.code }],
+  });
   if (!folder) {
     return next(new AppError(`no folder found with the name provided`, 404));
   }
+  console.log(folder);
+  folder.images = await Image.find({ name: { $in: folder.images } });
 
   res.status(200).json({
     status: "success",
@@ -95,31 +98,11 @@ exports.getOneFolder = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateOneFolder = catchAsync(async (req, res, next) => {
-  const folder = await Image.findOneAndUpdate(
-    { name: req.params.code },
-    req.body,
-    {
-      new: true,
-    }
-  );
-  if (!folder || req.params.code === undefined) {
-    return next(new AppError(`no folder found with the name provided`, 404));
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      folder,
-    },
-  });
-});
-
 exports.deleteManyFolders = catchAsync(async (req, res, next) => {
-  let test = req.params.code.split(",");
+  let foldersnames = req.params.code.split(",");
 
-  let test2 = await Image.find({
-    $and: [{ name: { $in: test } }, { genre: "Folder" }],
+  let arrayOfFolders = await Image.find({
+    $and: [{ name: { $in: foldersnames } }, { genre: "folder" }],
   }).select({
     Key: 1,
     _id: 0,
@@ -128,7 +111,7 @@ exports.deleteManyFolders = catchAsync(async (req, res, next) => {
   const params = {
     Bucket: "failasof",
     Delete: {
-      Objects: test2,
+      Objects: arrayOfFolders,
     },
   };
   await s3Client.send(
@@ -141,27 +124,16 @@ exports.deleteManyFolders = catchAsync(async (req, res, next) => {
   );
 
   await Image.findOneAndUpdate(
-    { group: test[0].group },
-    { $pull: { folders: { $in: test } } },
+    { group: foldersnames[0].group },
+    { $pull: { folders: { $in: foldersnames } } },
     { new: true }
   );
 
-  await Image.deleteMany({ folder: { $in: test } });
-  await Image.deleteMany({ name: { $in: test } });
+  await Image.deleteMany({ folder: { $in: foldersnames } });
+  await Image.deleteMany({ name: { $in: foldersnames } });
   res.status(204).json({});
 });
 
-exports.hideFolders = catchAsync(async (req, res, next) => {
-  let folders = req.params.code.split(",");
-
-  await Image.updateMany(
-    { name: { $in: folders } },
-    { active: req.body.active }
-  );
-  //the array of folders inside group
-  const result = await Image.find({ name: { $in: folders } });
-  res.status(200).json({
-    status: "success",
-    data: result,
-  });
-});
+exports.updateOneFolder = factory.update(Image);
+exports.hideFolders = factory.hide(Image);
+// exports.deleteManyFolders = factory.deleteElements(Image,"Folder");
