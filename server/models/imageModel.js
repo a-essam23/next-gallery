@@ -22,7 +22,7 @@ const imageSchema = new mongoose.Schema(
       original: String,
     },
     size: String,
-    active: { type: Boolean, default: false },
+    active: { type: Boolean, default: false, select: false },
     folder: String,
     group: String,
     images: Array,
