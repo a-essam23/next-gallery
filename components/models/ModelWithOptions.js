@@ -3,7 +3,10 @@ import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 
 export default function ModelWithOptions({
     data: {
-        image = null,
+        sizes = {
+            original: "/imgs/blank.jpg",
+            small: "/imgs/blank.jpg",
+        },
         name = null,
         collection = null,
         size = null,
@@ -16,9 +19,14 @@ export default function ModelWithOptions({
     return (
         <div className="relative">
             <Card
+                className="overflow-clip "
                 cover={
                     <div className="h-full w-full ">
-                        <img alt={name} src={image} className="w-full h-full" />
+                        <img
+                            alt={name}
+                            src={sizes.small}
+                            className="w-full h-full object-cover"
+                        />
                     </div>
                 }
                 actions={[

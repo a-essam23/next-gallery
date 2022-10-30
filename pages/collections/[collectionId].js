@@ -10,23 +10,28 @@ import {
     ModelInfo,
     Searchbar,
 } from "../../components";
+import { getOne } from "../../services";
 import { useLang } from "../../hooks";
 
 export async function getServerSideProps(context) {
-    const models = Array(10)
-        .fill()
-        .map((el, i) => ({
-            name: `Model ${i + 1}`,
-            image: "/imgs/placeholder1.jpg",
-            _id: i,
-            size: "120,150,40",
-        }));
+    const { data, error } = await getOne(
+        context.req.headers.host,
+        "folder",
+        context.query.collectionId
+    );
+    if (error) {
+        return {
+            notFound: true,
+        };
+    }
+
     return {
-        props: { models }, // will be passed to the page component as props
+        props: { models: data?.images || [] }, // will be passed to the page component as props
     };
 }
 
 export default function ModelPage({ models = [] }) {
+    ////TODO SEARCHBARS
     const router = useRouter();
     const collectionId = router.query.collectionId;
     // const [searchParams, setSearchParams] = useSearchParams();
@@ -43,11 +48,13 @@ export default function ModelPage({ models = [] }) {
         }
         // eslint-disable-next-line
     }, []);
+
     useEffect(() => {
         isShown
             ? (document.body.style.overflowY = "hidden")
             : (document.body.style.overflowY = "scroll");
     }, [isShown]);
+
     return (
         <Layout>
             <Searchbar

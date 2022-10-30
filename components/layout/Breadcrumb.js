@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useLang } from "../../hooks";
 
+////TODO REMODELL >>> FIX HREFS!
 export default function Breadcrumb() {
     const router = useRouter();
     const pathname = router.pathname;
@@ -16,7 +17,6 @@ export default function Breadcrumb() {
         const crumbList = paths.map((path, index) => {
             const href = "/" + paths.slice(0, index + 1).join("/");
             const dynamicPath = path.match(/\[([^)]+)\]/);
-            console.log();
             return {
                 path: dynamicPath
                     ? router.query[dynamicPath[1]]

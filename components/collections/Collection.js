@@ -1,6 +1,12 @@
 import { useRouter } from "next/router";
 
-function Collection({ data: { name = "", image } }) {
+function Collection({
+    data: {
+        name = "",
+        sizes = { original: "/imgs/blank.jpg", small: "/imgs/blank.jpg" },
+    },
+}) {
+    ///TODO REPLACE ORIGINAL WITH SMALL FOR EVERYTHING BUT MOBILE
     const router = useRouter();
     return (
         <div
@@ -10,7 +16,7 @@ function Collection({ data: { name = "", image } }) {
             }}
         >
             <img
-                src={image}
+                src={sizes.original}
                 alt={name}
                 className="object-cover w-full h-full hover:brightness-75 rounded-2xl "
             />

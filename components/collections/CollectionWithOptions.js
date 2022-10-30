@@ -3,7 +3,16 @@ import { Card, Checkbox } from "antd";
 import { EditTwoTone, DeleteTwoTone, FileAddTwoTone } from "@ant-design/icons";
 
 export default function CollectionWithOptions({
-    data: { name, image, models, visible = true, group = null },
+    data: {
+        name,
+        sizes = {
+            original: "/imgs/blank.jpg",
+            small: "/imgs/blank.jpg",
+        },
+        models,
+        visible = true,
+        group = null,
+    },
     onClickAdd,
     onClickEdit,
     onClickDelete,
@@ -26,7 +35,7 @@ export default function CollectionWithOptions({
                     >
                         <img
                             alt={name}
-                            src={image}
+                            src={sizes.small}
                             className="h-full w-full object-fit  "
                         />
                     </div>

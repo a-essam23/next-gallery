@@ -8,23 +8,30 @@ import {
     EmptyPlaceHolder,
     Grid,
     AdminLayout,
+    Searchbar,
 } from "../../../components";
+import { getOne } from "../../../services";
 
 ///TODO
 
 export async function getServerSideProps(context) {
-    const models = Array(10)
-        .fill()
-        .map((el, i) => {
-            return {
-                name: `Model${i + 1}`,
-                _id: i,
-                image: `/imgs/placeholder.jpg`,
-                visible: i % 3,
-            };
-        });
+    const { data, error } = await getOne(
+        context.req.headers.host,
+        "folder",
+        context.query.collectionId
+    );
+    // const models = Array(10)
+    //     .fill()
+    //     .map((el, i) => {
+    //         return {
+    //             name: `Model${i + 1}`,
+    //             _id: i,
+    //             image: `/imgs/placeholder.jpg`,
+    //             visible: i % 3,
+    //         };
+    //     });
     return {
-        props: { models }, // will be passed to the page component as props
+        props: { models: data.images || [] }, // will be passed to the page component as props
     };
 }
 
@@ -47,8 +54,8 @@ export default function AdminCollectionPage({ models }) {
                     }}
                 />
             )}
-
-            <div className="flex items-center justify-between p-4">
+            <div className="flex w-full h-max gap-2 ">
+                <Searchbar className={"w-full p-0"} />
                 <Button
                     type="primary"
                     size="large"

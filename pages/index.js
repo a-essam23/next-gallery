@@ -2,23 +2,20 @@ import { v4 } from "uuid";
 import {
     About,
     Contact,
-    FourBoxs,
+    FourBoxes,
     Layout,
     ModelSwiper,
     SwiperTemplate,
 } from "../components";
 import { useLang } from "../hooks";
-import { getAll } from "../services";
+import { getAll, getOne } from "../services";
 
 export async function getServerSideProps(context) {
-    console.log("getAll", getAll());
-    let groups = [];
-    for (let i = 0; i < 4; i++) {
-        groups.push({
-            image: "/imgs/placeholder.jpg",
-            name: `GROUP${i + 1}`,
-        });
-    }
+    const { data, error } = await getOne(
+        context.req.headers.host,
+        "group",
+        "group1"
+    );
     const models = [
         {
             image: "/imgs/placeholder.jpg",
@@ -74,11 +71,11 @@ export async function getServerSideProps(context) {
         "/imgs/blank-blue.jpg",
     ];
     return {
-        props: { groups, models, imageList }, // will be passed to the page component as props
+        props: { groups: [], models, imageList }, // will be passed to the page component as props
     };
 }
 
-export default function Home({ groups, models, imageList }) {
+export default function Home({ groups = [], models, imageList }) {
     const { langData } = useLang();
     return (
         <Layout>
@@ -101,7 +98,7 @@ export default function Home({ groups, models, imageList }) {
                         })}
                     className="sm:basis-3/5 h-96 sm:h-full w-full shadow-cd center "
                 />
-                <FourBoxs
+                <FourBoxes
                     activeLink
                     groups={groups}
                     className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 "

@@ -4,7 +4,7 @@ import {
     About,
     AdminLayout,
     Contact,
-    FourBoxs,
+    FourBoxes,
     ImageInputWall,
     ModelSwiper,
 } from "../../components";
@@ -83,7 +83,6 @@ export default function AdminPage({ content, allGroups = [], allModels = [] }) {
         models,
         misc: { swiper },
     } = content;
-    console.log(groups);
     return (
         <AdminLayout className="">
             <div className="flex justify-center pb-4 h-20">
@@ -116,7 +115,7 @@ export default function AdminPage({ content, allGroups = [], allModels = [] }) {
                             );
                         })}
                     </Select>
-                    <FourBoxs groups={groups} />
+                    <FourBoxes groups={groups} />
                 </div>
             </section>{" "}
             <section className="text-3xl 2xl:text-4xl text-center ">

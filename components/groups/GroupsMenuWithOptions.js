@@ -5,20 +5,26 @@ import { Menu } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FormModal } from "../../components";
+import { getAll } from "../../services";
 
 ///TODO FIX MENU CURRENT
-export default function GroupsMenuWithOptions({ groups = [] }) {
+export default function GroupsMenuWithOptions({}) {
     const [current, setCurrent] = useState(null);
     const [isShown, setIsShown] = useState(false);
-
-    groups = Array(6)
-        .fill()
-        .map((el, i) => {
-            return {
-                name: `GROUP${i + 1}`,
-                _id: i,
-            };
+    const [groups, setGroups] = useState([]);
+    useEffect(() => {
+        getAll("", "Group", true).then(({ data, error }) => {
+            setGroups(data || []);
         });
+    }, []);
+    // groups = Array(6)
+    //     .fill()
+    //     .map((el, i) => {
+    //         return {
+    //             name: `GROUP${i + 1}`,
+    //             _id: i,
+    //         };
+    //     });
     const handleDelete = async (name) => {};
 
     return (

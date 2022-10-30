@@ -2,7 +2,15 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { v4 } from "uuid";
 export default function Model({
-    data: { _id = v4(), image = "/imgs/blank.jpg", name = "", folder = "" },
+    data: {
+        _id = v4(),
+        sizes = {
+            small: "",
+            original: "/imgs/blank.jpg",
+        },
+        name = "",
+        folder = "",
+    },
     className = "",
     activeLink = false,
     showCode = true,
@@ -25,7 +33,7 @@ export default function Model({
         >
             <div className="w-full h-full">
                 <img
-                    src={image}
+                    src={sizes.original}
                     alt={name}
                     className={"object-cover w-full h-full"}
                 />

@@ -2,24 +2,20 @@ import { Button, Form, Input } from "antd";
 import { CropDragger } from "../../components";
 
 export default function GroupForm({
-    options: { previewFile, aspectRatio = 1 / 1, fileList },
+    options: { previewFile, aspectRatio = 1 / 1, fileList, onFinish },
     onChange,
-    onFinish,
 }) {
     return (
         <Form
             onFinish={onFinish}
             layout="vertical"
-            className="px-4 pt-2 2xl:pt-16 "
+            className="px-4 pt-2 2xl:pt-16 h-4/5 "
             size="middle"
         >
             <Form.Item name="name" label="Group name">
                 <Input required placeholder="Ex: models, projects, molds" />
             </Form.Item>
-            <Form.Item name="description" label="Group description">
-                <Input placeholder="Ex: types of sand molds" />
-            </Form.Item>
-            <Form.Item label="Group Image">
+            <Form.Item label="Key" className="">
                 <CropDragger
                     aspectRatio={aspectRatio}
                     fileList={fileList}

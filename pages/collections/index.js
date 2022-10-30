@@ -6,19 +6,12 @@ import {
     Layout,
     Searchbar,
 } from "../../components";
+import { getAll } from "../../services";
 
 export async function getServerSideProps(context) {
-    let collections = Array(32)
-        .fill()
-        .map((l, i) => {
-            const randDigit = Math.floor(Math.random() * 4);
-            return {
-                name: `Collection ${i + 1}`,
-                image: `/imgs/placeholder${randDigit}.jpg`,
-            };
-        });
+    const { data, error } = await getAll(context.req.headers.host, "Folder");
     return {
-        props: { collections }, // will be passed to the page component as props
+        props: { collections: data || [] }, // will be passed to the page component as props
     };
 }
 

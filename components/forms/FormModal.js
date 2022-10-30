@@ -5,6 +5,7 @@ import {
     ModelForm,
     CollectionForm,
 } from "../../components";
+import { postOne } from "../../services";
 
 export default function FormModal({
     className,
@@ -46,10 +47,28 @@ export default function FormModal({
                 ctx.restore();
 
                 setPreviewImage(canvas.toDataURL());
-                canvas.toBlob((blob) => setFileToUpload(blob));
+                canvas.toBlob((blob) => {
+                    const fileAfterWM = new File(
+                        [blob],
+                        file.name,
+                        {
+                            type: "image/jpeg",
+                        },
+                        "image/jpeg"
+                    );
+                    setFileToUpload(fileAfterWM);
+                });
             };
             // ;
         });
+    };
+
+    const handleUpload = async (formData) => {
+        const { data, error } = await postOne("", type, {
+            ...formData,
+            Key: fileToUpload,
+        });
+        console.log(data, error);
     };
 
     const options = {
@@ -60,14 +79,7 @@ export default function FormModal({
     };
 
     const forms = {
-        group: (
-            <GroupForm
-                options={options}
-                onFinish={(data) => {
-                    console.log(fileToUpload);
-                }}
-            />
-        ),
+        group: <GroupForm options={options} />,
         collection: (
             <CollectionForm
                 options={options}

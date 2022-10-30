@@ -6,7 +6,7 @@ import NavBar from "./layout/navbar/NavBar";
 import Breadcrumb from "./layout/Breadcrumb";
 
 import SwiperTemplate from "./utils/SwiperTemplate";
-import FourBoxs from "./utils/FourBoxs";
+import FourBoxes from "./utils/FourBoxs";
 import Searchbar from "./utils/Searchbar";
 import EmptyPlaceHolder from "./utils/EmptyPlaceholder";
 import RadioButtons from "./utils/RadioButtons";
@@ -37,14 +37,16 @@ import LoginForm from "./forms/LoginForm";
 import Counter from "./utils/Counter";
 import Grid from "./ui/Grid";
 import ImageInputWall from "./utils/ImageInputWall";
+import Box from "./ui/Box";
 
 export {
+    Box,
     Layout,
     AdminLayout,
     Header,
     Footer,
     SwiperTemplate,
-    FourBoxs,
+    FourBoxes,
     Collection,
     CollectionList,
     CollectionMasonic,

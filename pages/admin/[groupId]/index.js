@@ -10,19 +10,25 @@ import {
     Grid,
     CollectionWithOptions,
 } from "../../../components";
+import { getOne } from "../../../services";
 
 export async function getServerSideProps(context) {
-    const collections = Array(5)
-        .fill()
-        .map((el, i) => {
-            return {
-                name: `Collection${i + 1}`,
-                _id: i,
-                image: `/imgs/placeholder${Math.floor(Math.random() * 4)}.jpg`,
-            };
-        });
+    const { data, error } = await getOne(
+        context.req.headers.host,
+        "group",
+        context.query.groupId
+    );
+    // const collections = Array(5)
+    //     .fill()
+    //     .map((el, i) => {
+    //         return {
+    //             name: `Collection${i + 1}`,
+    //             _id: i,
+    //             image: `/imgs/placeholder${Math.floor(Math.random() * 4)}.jpg`,
+    //         };
+    //     });
     return {
-        props: { collections }, // will be passed to the page component as props
+        props: { collections: data.folders || [] }, // will be passed to the page component as props
     };
 }
 

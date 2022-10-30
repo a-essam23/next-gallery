@@ -4,7 +4,14 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function ModelInfo({
-    data: { image, name, size = null },
+    data: {
+        sizes = {
+            small: "",
+            original: "/imgs/blank.jpg",
+        },
+        name,
+        size = null,
+    },
     className,
 }) {
     ///// TODO MAKE NEW COMPONENT FOR MOB A
@@ -16,7 +23,7 @@ export default function ModelInfo({
         >
             <div className="basis-7/12 flex w-full justify-center items-center lg:shadow-md rounded lg:max-h-120 xl:max-h-144 2xl:max-h-full">
                 <img
-                    src={image}
+                    src={sizes.original}
                     alt={name}
                     className="object:cover w-full max-h-full md:rounded md:rounded-b-none lg:rounded-tr-none lg:rounded-l "
                 />
