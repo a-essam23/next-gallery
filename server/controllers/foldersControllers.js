@@ -30,7 +30,7 @@ exports.createFolder = catchAsync(async (req, res, next) => {
   });
 
   const groupChecker = await Image.findOne({
-    $and: [{ name: req.body.group }, { genre: "Group" }],
+    $and: [{ name: req.body.group }, { genre: "group" }],
   });
 
   if (checker) {
