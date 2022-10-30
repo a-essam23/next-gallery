@@ -1,32 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../../controllers/adminController");
-const { isAuthMiddleware, restrictTo } = require("../../middlewares/auth");
+const { restrictTo, protect } = require("../../middlewares/auth");
+const { validation } = require("../../middlewares/validation");
+const validators = require("./adminValidation");
 
-router.get(
-  "/users",
-  // isAuthMiddleware,
-  restrictTo("admin"),
-  adminController.getAllUsers
-);
+router.use(protect);
 
-router.get(
-  "/users/:userId",
-  // isAuthMiddleware,
-  restrictTo("admin"),
-  adminController.getUser
-);
+router.get("/users", restrictTo("admin"), adminController.getAllUsers);
+
+router.get("/users/:userId", restrictTo("admin"), adminController.getUser);
 
 router.patch(
   "/users/:userId",
-  // isAuthMiddleware,
+  validation(validators.updateUserValidation),
   restrictTo("admin"),
   adminController.updateUser
 );
 
 router.patch(
   "/users/delete/:userId",
-  // isAuthMiddleware,
   restrictTo("admin"),
   adminController.deleteUser
 );

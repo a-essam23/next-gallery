@@ -6,12 +6,12 @@ const adminController = require("../../controllers/adminController");
 const multerConfig = require("../../config/multerConfig");
 const { validation } = require("../../middlewares/validation");
 const validators = require("./groupValidation");
-// const { restrictTo, isAuthMiddleware } = require("../middlewares/auth");
+const { protect } = require("../../middlewares/auth");
 
 // router.route("/").get(groupControllers.getAllgroup);
 // router.route("/search").get(groupControllers.searchAllgroup);
 
-// router.use(isAuthMiddleware);
+router.use(protect);
 router
   .route("/upload")
   .post(

@@ -2,11 +2,7 @@ const express = require("express");
 const router = express.Router();
 const imagesControllers = require("../../controllers/imagesControllers");
 const multerConfig = require("../../config/multerConfig");
-const {
-  restrictTo,
-  isAuthMiddleware,
-  protect,
-} = require("../../middlewares/auth");
+const { restrictTo, protect } = require("../../middlewares/auth");
 const { resizeImage } = require("../../middlewares/resizeImage");
 const commentRouter = require("../comment/commentRouter");
 const { validation } = require("../../middlewares/validation");
