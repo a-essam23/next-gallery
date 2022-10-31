@@ -9,7 +9,7 @@ export default function GroupForm({
         <Form
             onFinish={onFinish}
             layout="vertical"
-            className="px-4 pt-2 2xl:pt-16 h-4/5 "
+            className="px-4 pt-2 2xl:pt-16 "
             size="middle"
         >
             <Form.Item name="name" label="Group name">

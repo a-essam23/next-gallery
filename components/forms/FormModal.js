@@ -1,4 +1,6 @@
-import { useCallback, useMemo, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Spin } from "antd";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
     RadioButtons,
     GroupForm,
@@ -17,6 +19,16 @@ export default function FormModal({
 }) {
     const [previewImage, setPreviewImage] = useState(null);
     const [fileToUpload, setFileToUpload] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [msg, setMsg] = useState({ err: false, content: "" });
+
+    useEffect(() => {
+        if (msg.content !== "") {
+            setTimeout(() => {
+                setMsg({ err: false, content: "" });
+            }, 4000);
+        }
+    }, [msg.content]);
 
     const previewFileHandler = async (file) => {
         const reader = new FileReader();
@@ -64,11 +76,18 @@ export default function FormModal({
     };
 
     const handleUpload = async (formData) => {
+        setIsLoading(true);
         const { data, error } = await postOne("", type, {
             ...formData,
             Key: fileToUpload,
         });
-        console.log(data, error);
+        console.log(data);
+        setIsLoading(false);
+        if (error) {
+            setMsg({ err: true, content: error });
+        } else {
+            setMsg({ err: false, content: "Added!" });
+        }
     };
 
     const options = {
@@ -76,28 +95,13 @@ export default function FormModal({
         selectedGroup,
         selectedCollection,
         previewFile: previewFileHandler,
+        onFinish: handleUpload,
     };
 
     const forms = {
         group: <GroupForm options={options} />,
-        collection: (
-            <CollectionForm
-                options={options}
-                onFinish={(data) => {
-                    console.log(data);
-                    console.log(fileToUpload);
-                }}
-            />
-        ),
-        model: (
-            <ModelForm
-                options={options}
-                onFinish={(data) => {
-                    console.log(data);
-                    console.log(fileToUpload);
-                }}
-            />
-        ),
+        collection: <CollectionForm options={options} />,
+        model: <ModelForm options={options} />,
     };
 
     return (
@@ -127,7 +131,14 @@ export default function FormModal({
                         />
                     </div>
                     {forms[type]}
-                    {/* <div className={"text-2xl px-4"}>{msg}</div> */}
+                    {isLoading && <Spin className="px-4" />}
+                    <div
+                        className={`text-2xl px-4 ${
+                            msg.err ? "text-red-600" : "text-green-600"
+                        }`}
+                    >
+                        {msg.content}
+                    </div>
                 </div>
             </div>
         </>

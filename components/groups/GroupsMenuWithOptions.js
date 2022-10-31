@@ -13,10 +13,10 @@ export default function GroupsMenuWithOptions({}) {
     const [isShown, setIsShown] = useState(false);
     const [groups, setGroups] = useState([]);
     useEffect(() => {
-        getAll("", "Group", true).then(({ data, error }) => {
+        getAll("", "group", true).then(({ data, error }) => {
             setGroups(data || []);
         });
-    }, []);
+    }, [isShown]);
     // groups = Array(6)
     //     .fill()
     //     .map((el, i) => {

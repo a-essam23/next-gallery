@@ -29,7 +29,7 @@ nextServer
             .then(() => {
                 console.log("DB connection successful!".cyan.underline);
             });
-        let server_port = process.env.PORT || 3000;
+        let server_port = process.env.PORT || 5000;
         let server_host = process.env.HOST || "0.0.0.0";
 
         app.get("*", (req, res) => {
@@ -38,11 +38,6 @@ nextServer
 
         app.listen(server_port, server_host, function () {
             console.log("Listening on port %d", server_port);
-        });
-
-        const port = process.env.PORT || 5000; /////
-        app.listen(process.env.PORT || 5000, () => {
-            console.log(`App Running on ${process.env.PORT}}...`);
         });
 
         process.on("unhandledRejection", (err) => {

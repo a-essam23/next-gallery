@@ -12,16 +12,16 @@ router.get("/users", restrictTo("admin"), adminController.getAllUsers);
 router.get("/users/:userId", restrictTo("admin"), adminController.getUser);
 
 router.patch(
-  "/users/:userId",
-  validation(validators.updateUserValidation),
-  restrictTo("admin"),
-  adminController.updateUser
+    "/users/:userId",
+    validation(validators.updateUserValidation),
+    restrictTo("admin"),
+    adminController.updateUser
 );
 
 router.patch(
-  "/users/delete/:userId",
-  restrictTo("admin"),
-  adminController.deleteUser
+    "/users/delete/:userId",
+    restrictTo("admin"),
+    adminController.deleteUser
 );
 
 module.exports = router;

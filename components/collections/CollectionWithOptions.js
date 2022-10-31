@@ -24,7 +24,7 @@ export default function CollectionWithOptions({
             <Card
                 cover={
                     <div
-                        className="h-48 xl:h-56 2xl:h-72 cursor-pointer"
+                        className="h-96 cursor-pointer"
                         onClick={() => {
                             router.push(
                                 `/admin/${

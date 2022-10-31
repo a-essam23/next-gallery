@@ -36,7 +36,7 @@ app.use(express.json({ limit: "10kb" }));
 app.use("/api", limiter);
 app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
-
+app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
     console.log("development");
     // app.use(morgan("dev"));

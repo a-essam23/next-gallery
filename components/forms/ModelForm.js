@@ -2,9 +2,14 @@ import { Button, Form, Input, Select } from "antd";
 import { CropDragger } from "../../components";
 
 export default function ModelForm({
-    options: { previewFile, selectedCollection, fileList },
+    options: {
+        previewFile,
+        aspectRatio = 1 / 1,
+        selectedCollection,
+        fileList,
+        onFinish,
+    },
     onChange,
-    onFinish,
 }) {
     return (
         <Form
@@ -20,7 +25,7 @@ export default function ModelForm({
                 <Input required placeholder="Ex: 24x62" />
             </Form.Item>
             <Form.Item
-                name="folderName"
+                name="folder"
                 label="Collection"
                 initialValue={selectedCollection}
             >
@@ -35,6 +40,7 @@ export default function ModelForm({
                     fileList={fileList}
                     onChange={onChange}
                     previewFile={previewFile}
+                    aspectRatio={aspectRatio}
                 />
             </Form.Item>
             <Form.Item className="">

@@ -20,6 +20,14 @@ export async function getServerSideProps(context) {
         "folder",
         context.query.collectionId
     );
+    if (error) {
+        return {
+            redirect: {
+                permenant: false,
+                destination: "/admin",
+            },
+        };
+    }
     // const models = Array(10)
     //     .fill()
     //     .map((el, i) => {
@@ -49,7 +57,7 @@ export default function AdminCollectionPage({ models }) {
                 <FormModal
                     selectedCollection={collection}
                     type={"model"}
-                    onClickHandler={() => {
+                    showClickHander={() => {
                         setIsShown(false);
                     }}
                 />

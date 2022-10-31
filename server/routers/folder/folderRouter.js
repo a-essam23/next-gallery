@@ -8,34 +8,36 @@ const validators = require("./folderValidation");
 
 // router.route("/").get(foldersControllers.getAllFolders);
 // router.route("/search").get(foldersControllers.searchAllfolders);
-router.use(protect);
-router
-  .route("/upload")
-  .post(
-    multerConfig.imageUpload.any(),
-    validation(validators.createFolderValidation),
-    foldersControllers.createFolder
-  );
+
+// router.use(protect);
 
 router
-  .route("/:code")
-  .get(
-    validation(validators.getOneFolderValidation),
-    foldersControllers.getOneFolder
-  )
-  .patch(
-    validation(validators.updateOneFolderValidation),
-    foldersControllers.updateOneFolder
-  )
-  .delete(
-    validation(validators.deleteFolderValidation),
-    // restrictTo("admin", "data-entry"),
-    foldersControllers.deleteManyFolders
-  );
+    .route("/upload")
+    .post(
+        multerConfig.imageUpload.any(),
+        validation(validators.createFolderValidation),
+        foldersControllers.createFolder
+    );
+
 router
-  .route("/hide/:code")
-  .patch(
-    validation(validators.hideFolderValidation),
-    foldersControllers.hideFolders
-  );
+    .route("/:code")
+    .get(
+        validation(validators.getOneFolderValidation),
+        foldersControllers.getOneFolder
+    )
+    .patch(
+        validation(validators.updateOneFolderValidation),
+        foldersControllers.updateOneFolder
+    )
+    .delete(
+        validation(validators.deleteFolderValidation),
+        // restrictTo("admin", "data-entry"),
+        foldersControllers.deleteManyFolders
+    );
+router
+    .route("/hide/:code")
+    .patch(
+        validation(validators.hideFolderValidation),
+        foldersControllers.hideFolders
+    );
 module.exports = router;

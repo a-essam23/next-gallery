@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import {
     AdminLayout,
@@ -18,6 +18,14 @@ export async function getServerSideProps(context) {
         "group",
         context.query.groupId
     );
+    if (error) {
+        return {
+            redirect: {
+                permenant: false,
+                destination: "/admin",
+            },
+        };
+    }
     // const collections = Array(5)
     //     .fill()
     //     .map((el, i) => {
@@ -31,15 +39,20 @@ export async function getServerSideProps(context) {
         props: { collections: data.folders || [] }, // will be passed to the page component as props
     };
 }
+//// TODO REPLACE ADMIN SSR WITH CSR FOR AUTH VALIDATION!
 
 export default function AdminGrouppage({ collections = [] }) {
     const [isShown, setIsShown] = useState(false);
+    // const [collections, setcollections] = useState(ssCollections);
     const [selectedCollection, setSelectedCollection] = useState(null);
     const [modalType, setModalType] = useState(null);
     const router = useRouter();
     const groupId = router.query.groupId;
-
     ////TODO ADD CHECK/UNCHECK ALL BUTTON
+
+    // useEffect(() => {
+    //     console.log(isShown);
+    // }, [isShown]);
 
     const handleDelete = async (folderName) => {};
 

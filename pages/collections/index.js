@@ -9,7 +9,7 @@ import {
 import { getAll } from "../../services";
 
 export async function getServerSideProps(context) {
-    const { data, error } = await getAll(context.req.headers.host, "Folder");
+    const { data, error } = await getAll(context.req.headers.host, "folder");
     return {
         props: { collections: data || [] }, // will be passed to the page component as props
     };

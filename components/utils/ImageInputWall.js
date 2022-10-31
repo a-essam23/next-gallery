@@ -3,6 +3,7 @@ import { useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCancel } from "@fortawesome/free-solid-svg-icons";
+import { v4 } from "uuid";
 
 export default function ImageInputWall({
     images = [],
@@ -27,7 +28,7 @@ export default function ImageInputWall({
         <div className="p-4 flex gap-4">
             {fileList.map((file) => {
                 return (
-                    <div className="w-max h-max relative" key={file.uid}>
+                    <div className="w-max h-max relative" key={v4()}>
                         <FontAwesomeIcon
                             icon={faCancel}
                             className="absolute rounded-full p-0 right-1 top-1 text-red-600 cursor-pointer"

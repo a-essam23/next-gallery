@@ -9,32 +9,34 @@ const { validation } = require("../../middlewares/validation");
 const validators = require("./imageValidation");
 
 // api/v1/image/:code/comments
+
+// router.use(protect);
+
 router.use("/:code/comments", commentRouter);
-router.use(protect);
 
 router.route("/").get(imagesControllers.getAllImages);
 // router.route("/search").get(imagesControllers.searchAllImages);
 
 router.route("/upload").post(
-  multerConfig.imageUpload.any(),
-  // imagesControllers.setUserIds,
-  // resizeImage(100, 100),
-  imagesControllers.createImage
+    multerConfig.imageUpload.any(),
+    // imagesControllers.setUserIds,
+    // resizeImage(100, 100),
+    imagesControllers.createImage
 );
 
 router
-  .route("/:code")
-  .get(
-    validation(validators.getOneImageValidation),
-    imagesControllers.getOneImage
-  )
-  .patch(
-    validation(validators.updateImageValidation),
-    imagesControllers.updateImage
-  )
-  .delete(
-    validation(validators.deleteImageValidation),
-    imagesControllers.deleteImages
-  );
+    .route("/:code")
+    .get(
+        validation(validators.getOneImageValidation),
+        imagesControllers.getOneImage
+    )
+    .patch(
+        validation(validators.updateImageValidation),
+        imagesControllers.updateImage
+    )
+    .delete(
+        validation(validators.deleteImageValidation),
+        imagesControllers.deleteImages
+    );
 
 module.exports = router;

@@ -3,12 +3,15 @@ import { useRouter } from "next/router";
 import { CropDragger } from "../../components";
 
 export default function CollectionForm({
-    options: { previewFile, fileList, aspectRatio, selectedGroup = null },
+    options: {
+        previewFile,
+        fileList,
+        aspectRatio,
+        selectedGroup = null,
+        onFinish,
+    },
     onChange,
-    onFinish,
 }) {
-    const router = useRouter();
-
     return (
         <Form
             onFinish={onFinish}
