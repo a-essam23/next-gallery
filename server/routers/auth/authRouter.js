@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const passport = require("passport");
-const authController = require("../controllers/authController");
+const authController = require("../../controllers/authController");
 const path = require("path");
+const { validation } = require("../../middlewares/validation");
+const validators = require("./authValidation");
 
 // router.post(
 //   "/login",
@@ -32,8 +34,16 @@ const path = require("path");
 
 // router.get("/logout", authController.logout);
 
-router.post("/signup", authController.signup);
+router.post(
+  "/signup",
+  validation(validators.signupValidation),
+  authController.signup
+);
 
-router.post("/login", authController.login);
+router.post(
+  "/login",
+  validation(validators.loginValidation),
+  authController.login
+);
 
 module.exports = router;

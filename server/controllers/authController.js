@@ -12,20 +12,21 @@ const signToken = (id) => {
 };
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  // const cookieOptions = {
-  //   expires: new Date(
-  //     Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-  //   ),
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
 
-  // httpOnly: true,
-  // };
-  // if (process.env.NODE_ENV === "production") {
-  //   cookieOptions.secure = true;
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === "production") {
+    cookieOptions.secure = true;
+  }
 
   user.password = undefined;
 
   // res.cookie("jwt", token, cookieOptions);
-  res.status(statusCode).json({
+  res.cookie("jwt", token).status(statusCode).json({
     status: "success",
     token,
     data: {
@@ -39,7 +40,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     name: req.body.name,
     password: req.body.password,
     email: req.body.email,
-    passwordConfirm: req.body.passwordConfirm,
+    // passwordConfirm: req.body.passwordConfirm,
     role: req.body.role,
   });
 
@@ -48,9 +49,9 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) {
-    return next(new AppError("Please provide email and password!", 400));
-  }
+  // if (!email || !password) {
+  //   return next(new AppError("Please provide email and password!", 400));
+  // }
   const user = await User.findOne({ email }).select("+password");
   console.log(user);
   if (!user || !(await user.correctPassword(password, user.password))) {
@@ -59,7 +60,7 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 201, res);
 });
 
-const passport = require("passport");
+// const passport = require("passport");
 
 // exports.login = (req, res, next) => {
 //   res.status(200).json({
@@ -68,21 +69,21 @@ const passport = require("passport");
 //   });
 // };
 
-exports.googleLogin = (req, res, next) => {
-  res.status(200).json({
-    status: "success",
-    data: req.user,
-  });
-};
+// exports.googleLogin = (req, res, next) => {
+//   res.status(200).json({
+//     status: "success",
+//     data: req.user,
+//   });
+// };
 
-exports.facebookLogin = (req, res, next) => {
-  res.status(200).json({
-    status: "success",
-    data: req.user,
-  });
-};
+// exports.facebookLogin = (req, res, next) => {
+//   res.status(200).json({
+//     status: "success",
+//     data: req.user,
+//   });
+// };
 
-exports.logout = (req, res, next) => {
-  // req.logOut();
-  // req.
-};
+// exports.logout = (req, res, next) => {
+// req.logOut();
+// req.
+// };

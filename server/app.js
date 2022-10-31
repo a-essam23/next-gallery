@@ -5,7 +5,7 @@ const folderRouter = require("./routers/folder/folderRouter");
 const cookieParser = require("cookie-parser");
 const imageRouter = require("./routers/image/imageRouter");
 const groupRouter = require("./routers/group/groupRouter");
-const authRouter = require("./routers/authRouter");
+const authRouter = require("./routers/auth/authRouter");
 const adminRouter = require("./routers/admin/adminRouter");
 const rateLimit = require("express-rate-limit");
 const mainRouter = require("./routers/mainRouter");
@@ -36,7 +36,7 @@ app.use(express.json({ limit: "10kb" }));
 app.use("/api", limiter);
 app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
-
+app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
   console.log("development");
   app.use(morgan("dev"));

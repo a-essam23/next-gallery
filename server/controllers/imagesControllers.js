@@ -25,6 +25,7 @@ const deleteFiles = () => {
 };
 
 const Jimp = require("jimp");
+const Comment = require("../models/commentModel");
 
 exports.createImage = catchAsync(async (req, res, next) => {
   const checker = await Image.findOne({
@@ -89,7 +90,9 @@ exports.getOneImage = catchAsync(async (req, res, next) => {
   if (!image) {
     return next(new AppError(`no image found with the Name provided`, 404));
   }
-  image.comments = await Image.find({ name: { $in: image.comments } });
+  image.comments = await Comment.find({ _id: { $in: image.comments } }).select(
+    "-imageCode"
+  );
 
   res.status(200).json({
     status: "success",

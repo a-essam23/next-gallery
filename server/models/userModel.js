@@ -18,21 +18,20 @@ const userSchema = new mongoose.Schema(
       minlength: 8,
       select: false,
     },
-    passwordConfirm: {
-      type: String,
-      required: [
-        true,
-        "please provide a password confirm that is same as the password",
-      ],
-      validate: {
-        // this only works on save & create
-        validator: function (el) {
-          return el === this.password;
-        },
-
-        message: "passwords are not the same",
-      },
-    },
+    // passwordConfirm: {
+    //   type: String,
+    //   required: [
+    //     true,
+    //     "please provide a password confirm that is same as the password",
+    //   ],
+    //   validate: {
+    //     // this only works on save & create
+    //     validator: function (el) {
+    //       return el === this.password;
+    //     },
+    //     message: "passwords are not the same",
+    //   },
+    // },
     email: {
       type: String,
       required: [true, "User must have a valid email"],
