@@ -40,7 +40,9 @@ import ImageInputWall from "./utils/ImageInputWall";
 import Box from "./ui/Box";
 import Loading from "./ui/Loading/Loading";
 import Message from "./ui/Message";
+import Expire from "./ui/Expire";
 export {
+    Expire,
     Loading,
     Message,
     Box,

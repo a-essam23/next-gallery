@@ -13,7 +13,6 @@ import {
 import { getOne } from "../../../services";
 
 ///TODO
-
 export async function getServerSideProps(context) {
     const { data, error } = await getOne(
         context.req.headers.host,

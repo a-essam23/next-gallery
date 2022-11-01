@@ -1,13 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Spin } from "antd";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import {
     RadioButtons,
     GroupForm,
     ModelForm,
     CollectionForm,
+    Message,
+    Loading,
+    Expire,
 } from "../../components";
-import { postOne, updateOne } from "../../services";
+import { useFetch } from "../../hooks";
+import { updateOne } from "../../services";
 
 export default function FormModal({
     className,
@@ -19,16 +21,14 @@ export default function FormModal({
         name: null,
         image: null,
     },
-    // selectedGroup = null,
-    // selectedCollection = null,
     showClickHander,
     isUpdate = false,
 }) {
     const [previewImage, setPreviewImage] = useState(content.image);
     const [fileToUpload, setFileToUpload] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [msg, setMsg] = useState();
-
+    const { isLoading, msg, handleUpload, handleUpdate } = useFetch();
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [msg, setMsg] = useState();
     const previewFileHandler = async (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -73,42 +73,26 @@ export default function FormModal({
             // ;
         });
     };
-
-    const handleUpload = async (formData) => {
-        setIsLoading(true);
-        const { data, error } = await postOne("", content.type, {
-            ...formData,
-            Key: fileToUpload,
-        });
-        setIsLoading(false);
-        if (error) {
-            setMsg({ err: true, content: error });
-        } else {
-            setMsg({ err: false, content: "Added!" });
-        }
-    };
-    const handleUpdate = async (formData) => {
-        setIsLoading(true);
-        const { data, error } = await updateOne(
-            "",
-            content.type,
-            {
-                ...formData,
-            },
-            content.currentName
-        );
-        setIsLoading(false);
-        if (error) {
-            setMsg({ err: true, content: error });
-        } else {
-            setMsg({ err: false, content: `Updated!` });
-        }
-    };
+    // const handleUpload = async (formData) => {
+    //     setIsLoading(true);
+    //     const { data, error } = await postOne("", content.type, {
+    //         ...formData,
+    //         Key: fileToUpload,
+    //     });
+    //     setIsLoading(false);
+    //     if (error) {
+    //         setMsg({ err: true, content: error });
+    //     } else {
+    //         setMsg({ err: false, content: "Added!" });
+    //     }
+    // };
 
     const options = {
         content,
         previewFile: previewFileHandler,
-        onFinish: isUpdate ? handleUpdate : handleUpload,
+        onFinish: isUpdate
+            ? (d) => handleUpdate({ ...d }, content.type, content.currentName)
+            : (d) => handleUpload({ ...d, Key: fileToUpload }, content.type),
         isDisabled: isUpdate,
     };
 
@@ -137,16 +121,18 @@ export default function FormModal({
                     </div>
                 </div>
 
-                <div className="basis-3/5 flex-col outline-gray-300 outline-2 outline">
+                <div className="basis-3/5 outline-gray-300 outline-2 outline ">
                     <div className="flex flex-1 ">
                         <RadioButtons
                             items={["group", "collection", "model"]}
                             selectedButton={content.type}
                         />
                     </div>
+
                     {forms[content.type]}
-                    {isLoading && <Spin className="px-4" />}
-                    <Message options={msg} timeout={2} />
+                    {/* {<Spin className="px-4" />} */}
+                    <Loading isLoading={isLoading || false} />
+                    {msg && <Message options={msg} icon />}
                 </div>
             </div>
         </>

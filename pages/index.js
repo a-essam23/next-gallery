@@ -11,12 +11,12 @@ import { useLang } from "../hooks";
 import { getAll, getOne } from "../services";
 
 export async function getServerSideProps(context) {
-    console.log(context.req);
     const { data, error } = await getOne(
         context.req.headers.host,
         "group",
         "group1"
     );
+
     const models = [
         {
             image: "/imgs/placeholder.jpg",

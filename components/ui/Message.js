@@ -6,25 +6,17 @@ export default function Message({
         content: null,
         status: null,
     },
-    icon = true,
+    delay = 3,
+    icon = false,
     className,
-    timeout = 0,
 }) {
-    const [visible, setVisible] = useState(true);
+    //// TODO : ADD TIMEOUT PROPERTY!
     const icons = { fail: faTimes, success: faCheck };
-
-    useEffect(() => {
-        if (timeout > 0) {
-            setTimeout(() => {
-                setVisible(false);
-            }, timeout * 1000);
-        }
-    }, []);
     return (
         <>
-            {visible && options && (
+            {options && (
                 <div
-                    className={`flex w-max justify-center p-4 text-2xl gap-4 ${
+                    className={`flex w-full h-full justify-center p-4 text-2xl gap-4 ${
                         options.status === "success"
                             ? "text-green-600"
                             : "text-red-600"

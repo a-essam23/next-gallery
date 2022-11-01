@@ -54,7 +54,6 @@ export default function AdminGrouppage({ collections = [] }) {
     const [modalContent, setModalContent] = useState({ group: groupId });
     const [isLoading, setIsLoading] = useState(false);
     const [msg, setMsg] = useState(null);
-    console.log(modalContent);
 
     ////TODO ADD CHECK/UNCHECK ALL BUTTON
 
@@ -63,6 +62,8 @@ export default function AdminGrouppage({ collections = [] }) {
     // useEffect(() => {
     //     console.log(isShown);
     // }, [isShown]);
+
+    useEffect(() => {}, [isShown]);
 
     const handleDelete = async (type, name, setIsLoading, setMsg) => {
         setIsLoading(true);

@@ -17,7 +17,6 @@ export const getAll = async (
         const res = await axios.get(
             `http:${hostname}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-folders,-genre,-updatedAt&sort=createdAt`
         );
-
         payload.data = res?.data?.data?.doc;
         return payload;
     } catch (e) {
