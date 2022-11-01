@@ -43,7 +43,11 @@ export default function CollectionWithOptions({
                 actions={[
                     <FileAddTwoTone key="Add" onClick={onClickAdd} />,
                     <EditTwoTone key="Edit" onClick={onClickEdit} />,
-                    <DeleteTwoTone key="Delete" onClick={onClickDelete} />,
+                    <DeleteTwoTone
+                        key="Delete"
+                        twoToneColor={"red"}
+                        onClick={onClickDelete}
+                    />,
                 ]}
             >
                 <div className="text-center font-bold"> {name}</div>

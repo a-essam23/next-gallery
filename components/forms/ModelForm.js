@@ -8,6 +8,8 @@ export default function ModelForm({
         selectedCollection,
         fileList,
         onFinish,
+        content = { name: null, collection: null },
+        isDisabled,
     },
     onChange,
 }) {
@@ -18,7 +20,11 @@ export default function ModelForm({
             className="px-4 pt-2 2xl:pt-16 "
             size="middle"
         >
-            <Form.Item name="name" label="Model code">
+            <Form.Item
+                name="name"
+                label="Model code"
+                initialValue={content.name}
+            >
                 <Input required placeholder="Ex: AA, BB, CA" />
             </Form.Item>
             <Form.Item name="size" label="Image dimensions">
@@ -27,16 +33,17 @@ export default function ModelForm({
             <Form.Item
                 name="folder"
                 label="Collection"
-                initialValue={selectedCollection}
+                initialValue={content.collection}
             >
                 <Select>
-                    <Select.Option value={selectedCollection}>
-                        {selectedCollection.toUpperCase()}
+                    <Select.Option value={content.collection}>
+                        {content.collection.toUpperCase()}
                     </Select.Option>
                 </Select>
             </Form.Item>
             <Form.Item label="Image">
                 <CropDragger
+                    isDisabled={isDisabled}
                     fileList={fileList}
                     onChange={onChange}
                     previewFile={previewFile}
@@ -45,7 +52,7 @@ export default function ModelForm({
             </Form.Item>
             <Form.Item className="">
                 <Button type="primary" danger size="large" htmlType="submit">
-                    ADD IMAGE
+                    {isDisabled ? "UPDATE" : "ADD"} IMAGE
                 </Button>
             </Form.Item>
         </Form>

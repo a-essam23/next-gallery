@@ -31,8 +31,8 @@ export default function GroupsMenuWithOptions({}) {
         <div className="h-max">
             {isShown && (
                 <FormModal
-                    type="group"
                     showClickHander={() => setIsShown(false)}
+                    content={{ type: "group" }}
                 />
             )}
             <div className="text-2xl roudned bg-slate-300 text-white text-center tracking-widest font-bold py-2 px-4 items-center justify-between flex overflow-hidden">

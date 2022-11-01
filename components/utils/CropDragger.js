@@ -10,10 +10,12 @@ export default function CropDragger({
     previewFile,
     className,
     showUploadList = false,
+    isDisabled = false,
 }) {
     return (
         <ImgCrop rotate quality={1} aspect={aspectRatio}>
             <Dragger
+                disabled={isDisabled}
                 className={className}
                 showUploadList={showUploadList}
                 maxCount={size}

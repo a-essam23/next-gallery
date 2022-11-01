@@ -43,6 +43,34 @@ export const getOne = async (hostname = null, type = null, name = null) => {
     }
 };
 
+export const updateOne = async (
+    hostname = null,
+    type = null,
+    reqData = {},
+    name = null,
+    token = null
+) => {
+    let payload = { data: null, error: null };
+    if (!type) {
+        payload.error = "Bad request: no type or hostname";
+        return payload;
+    }
+    console.log(`${hostname}/api/v1/${type}/${name}`);
+    try {
+        if (type === "collection") type = "folder";
+        if (type === "model") type = "image";
+        const res = await axios.patch(
+            `${hostname}/api/v1/${type}/${name}`,
+            reqData
+        );
+        payload.data = res?.data?.data;
+        return payload;
+    } catch (e) {
+        payload.error = e.response?.data?.message;
+        return payload;
+    }
+};
+
 export const postOne = async (
     hostname = null,
     type = null,
@@ -80,6 +108,29 @@ export const postMany = async (
     token = null,
     clientSide = false
 ) => {};
+
+export const deleteOne = async (
+    hostname = null,
+    type = null,
+    name = null,
+    token = null
+) => {
+    let payload = { data: null, error: null };
+    if (!type) {
+        payload.error = "Bad request: no type or hostname";
+        return payload;
+    }
+    try {
+        if (type === "collection") type = "folder";
+        if (type === "model") type = "image";
+        const res = await axios.delete(`${hostname}/api/v1/${type}/${name}`);
+        payload.data = res?.data?.data;
+        return payload;
+    } catch (e) {
+        payload.error = e.response?.data?.message;
+        return payload;
+    }
+};
 
 export const deleteMany = async (
     hostname = null,

@@ -44,10 +44,13 @@ export async function getServerSideProps(context) {
 }
 
 export default function AdminCollectionPage({ models }) {
-    const [isShown, setIsShown] = useState(false);
-    // eslint-disable-next-line
     const router = useRouter();
-    const collection = router.query.collectionId;
+    const collectionId = router.query.collectionId;
+    const [modalContent, setModalContent] = useState({
+        collection: collectionId,
+    });
+    const [isShown, setIsShown] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
 
     const handleDelete = async (code) => {};
 
@@ -55,8 +58,7 @@ export default function AdminCollectionPage({ models }) {
         <AdminLayout>
             {isShown && (
                 <FormModal
-                    selectedCollection={collection}
-                    type={"model"}
+                    content={modalContent}
                     showClickHander={() => {
                         setIsShown(false);
                     }}
@@ -85,7 +87,13 @@ export default function AdminCollectionPage({ models }) {
                         data={album}
                         onClickDelete={() => handleDelete(album.code)}
                         onClickEdit={() => {
-                            setIsUpdate(album);
+                            setModalContent({
+                                type: "model",
+                                collection: collectionId,
+                                name: album.name,
+                                currentName: album.name,
+                            });
+                            setIsUpdate(true);
                         }}
                     />
                 ))}

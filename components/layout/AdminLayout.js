@@ -12,6 +12,7 @@ import {
     Footer,
     NavBar,
     Counter,
+    Loading,
 } from "../../components";
 import { useLang } from "../../hooks";
 

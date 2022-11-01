@@ -7,28 +7,27 @@ import {
     ModelForm,
     CollectionForm,
 } from "../../components";
-import { postOne } from "../../services";
+import { postOne, updateOne } from "../../services";
 
 export default function FormModal({
     className,
-    type = null,
-    isUpdate = false,
-    selectedGroup = null,
-    selectedCollection = null,
+    content = {
+        type: null,
+        group: null,
+        collection: null,
+        currentName: null,
+        name: null,
+        image: null,
+    },
+    // selectedGroup = null,
+    // selectedCollection = null,
     showClickHander,
+    isUpdate = false,
 }) {
-    const [previewImage, setPreviewImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(content.image);
     const [fileToUpload, setFileToUpload] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [msg, setMsg] = useState({ err: false, content: "" });
-
-    useEffect(() => {
-        if (msg.content !== "") {
-            setTimeout(() => {
-                setMsg({ err: false, content: "" });
-            }, 4000);
-        }
-    }, [msg.content]);
+    const [msg, setMsg] = useState();
 
     const previewFileHandler = async (file) => {
         const reader = new FileReader();
@@ -77,11 +76,10 @@ export default function FormModal({
 
     const handleUpload = async (formData) => {
         setIsLoading(true);
-        const { data, error } = await postOne("", type, {
+        const { data, error } = await postOne("", content.type, {
             ...formData,
             Key: fileToUpload,
         });
-        console.log(data);
         setIsLoading(false);
         if (error) {
             setMsg({ err: true, content: error });
@@ -89,13 +87,29 @@ export default function FormModal({
             setMsg({ err: false, content: "Added!" });
         }
     };
+    const handleUpdate = async (formData) => {
+        setIsLoading(true);
+        const { data, error } = await updateOne(
+            "",
+            content.type,
+            {
+                ...formData,
+            },
+            content.currentName
+        );
+        setIsLoading(false);
+        if (error) {
+            setMsg({ err: true, content: error });
+        } else {
+            setMsg({ err: false, content: `Updated!` });
+        }
+    };
 
     const options = {
-        isUpdate,
-        selectedGroup,
-        selectedCollection,
+        content,
         previewFile: previewFileHandler,
-        onFinish: handleUpload,
+        onFinish: isUpdate ? handleUpdate : handleUpload,
+        isDisabled: isUpdate,
     };
 
     const forms = {
@@ -127,18 +141,12 @@ export default function FormModal({
                     <div className="flex flex-1 ">
                         <RadioButtons
                             items={["group", "collection", "model"]}
-                            selectedButton={type}
+                            selectedButton={content.type}
                         />
                     </div>
-                    {forms[type]}
+                    {forms[content.type]}
                     {isLoading && <Spin className="px-4" />}
-                    <div
-                        className={`text-2xl px-4 ${
-                            msg.err ? "text-red-600" : "text-green-600"
-                        }`}
-                    >
-                        {msg.content}
-                    </div>
+                    <Message options={msg} timeout={2} />
                 </div>
             </div>
         </>

@@ -9,8 +9,10 @@ import {
     Searchbar,
     Grid,
     CollectionWithOptions,
+    Loading,
+    Message,
 } from "../../../components";
-import { getOne } from "../../../services";
+import { deleteOne, getOne } from "../../../services";
 
 export async function getServerSideProps(context) {
     const { data, error } = await getOne(
@@ -41,28 +43,44 @@ export async function getServerSideProps(context) {
 }
 //// TODO REPLACE ADMIN SSR WITH CSR FOR AUTH VALIDATION!
 
+//// TODO REPLACE STATE WITH REDUCER
+
 export default function AdminGrouppage({ collections = [] }) {
-    const [isShown, setIsShown] = useState(false);
-    // const [collections, setcollections] = useState(ssCollections);
-    const [selectedCollection, setSelectedCollection] = useState(null);
-    const [modalType, setModalType] = useState(null);
     const router = useRouter();
     const groupId = router.query.groupId;
+    const [isShown, setIsShown] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
+    // const [collections, setcollections] = useState(ssCollections);
+    const [modalContent, setModalContent] = useState({ group: groupId });
+    const [isLoading, setIsLoading] = useState(false);
+    const [msg, setMsg] = useState(null);
+    console.log(modalContent);
+
     ////TODO ADD CHECK/UNCHECK ALL BUTTON
+
+    ///TODO CREATE A MESSAGE COMPOENENT WITH ICONS
 
     // useEffect(() => {
     //     console.log(isShown);
     // }, [isShown]);
 
-    const handleDelete = async (folderName) => {};
+    const handleDelete = async (type, name, setIsLoading, setMsg) => {
+        setIsLoading(true);
+        const { data, error } = await deleteOne("", type, name);
+        setIsLoading(false);
+        if (error) {
+            setMsg({ content: error, status: "fail" });
+        } else {
+            setMsg({ content: "Added!", status: "success" });
+        }
+    };
 
     return (
-        <AdminLayout>
+        <AdminLayout isLoading={isLoading}>
             {isShown && (
                 <FormModal
-                    type={modalType}
-                    selectedCollection={selectedCollection}
-                    selectedGroup={groupId}
+                    isUpdate={isUpdate}
+                    content={modalContent}
                     showClickHander={() => {
                         setIsShown(false);
                     }}
@@ -76,12 +94,20 @@ export default function AdminGrouppage({ collections = [] }) {
                     size="large"
                     className="bg-blue-600 "
                     onClick={() => {
-                        setModalType("collection");
+                        setModalContent({
+                            type: "collection",
+                            group: groupId,
+                        });
+                        setIsUpdate(false);
                         setIsShown(true);
                     }}
                 >
                     Add Collection
                 </Button>
+            </div>
+            <div className="flex justify-center">
+                <Loading isLoading={isLoading} />
+                <Message options={msg} icon timeout={2} />
             </div>
             {collections.length > 0 ? (
                 <Grid className="p-4">
@@ -90,13 +116,34 @@ export default function AdminGrouppage({ collections = [] }) {
                             key={v4()}
                             data={collection}
                             onClickAdd={() => {
-                                setModalType("model");
-                                setSelectedCollection(collection.name);
+                                setModalContent({
+                                    type: "model",
+                                    group: groupId,
+                                    collection: collection.name,
+                                });
+                                // setModalType("model");
+                                // setSelectedCollection(collection.name);
+                                setIsUpdate(false);
+                                setIsShown(true);
+                            }}
+                            onClickEdit={() => {
+                                setModalContent({
+                                    ...modalContent,
+                                    type: "collection",
+                                    name: collection.name,
+                                    currentName: collection.name,
+                                    image: collection.sizes.original,
+                                });
+                                setIsUpdate(true);
                                 setIsShown(true);
                             }}
                             onClickDelete={() => {
-                                console.log("deleting");
-                                handleDelete(collection.name);
+                                handleDelete(
+                                    "collection",
+                                    collection.name,
+                                    setIsLoading,
+                                    setMsg
+                                );
                             }}
                             onCheck={(check) => console.log(check)}
                         />

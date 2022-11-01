@@ -1,0 +1,21 @@
+.isLoading {
+    animation: gradient 5s ease infinite;
+    background: #0284c7;
+}
+@keyframes gradient {
+    0% {
+        width: 0%;
+    }
+
+    30% {
+        width: 30%;
+    }
+
+    60% {
+        width: 60%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}

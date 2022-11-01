@@ -38,8 +38,11 @@ import Counter from "./utils/Counter";
 import Grid from "./ui/Grid";
 import ImageInputWall from "./utils/ImageInputWall";
 import Box from "./ui/Box";
-
+import Loading from "./ui/Loading/Loading";
+import Message from "./ui/Message";
 export {
+    Loading,
+    Message,
     Box,
     Layout,
     AdminLayout,
