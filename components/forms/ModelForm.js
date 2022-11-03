@@ -27,7 +27,11 @@ export default function ModelForm({
             >
                 <Input required placeholder="Ex: AA, BB, CA" />
             </Form.Item>
-            <Form.Item name="size" label="Image dimensions">
+            <Form.Item
+                name="size"
+                label="Image dimensions"
+                initialValue={content.size}
+            >
                 <Input required placeholder="Ex: 24x62" />
             </Form.Item>
             <Form.Item

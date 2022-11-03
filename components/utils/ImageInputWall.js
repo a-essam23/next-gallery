@@ -6,6 +6,7 @@ import { faCancel } from "@fortawesome/free-solid-svg-icons";
 import { v4 } from "uuid";
 
 export default function ImageInputWall({
+    className = "",
     images = [],
     size = 5,
     onRemove = true,
@@ -25,7 +26,7 @@ export default function ImageInputWall({
     };
 
     return (
-        <div className="p-4 flex gap-4">
+        <div className={`p-4 flex gap-4 ${className}`}>
             {fileList.map((file) => {
                 return (
                     <div className="w-max h-max relative" key={v4()}>

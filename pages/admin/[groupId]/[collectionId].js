@@ -11,6 +11,7 @@ import {
     Searchbar,
 } from "../../../components";
 import { getOne } from "../../../services";
+import { useFetch } from "../../../hooks";
 
 ///TODO
 export async function getServerSideProps(context) {
@@ -50,8 +51,7 @@ export default function AdminCollectionPage({ models }) {
     });
     const [isShown, setIsShown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-
-    const handleDelete = async (code) => {};
+    const { isLoading, msg, handleUpdate, handleDelete } = useFetch();
 
     return (
         <AdminLayout>
@@ -70,6 +70,10 @@ export default function AdminCollectionPage({ models }) {
                     size="large"
                     className="bg-blue-600 mr-8 2xl:mr-16"
                     onClick={() => {
+                        setModalContent({
+                            type: "model",
+                            collection: collectionId,
+                        });
                         setIsShown(true);
                     }}
                 >
@@ -84,15 +88,19 @@ export default function AdminCollectionPage({ models }) {
                     <ModelWithOptions
                         key={v4()}
                         data={album}
-                        onClickDelete={() => handleDelete(album.code)}
+                        onClickDelete={() =>
+                            handleDelete((type = "model"), album.name)
+                        }
                         onClickEdit={() => {
                             setModalContent({
                                 type: "model",
                                 collection: collectionId,
                                 name: album.name,
                                 currentName: album.name,
+                                size: album.size,
                             });
                             setIsUpdate(true);
+                            setIsShown(true);
                         }}
                     />
                 ))}

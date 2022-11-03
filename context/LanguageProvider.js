@@ -1,10 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { arabic, english } from "../public/lang";
 
 const LanguageContext = createContext({
     language: "",
     changeLanguage: (lang_abr) => {},
     langData: {},
+    dir: "ltr",
     isAr: false,
 });
 
@@ -31,6 +32,7 @@ export const LanguageProvider = ({ children }) => {
         language,
         changeLanguage,
         langData,
+        dir: language === "ar" ? "rtl" : "ltr",
         isAr: language === "ar",
     };
     return (
@@ -39,5 +41,5 @@ export const LanguageProvider = ({ children }) => {
         </LanguageContext.Provider>
     );
 };
-
+export const useLang = () => useContext(LanguageContext);
 export default LanguageContext;

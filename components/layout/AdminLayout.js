@@ -14,7 +14,7 @@ import {
     Counter,
     Loading,
 } from "../../components";
-import { useLang } from "../../hooks";
+import { useLang } from "../../context";
 
 export default function AdminLayout({ children, className = "" }) {
     return (

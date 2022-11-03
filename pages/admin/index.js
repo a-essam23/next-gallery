@@ -1,15 +1,14 @@
 import { v4 } from "uuid";
-import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
 import {
-    About,
     AdminLayout,
-    Contact,
     FourBoxes,
     ImageInputWall,
     ModelSwiper,
 } from "../../components";
-import { Button, Select } from "antd";
-import { useLang } from "../../hooks";
+import { Button, Form, Input, Select } from "antd";
+import { useLang } from "../../context";
+import TextArea from "antd/lib/input/TextArea";
+import Dragger from "antd/lib/upload/Dragger";
 
 export async function getServerSideProps(context) {
     let allGroups = [];
@@ -48,6 +47,11 @@ export async function getServerSideProps(context) {
     ];
 
     const content = {
+        names: "Roman Gallery",
+        title: "",
+        logo: "",
+        images: [],
+        image: "",
         groups: [
             {
                 image: "/imgs/placeholder.jpg",
@@ -62,27 +66,39 @@ export async function getServerSideProps(context) {
                 id: "00",
             },
         ],
-        misc: {
+        data: {
             swiper: [
                 { id: v4(), image: "/imgs/placeholder.jpg", name: "1" },
                 { id: v4(), image: "/imgs/blank-blue.jpg", name: "2" },
                 { id: v4(), image: "/imgs/empty.png", name: "3" },
             ],
         },
+        facebook: "",
+        whatsapp: "",
+        pinterest: "",
     };
     return {
         props: { content, allGroups, allModels }, // will be passed to the page component as props
     };
 }
-
+//// TODO SPLIT ABOUT US PAGE INTO DIFFERENT COMPONENTS
 export default function AdminPage({ content, allGroups = [], allModels = [] }) {
     //// ADD SMARTER SEARCH FOR MODELS SELECt
     const { langData } = useLang();
     const {
         groups,
         models,
-        misc: { swiper },
+        data: { swiper },
     } = content;
+
+    const reducer = (state, action) => {
+        switch ({}) {
+            case "":
+                return;
+            case "":
+        }
+    };
+
     return (
         <AdminLayout className="">
             <div className="flex justify-center pb-4 h-20">
@@ -143,11 +159,47 @@ export default function AdminPage({ content, allGroups = [], allModels = [] }) {
                     activeLink
                 />
             </section>
-            <section id="about">
-                <About card={{}} />
+            <section>
+                <section className="text-3xl 2xl:text-4xl text-center ">
+                    {langData.about.toUpperCase()}
+                </section>
+                <Form className="border-2 rounded p-2" size="large">
+                    <Form.Item>
+                        <Input name="title" placeholder="Title" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Dragger>Upload Image</Dragger>
+                    </Form.Item>
+                    <Form.Item>
+                        <TextArea
+                            rows={4}
+                            name="content"
+                            placeholder="Content"
+                        />
+                    </Form.Item>
+                </Form>
             </section>
-            <section id="contact">
-                <Contact />
+            <section className="text-3xl 2xl:text-4xl text-center ">
+                {langData.customers.toUpperCase()}
+            </section>
+            <section>
+                <ImageInputWall className="border-2 rounded" images={[]} />
+            </section>
+            <section className="text-3xl 2xl:text-4xl text-center ">
+                {langData.contact.toUpperCase()}
+            </section>
+            <section className="">
+                <Form layout="inline" className="p-2 w-full " size="large">
+                    <Form.Item className="w-3/12">
+                        <Input name="facebook" placeholder="Facebook" />
+                    </Form.Item>
+                    <Form.Item className="w-3/12">
+                        <Input name="whatsapp" placeholder="Whatsapp" />
+                    </Form.Item>
+                    <Form.Item className="w-3/12">
+                        <Input name="pinterest" placeholder="Pinterest" />
+                    </Form.Item>
+                </Form>
             </section>
         </AdminLayout>
     );

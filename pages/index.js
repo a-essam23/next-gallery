@@ -7,8 +7,8 @@ import {
     ModelSwiper,
     SwiperTemplate,
 } from "../components";
-import { useLang } from "../hooks";
-import { getAll, getOne } from "../services";
+import { useLang } from "../context";
+import { getOne } from "../services";
 
 export async function getServerSideProps(context) {
     const { data, error } = await getOne(

@@ -15,6 +15,7 @@ export const english = {
     collection: "collection",
     search: "search",
     home: "home",
+    customers: "our customers",
 };
 
 export const arabic = {
@@ -36,4 +37,5 @@ export const arabic = {
     collection: "ألبوم",
     search: "إبحث",
     home: "الصفحة الرئيسيه",
+    customers: "عملائنا",
 };

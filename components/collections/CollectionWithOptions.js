@@ -9,9 +9,9 @@ export default function CollectionWithOptions({
             original: "/imgs/blank.jpg",
             small: "/imgs/blank.jpg",
         },
-        models,
         visible = true,
         group = null,
+        images = [],
     },
     onClickAdd,
     onClickEdit,
@@ -52,7 +52,7 @@ export default function CollectionWithOptions({
             >
                 <div className="text-center font-bold"> {name}</div>
                 <div className="absolute top-0 left-0 p-2 bg-black opacity-75 ">
-                    <span className="text-white">{models?.length || 0}</span>
+                    <span className="text-white">{images?.length || 0}</span>
                 </div>
             </Card>
             <Checkbox

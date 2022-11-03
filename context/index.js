@@ -1,4 +1,4 @@
-import { LanguageProvider } from "./LanguageProvider";
+import { LanguageProvider, useLang } from "./LanguageProvider";
 import { ScrollToTop } from "./ScrollToTop";
 import { AuthProvider } from "./AuthProvider";
-export { LanguageProvider, ScrollToTop, AuthProvider };
+export { LanguageProvider, ScrollToTop, AuthProvider, useLang };

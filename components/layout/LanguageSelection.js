@@ -1,4 +1,4 @@
-import { useLang } from "../../hooks";
+import { useLang } from "../../context";
 
 export default function LanguageSelection({}) {
     const { changeLanguage } = useLang();

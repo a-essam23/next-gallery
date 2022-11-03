@@ -11,7 +11,6 @@ import {
     Searchbar,
 } from "../../components";
 import { getOne } from "../../services";
-import { useLang } from "../../hooks";
 
 export async function getServerSideProps(context) {
     const { data, error } = await getOne(
@@ -39,7 +38,7 @@ export default function ModelPage({ models = [] }) {
     // const [models, setmodels] = useState([]);
     const [isShown, setIsShown] = useState(false);
     const [slideIndex, setSlideIndex] = useState(1);
-    const { isAr } = useLang();
+    // const { isAr } = useLang();
 
     useEffect(() => {
         if (router.query.ref) {

@@ -1,5 +1,6 @@
 import { Button, Form, Input, Select } from "antd";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
 import { CropDragger } from "../../components";
 
 export default function CollectionForm({
@@ -14,6 +15,11 @@ export default function CollectionForm({
     },
     onChange,
 }) {
+    const AR = useCallback(() => {
+        const ARs = [4 / 5, 3 / 4, 2 / 3, 1 / 1, 5 / 6, 6 / 7, 7 / 8];
+        return ARs[Math.floor(Math.random() * ARs.length)];
+    }, []);
+    console.log(AR());
     return (
         <Form
             onFinish={onFinish}
@@ -40,7 +46,7 @@ export default function CollectionForm({
             <Form.Item label="Collection Image">
                 <CropDragger
                     isDisabled={isDisabled}
-                    aspectRatio={aspectRatio}
+                    aspectRatio={AR()}
                     fileList={fileList}
                     onChange={onChange}
                     previewFile={previewFile}

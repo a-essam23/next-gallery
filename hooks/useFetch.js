@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postOne, updateOne } from "../services";
+import { deleteOne, postOne, updateOne } from "../services";
 
 const useFetch = () => {
     //// DIFFERENT STATES FOR EVERY HANDLER
@@ -42,6 +42,17 @@ const useFetch = () => {
         return { data, error };
     };
 
+    const handleDelete = async (type, name) => {
+        setIsLoading(true);
+        const { data, error } = await deleteOne("", type, name);
+        setIsLoading(false);
+        if (error) {
+            setMsg({ content: error, status: "fail" });
+        } else {
+            setMsg({ content: "Deleted!", status: "success" });
+        }
+    };
+
     // const methods = {
     //     updateOne: handleUpdate,
     //     uploadOne: handleUpload,
@@ -59,7 +70,7 @@ const useFetch = () => {
     //     };
     // }
     // const result = handler({ type, name, data });
-    return { isLoading, msg, handleUpload, handleUpdate };
+    return { isLoading, msg, handleUpload, handleUpdate, handleDelete };
 };
 
 export default useFetch;

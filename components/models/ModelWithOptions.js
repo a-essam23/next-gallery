@@ -31,7 +31,11 @@ export default function ModelWithOptions({
                 }
                 actions={[
                     <EditTwoTone key="Edit" onClick={onClickEdit} />,
-                    <DeleteTwoTone key="Delete" onClick={onClickDelete} />,
+                    <DeleteTwoTone
+                        key="Delete"
+                        twoToneColor={"red"}
+                        onClick={onClickDelete}
+                    />,
                 ]}
             >
                 <div className="text-center font-bold"> {name}</div>

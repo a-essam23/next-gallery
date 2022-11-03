@@ -91,9 +91,7 @@ exports.getOneFolder = catchAsync(async (req, res, next) => {
             new AppError(`no folder found with the name provided`, 404)
         );
     }
-    console.log(folder);
     folder.images = await Image.find({ name: { $in: folder.images } });
-    console.log(folder.size);
     res.status(200).json({
         status: "success",
         data: folder,

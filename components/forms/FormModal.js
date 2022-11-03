@@ -20,6 +20,7 @@ export default function FormModal({
         currentName: null,
         name: null,
         image: null,
+        size: null,
     },
     showClickHander,
     isUpdate = false,
@@ -132,7 +133,7 @@ export default function FormModal({
                     {forms[content.type]}
                     {/* {<Spin className="px-4" />} */}
                     <Loading isLoading={isLoading || false} />
-                    {msg && <Message options={msg} icon />}
+                    {msg && <Message options={msg} icon size={"lg"} />}
                 </div>
             </div>
         </>

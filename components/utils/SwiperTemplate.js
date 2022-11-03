@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper";
 import { v4 } from "uuid";
 import "swiper/css/bundle";
-import { useLang } from "../../hooks";
 import { useMemo, useState } from "react";
 
 export default function SwiperTemplate({
@@ -13,7 +12,7 @@ export default function SwiperTemplate({
     className,
     pagination,
 }) {
-    const { isAr } = useLang();
+    // const { isAr } = useLang();
     return (
         <Swiper
             dir="ltr"

@@ -2,7 +2,7 @@ import { Button, Form, Input, Select } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { useEffect } from "react";
 import { v4 } from "uuid";
-import { useLang } from "../../hooks";
+import { useLang } from "../../context";
 
 export default function Searchbar({ onFinish, className, choices = null }) {
     const { langData, isAr } = useLang();

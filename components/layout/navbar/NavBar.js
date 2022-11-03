@@ -1,7 +1,7 @@
 import classes from "./NavBar.module.css";
 // import phone from "../../assets/phone.png";
 import Link from "next/link";
-import { useLang } from "../../../hooks";
+import { useLang } from "../../../context";
 import Router from "next/router";
 
 function NavBar() {

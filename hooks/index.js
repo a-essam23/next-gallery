@@ -1,3 +1,3 @@
-import useLang from "./useLang";
+// import useLang from "./useLang";
 import useFetch from "./useFetch";
-export { useLang, useFetch };
+export { useFetch };

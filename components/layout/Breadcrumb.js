@@ -4,7 +4,7 @@ import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useLang } from "../../hooks";
+import { useLang } from "../../context";
 
 ////TODO REMODELL >>> FIX HREFS!
 export default function Breadcrumb() {
@@ -12,15 +12,18 @@ export default function Breadcrumb() {
     const pathname = router.pathname;
     const { langData, language } = useLang();
     function getBreadCrumbs() {
-        const paths = pathname.split("/").filter((path) => path.length > 1);
-        if (paths.length < 1) return null;
+        const paths = pathname.split("/");
+        if (paths.length === 1) return null;
+
         const crumbList = paths.map((path, index) => {
-            const href = "/" + paths.slice(0, index + 1).join("/");
             const dynamicPath = path.match(/\[([^)]+)\]/);
+            const path_ = dynamicPath
+                ? router.query[dynamicPath[1]]
+                : langData[decodeURI(path)] || decodeURI(path);
+            const href =
+                paths.slice(0, index).join("/") + `${path_ ? "/" + path_ : ""}`;
             return {
-                path: dynamicPath
-                    ? router.query[dynamicPath[1]]
-                    : langData[decodeURI(path)] || decodeURI(path),
+                path: path_,
                 href,
             };
         });
@@ -31,13 +34,16 @@ export default function Breadcrumb() {
                         <a>{langData["home"].toUpperCase()}</a>
                     </Link>
                 </BreadcrumbItem>
-                {crumbList.map(({ href, path }, index) => (
-                    <BreadcrumbItem key={v4()}>
-                        <Link href={href}>
-                            <a>{path.toUpperCase()}</a>
-                        </Link>
-                    </BreadcrumbItem>
-                ))}
+                {crumbList.map(({ href, path }, index) => {
+                    if (index === 0) return;
+                    return (
+                        <BreadcrumbItem key={v4()}>
+                            <Link href={href}>
+                                <a>{path.toUpperCase()}</a>
+                            </Link>
+                        </BreadcrumbItem>
+                    );
+                })}
             </>
         );
     }
