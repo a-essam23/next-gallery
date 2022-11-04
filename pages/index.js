@@ -9,7 +9,6 @@ import {
 } from "../components";
 import { useAuth, useLang } from "../context";
 import { checkJWTcookie, ServerSideErrorHandler } from "../lib";
-import { getOne } from "../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
