@@ -1,6 +1,7 @@
 import ImgCrop from "antd-img-crop";
 import Dragger from "antd/lib/upload/Dragger";
 import { InboxOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 
 export default function CropDragger({
     aspectRatio = 3 / 4,

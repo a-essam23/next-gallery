@@ -16,7 +16,6 @@ export default function ModelInfo({
 }) {
     ///// TODO MAKE NEW COMPONENT FOR MOB A
     const [width, height, depth] = size ? size.split(",") : [];
-    // console.log(width, height, depth);
     return (
         <div
             className={`py-0 sm:py-6 md:py-8 lg:flex lg:py-10 xl:px-8 xl:py-8 2xl:px-8 w-full 2xl:w-11/12 h-full overflow-scroll no-scrollbar lg:overflow-hidden ${+className}`}

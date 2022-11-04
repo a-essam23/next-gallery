@@ -5,6 +5,7 @@ import { Menu } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FormModal, Loading, Message } from "../../components";
+import { useAuth } from "../../context";
 import { useFetch } from "../../hooks";
 import { getAll } from "../../services";
 
@@ -13,12 +14,14 @@ export default function GroupsMenuWithOptions({}) {
     const [current, setCurrent] = useState(null);
     const [isShown, setIsShown] = useState(false);
     const [groups, setGroups] = useState([]);
-    const { isLoading, msg, handleDelete } = useFetch();
+    const { user } = useAuth();
+    const { isLoading, msg, handleDelete, handleGetAll } = useFetch();
     useEffect(() => {
-        getAll("", "group", true).then(({ data, error }) => {
-            setGroups(data || []);
-        });
-    }, [isShown, isLoading]);
+        handleGetAll("group").then((data) => setGroups(data));
+        // getAll("", "group", user?.token).then(({ data, error }) => {
+        //     setGroups(data || []);
+        // });
+    }, [isShown]);
     // groups = Array(6)
     //     .fill()
     //     .map((el, i) => {

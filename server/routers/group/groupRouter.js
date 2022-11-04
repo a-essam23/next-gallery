@@ -11,7 +11,7 @@ const { protect } = require("../../middlewares/auth");
 // router.route("/").get(groupControllers.getAllgroup);
 // router.route("/search").get(groupControllers.searchAllgroup);
 
-// router.use(protect);
+router.use(protect);
 
 router
     .route("/upload")

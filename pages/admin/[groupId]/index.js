@@ -12,22 +12,19 @@ import {
     Loading,
     Message,
 } from "../../../components";
+import { checkJWTcookie, ServerSideErrorHandler } from "../../../lib";
 import { deleteOne, getOne } from "../../../services";
 
 export async function getServerSideProps(context) {
+    const jwt = checkJWTcookie(context);
+    if (!jwt) ServerSideErrorHandler(context, { status: 401 });
     const { data, error } = await getOne(
         context.req.headers.host,
         "group",
-        context.query.groupId
+        context.query.groupId,
+        jwt
     );
-    if (error) {
-        return {
-            redirect: {
-                permenant: false,
-                destination: "/admin",
-            },
-        };
-    }
+    if (error) return ServerSideErrorHandler(context, error);
     // const collections = Array(5)
     //     .fill()
     //     .map((el, i) => {

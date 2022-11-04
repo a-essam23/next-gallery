@@ -1,12 +1,13 @@
 import classes from "./NavBar.module.css";
 // import phone from "../../assets/phone.png";
 import Link from "next/link";
-import { useLang } from "../../../context";
+import { useAuth, useLang } from "../../../context";
 import Router from "next/router";
 
 function NavBar() {
     ////TODO tailwind themes...
     const { langData } = useLang();
+    const { user } = useAuth();
     return (
         <div
             className={`container flex items-center md:py-1 lg:py-2 xl:py-3 2xl:py-4 gap-4 justify-between `}
@@ -30,6 +31,11 @@ function NavBar() {
                 <Link href="/#contact">
                     <a className={classes.item}>{langData.contact}</a>
                 </Link>
+                {user?.role === "admin" && (
+                    <Link href="/admin">
+                        <a className="">ADMIN</a>
+                    </Link>
+                )}
             </div>
         </div>
     );

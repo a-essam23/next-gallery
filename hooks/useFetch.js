@@ -1,17 +1,27 @@
-import { useState } from "react";
-import { deleteOne, postOne, updateOne } from "../services";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context";
+import {
+    deleteOne,
+    getAll,
+    login,
+    postOne,
+    register,
+    updateOne,
+} from "../services";
 
 const useFetch = () => {
     //// DIFFERENT STATES FOR EVERY HANDLER
     const [isLoading, setIsLoading] = useState(false);
     const [msg, setMsg] = useState(null);
-
+    // const [response, setResponse] = useState(null);
+    const { user, addUser, removeUser } = useAuth();
+    const token = user?.token;
     // const handleDelete = async ({ type, name }) => {
     //     setIsLoading(true);
     //     const { data, error } = await deleteOne("", type, name);
     //     setIsLoading(false);
     //     if (error) {
-    //         setMsg({ content: error, status: "fail" });
+    //         setMsg({ content: error.message, status: "fail" });
     //     } else {
     //         setMsg({ content: "Added!", status: "success" });
     //     }
@@ -20,9 +30,9 @@ const useFetch = () => {
 
     const handleUpload = async (formData, type) => {
         setIsLoading(true);
-        const { data, error } = await postOne("", type, formData);
+        const { data, error } = await postOne("", type, formData, token);
         if (error) {
-            setMsg({ content: error, status: "fail" });
+            setMsg({ content: error.message, status: "fail" });
         } else {
             setMsg({ content: "Added!", status: "success" });
         }
@@ -32,10 +42,16 @@ const useFetch = () => {
 
     const handleUpdate = async (formData, type, name) => {
         setIsLoading(true);
-        const { data, error } = await updateOne("", type, formData, name);
+        const { data, error } = await updateOne(
+            "",
+            type,
+            formData,
+            name,
+            token
+        );
         setIsLoading(false);
         if (error) {
-            setMsg({ content: error, status: "fail" });
+            setMsg({ content: error.message, status: "fail" });
         } else {
             setMsg({ content: "Updated!", status: "success" });
         }
@@ -44,33 +60,66 @@ const useFetch = () => {
 
     const handleDelete = async (type, name) => {
         setIsLoading(true);
-        const { data, error } = await deleteOne("", type, name);
+        const { data, error } = await deleteOne("", type, name, token);
         setIsLoading(false);
         if (error) {
-            setMsg({ content: error, status: "fail" });
+            setMsg({ content: error.message, status: "fail" });
         } else {
             setMsg({ content: "Deleted!", status: "success" });
         }
     };
 
-    // const methods = {
-    //     updateOne: handleUpdate,
-    //     uploadOne: handleUpload,
-    //     deleteOne: handleDelete,
-    // };
+    const handleLogin = async (formData) => {
+        setIsLoading(true);
+        const { data, error } = await login(formData);
+        setIsLoading(false);
+        if (error) {
+            setMsg({ content: error.message, status: "fail" });
+            return false;
+        } else {
+            setMsg({ content: "Logged in... redirecting", status: "success" });
+            addUser({ ...data.data.user, token: data.token });
+            return true;
+        }
+    };
 
-    // const handler = methods[method];
+    const handleRegister = async (formData) => {
+        setIsLoading(true);
+        const { data, error } = await register(formData);
+        setIsLoading(false);
+        if (error) {
+            setMsg({ content: error.message, status: "fail" });
+            return false;
+        } else {
+            setMsg({ content: "Registered... redirecting", status: "success" });
+            addUser({ ...data.data.user, token: data.token });
+            return true;
+        }
+    };
 
-    // if (!handler) {
-    //     return {
-    //         data: null,
-    //         error: "No method specified!",
-    //         isLoading: false,
-    //         msg: {},
-    //     };
-    // }
-    // const result = handler({ type, name, data });
-    return { isLoading, msg, handleUpload, handleUpdate, handleDelete };
+    const handleGetAll = async (type) => {
+        setIsLoading(true);
+        const { data, error } = await getAll("", type, token);
+        setIsLoading(false);
+        if (error) {
+            setMsg({ content: error.message, status: "fail" });
+            return [];
+        } else {
+            setMsg(null);
+            return data;
+        }
+    };
+
+    return {
+        isLoading,
+        msg,
+        handleUpload,
+        handleUpdate,
+        handleDelete,
+        handleLogin,
+        handleRegister,
+        handleGetAll,
+    };
 };
 
 export default useFetch;

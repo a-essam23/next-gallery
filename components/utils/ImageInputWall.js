@@ -19,7 +19,6 @@ export default function ImageInputWall({
     const onRemoveHandler = (id) => {
         setFileList(
             fileList.filter((file) => {
-                console.log(file.id !== id);
                 return file.id !== id;
             })
         );

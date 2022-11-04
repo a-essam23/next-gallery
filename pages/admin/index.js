@@ -9,8 +9,12 @@ import { Button, Form, Input, Select } from "antd";
 import { useLang } from "../../context";
 import TextArea from "antd/lib/input/TextArea";
 import Dragger from "antd/lib/upload/Dragger";
+import { checkJWTcookie, ServerSideErrorHandler } from "../../lib";
 
 export async function getServerSideProps(context) {
+    const jwt = checkJWTcookie(context);
+    // console.log(jwt);
+    if (!jwt) ServerSideErrorHandler(context, { status: 401 });
     let allGroups = [];
     for (let i = 0; i < 4; i++) {
         allGroups.push({
@@ -89,7 +93,11 @@ export default function AdminPage({ content, allGroups = [], allModels = [] }) {
         groups,
         models,
         data: { swiper },
-    } = content;
+    } = {
+        groups: [],
+        models: [],
+        data: { swiper: [] },
+    };
 
     const reducer = (state, action) => {
         switch ({}) {
@@ -133,7 +141,7 @@ export default function AdminPage({ content, allGroups = [], allModels = [] }) {
                     </Select>
                     <FourBoxes groups={groups} />
                 </div>
-            </section>{" "}
+            </section>
             <section className="text-3xl 2xl:text-4xl text-center ">
                 {langData.latest.toUpperCase()}
             </section>

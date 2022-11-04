@@ -12,22 +12,21 @@ import {
 } from "../../../components";
 import { getOne } from "../../../services";
 import { useFetch } from "../../../hooks";
+import { ServerSideErrorHandler } from "../../../lib";
 
 ///TODO
 export async function getServerSideProps(context) {
+    const jwt = checkJWTcookie(context);
+    // console.log(jwt);
+    if (!jwt) ServerSideErrorHandler(context, { status: 401 });
     const { data, error } = await getOne(
         context.req.headers.host,
         "folder",
-        context.query.collectionId
+        context.query.collectionId,
+        jwt
     );
-    if (error) {
-        return {
-            redirect: {
-                permenant: false,
-                destination: "/admin",
-            },
-        };
-    }
+
+    if (error) return ServerSideErrorHandler(context, error);
     // const models = Array(10)
     //     .fill()
     //     .map((el, i) => {

@@ -10,7 +10,7 @@ const validators = require("./imageValidation");
 
 // api/v1/image/:code/comments
 
-// router.use(protect);
+router.use(protect);
 
 router.use("/:code/comments", commentRouter);
 

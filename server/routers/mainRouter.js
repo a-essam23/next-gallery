@@ -6,14 +6,14 @@ const { restrictTo, protect } = require("../middlewares/auth");
 router.use(protect);
 
 router
-  .route("/")
-  .get(mainController.getMainPage)
-  .post(restrictTo("admin", "data-entry"), mainController.createMainPage);
+    .route("/")
+    .get(mainController.getMainPage)
+    .post(restrictTo("admin", "data-entry"), mainController.createMainPage);
 
 router
-  .route("/:id")
-  .get(mainController.getOneMain)
-  .patch(restrictTo("admin", "data-entry"), mainController.updateMain)
-  .delete(restrictTo("admin", "data-entry"), mainController.deleteMainPage);
+    .route("/:id")
+    .get(mainController.getOneMain)
+    .patch(restrictTo("admin", "data-entry"), mainController.updateMain)
+    .delete(restrictTo("admin", "data-entry"), mainController.deleteMainPage);
 
 module.exports = router;

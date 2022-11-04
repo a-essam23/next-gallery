@@ -92,8 +92,14 @@ export default function FormModal({
         content,
         previewFile: previewFileHandler,
         onFinish: isUpdate
-            ? (d) => handleUpdate({ ...d }, content.type, content.currentName)
-            : (d) => handleUpload({ ...d, Key: fileToUpload }, content.type),
+            ? async (d) =>
+                  await handleUpdate(
+                      { ...d },
+                      content.type,
+                      content.currentName
+                  )
+            : async (d) =>
+                  await handleUpload({ ...d, Key: fileToUpload }, content.type),
         isDisabled: isUpdate,
     };
 

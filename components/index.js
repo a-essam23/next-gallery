@@ -33,6 +33,7 @@ import ModelWithOptions from "./models/ModelWithOptions";
 import About from "./sections/About";
 import Contact from "./sections/Contact";
 import LoginForm from "./forms/LoginForm";
+import RegisterForm from "./forms/RegisterForm";
 
 import Counter from "./utils/Counter";
 import Grid from "./ui/Grid";
@@ -78,4 +79,5 @@ export {
     LoginForm,
     ImageInputWall,
     Counter,
+    RegisterForm,
 };

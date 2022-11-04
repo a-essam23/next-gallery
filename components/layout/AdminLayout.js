@@ -5,6 +5,8 @@ import {
     Footer as AntFooter,
 } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import {
     GroupsMenuWithOptions,
     Header,
@@ -14,11 +16,21 @@ import {
     Counter,
     Loading,
 } from "../../components";
-import { useLang } from "../../context";
+import { useAuth, useLang } from "../../context";
 
 export default function AdminLayout({ children, className = "" }) {
+    const { language, dir } = useLang();
+    const { user } = useAuth();
+    const router = useRouter();
+    useEffect(() => {
+        if (router.pathname !== "/login" && router.pathname !== "/404") {
+            if (!user) router.replace("/login");
+            if (user?.role !== "admin") router.replace("/");
+        }
+    }, [user]);
+
     return (
-        <AntLayout className="">
+        <AntLayout dir={dir} lang={language} className="bg-white">
             <AntHeader className="main-theme h-auto p-0 m-0 flex sticky z-10 top-0 shadow-lg">
                 <Header />
                 <NavBar />
@@ -40,7 +52,7 @@ export default function AdminLayout({ children, className = "" }) {
                         className={`${className} xl:mx-6 bg-white min-h-screen h-full `}
                     >
                         <Counter />
-                        {children}
+                        {user && children}
                     </AntContent>
                 </AntLayout>
             </AntContent>

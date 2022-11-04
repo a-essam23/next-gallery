@@ -7,13 +7,13 @@ import NextNProgress from "nextjs-progressbar";
 
 function MyApp({ Component, pageProps }) {
     return (
-        <LanguageProvider>
-            <AuthProvider>
+        <AuthProvider>
+            <LanguageProvider>
                 <NextNProgress startPosition={0.1} stopDelayMs={50} />
                 <ScrollToTop />
                 <Component {...pageProps} />
-            </AuthProvider>
-        </LanguageProvider>
+            </LanguageProvider>
+        </AuthProvider>
     );
 }
 

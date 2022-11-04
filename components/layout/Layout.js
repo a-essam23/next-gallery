@@ -6,13 +6,22 @@ import {
 } from "antd/lib/layout/layout";
 import { Breadcrumb, NavBar, Footer, Header, Counter } from "../../components";
 import LanguageSelection from "./LanguageSelection";
-import { useLang } from "../../context";
-export default function Layout({ children, className }) {
+import { useAuth, useLang } from "../../context";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+export default function Layout({ children, className, title }) {
     const { language, dir } = useLang();
+    const { user } = useAuth();
+    const router = useRouter();
+    useEffect(() => {
+        if (router.pathname !== "/login" && router.pathname !== "/404") {
+            if (!user) router.replace("/login");
+        }
+    }, [user]);
     //// TODO FIX COMPONENTS
     return (
         <AntLayout dir={dir} lang={language} className="bg-white">
-            <Header />
+            <Header title={title} />
             <LanguageSelection />
             <AntHeader className="h-auto p-0 m-0 flex justify-center main-theme sticky z-10 top-0 shadow-lg">
                 <NavBar />

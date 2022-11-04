@@ -9,7 +9,7 @@ const validators = require("./folderValidation");
 // router.route("/").get(foldersControllers.getAllFolders);
 // router.route("/search").get(foldersControllers.searchAllfolders);
 
-// router.use(protect);
+router.use(protect);
 
 router
     .route("/upload")

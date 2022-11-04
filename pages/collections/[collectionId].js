@@ -10,20 +10,21 @@ import {
     ModelInfo,
     Searchbar,
 } from "../../components";
+import { ServerSideErrorHandler } from "../../lib";
 import { getOne } from "../../services";
 
 export async function getServerSideProps(context) {
+    const jwt = checkJWTcookie(context);
+    if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
+
     const { data, error } = await getOne(
         context.req.headers.host,
         "folder",
-        context.query.collectionId
+        context.query.collectionId,
+        jwt
     );
-    if (error) {
-        return {
-            notFound: true,
-        };
-    }
 
+    if (error) return ServerSideErrorHandler(context, error);
     return {
         props: { models: data?.images || [] }, // will be passed to the page component as props
     };
@@ -34,7 +35,6 @@ export default function ModelPage({ models = [] }) {
     const router = useRouter();
     const collectionId = router.query.collectionId;
     // const [searchParams, setSearchParams] = useSearchParams();
-    // const [isLoading, setIsLoading] = useState(true);
     // const [models, setmodels] = useState([]);
     const [isShown, setIsShown] = useState(false);
     const [slideIndex, setSlideIndex] = useState(1);

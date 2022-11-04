@@ -1,31 +1,27 @@
 import { Button, Form, Input } from "antd";
 
-export default function LoginForm({ onFinish, errMsg = "" }) {
+export default function LoginForm({ onFinish }) {
     return (
-        <Form
-            size="large"
-            layout="vertical"
-            className="p-8  "
-            onFinish={onFinish}
-        >
-            <Form.Item
-                name="email"
-                label="EMAIL"
-                required
-                className="font-bold"
-            >
-                <Input required />
+        <Form size="middle" layout="vertical" className="" onFinish={onFinish}>
+            <div className="text-3xl font-bold pb-6">Login</div>
+            <Form.Item name="email" label="Email" className="font-bold">
+                <Input autoComplete="email" className="rounded" required />
             </Form.Item>
-            <Form.Item
-                name="password"
-                label="PASSWORD"
-                className="font-bold"
-                required
-            >
-                <Input type="password" required />
+            <Form.Item name="password" label="Password" className="font-bold">
+                <Input
+                    type="password"
+                    required
+                    autoComplete="current-password"
+                />
             </Form.Item>
-            <Button className="my-4" type="primary" htmlType="submit" danger>
-                Log in
+            <Button
+                className="mb-4 rounded"
+                type="primary"
+                htmlType="submit"
+                danger
+                size="large"
+            >
+                Login
             </Button>
         </Form>
     );

@@ -1,43 +1,67 @@
+import { message } from "antd";
 import axios from "axios";
 
-//// SET TOKEN HERE
+const protocol =
+    process.env.NODE_ENV === "development" ? "http://" : "https://";
 
-export const getAll = async (
-    hostname = null,
-    type = null,
-    clientSide = false
-) => {
+//// FIX TOO MANY REQUESTS ERROR !
+
+export const getAll = async (hostname = null, type = null, token) => {
     let payload = { data: null, error: null };
-    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const host = hostname ? protocol + hostname : "";
+
     if (!type) {
         payload.error = "Bad request: no type or hostname";
         return payload;
     }
+
     try {
         const res = await axios.get(
-            `http:${hostname}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-folders,-genre,-updatedAt&sort=createdAt`
+            `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-folders,-genre,-updatedAt&sort=createdAt`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
         );
         payload.data = res?.data?.data?.doc;
         return payload;
     } catch (e) {
-        payload.error = e.message;
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
         return payload;
     }
 };
 
-export const getOne = async (hostname = null, type = null, name = null) => {
+export const getOne = async (
+    hostname = null,
+    type = null,
+    name = null,
+    token = null
+) => {
     let payload = { data: null, error: null };
-    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+
+    const host = hostname ? protocol + hostname : "";
+
     if (!type) {
         payload.error = "Bad request: no type or hostname";
         return payload;
     }
     try {
-        const res = await axios.get(`http:${hostname}/api/v1/${type}/${name}`);
+        const res = await axios.get(`${host}/api/v1/${type}/${name}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
         payload.data = res?.data?.data;
         return payload;
     } catch (e) {
-        payload.error = e.message;
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
         return payload;
     }
 };
@@ -50,22 +74,33 @@ export const updateOne = async (
     token = null
 ) => {
     let payload = { data: null, error: null };
+
+    const host = hostname ? protocol + hostname : "";
+
     if (!type) {
         payload.error = "Bad request: no type or hostname";
         return payload;
     }
-    console.log(`${hostname}/api/v1/${type}/${name}`);
     try {
         if (type === "collection") type = "folder";
         if (type === "model") type = "image";
+
         const res = await axios.patch(
-            `${hostname}/api/v1/${type}/${name}`,
-            reqData
+            `${host}/api/v1/${type}/${name}`,
+            reqData,
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
         );
         payload.data = res?.data?.data;
         return payload;
     } catch (e) {
-        payload.error = e.response?.data?.message;
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
         return payload;
     }
 };
@@ -77,8 +112,7 @@ export const postOne = async (
     token = null
 ) => {
     let payload = { data: null, error: null, reqData };
-
-    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const host = hostname ? protocol + hostname : "";
 
     if (!type) {
         payload.error = "Bad request: no type or hostname";
@@ -89,13 +123,21 @@ export const postOne = async (
         if (type === "collection") type = "folder";
         if (type === "model") type = "image";
         const res = await axios.postForm(
-            `${hostname}/api/v1/${type}/upload`,
-            reqData
+            `${host}/api/v1/${type}/upload`,
+            reqData,
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
         );
         payload.data = res?.data?.data;
         return payload;
     } catch (e) {
-        payload.error = e.response?.data?.message;
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
         return payload;
     }
 };
@@ -115,6 +157,8 @@ export const deleteOne = async (
     token = null
 ) => {
     let payload = { data: null, error: null };
+    const host = hostname ? protocol + hostname : "";
+
     if (!type) {
         payload.error = "Bad request: no type or hostname";
         return payload;
@@ -122,11 +166,18 @@ export const deleteOne = async (
     try {
         if (type === "collection") type = "folder";
         if (type === "model") type = "image";
-        const res = await axios.delete(`${hostname}/api/v1/${type}/${name}`);
+        const res = await axios.delete(`${host}/api/v1/${type}/${name}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
         payload.data = res?.data?.data;
         return payload;
     } catch (e) {
-        payload.error = e.response?.data?.message;
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
         return payload;
     }
 };
@@ -139,7 +190,7 @@ export const deleteMany = async (
 ) => {
     let payload = { data: null, error: null, reqData };
 
-    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const host = hostname ? protocol + hostname : "";
 
     if (!type) {
         payload.error = "Bad request: no type or hostname";
@@ -150,13 +201,52 @@ export const deleteMany = async (
         if (type === "collection") type = "folder";
         if (type === "model") type = "image";
         const res = await axios.postForm(
-            `${hostname}/api/v1/${type}/upload`,
-            reqData
+            `${host}/api/v1/${type}/upload`,
+            reqData,
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
         );
         payload.data = res?.data?.data;
         return payload;
     } catch (e) {
-        payload.error = e.response?.data?.message;
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
+        return payload;
+    }
+};
+
+export const login = async (reqData) => {
+    let payload = { data: null, error: null, reqData };
+    // const host = hostname ? protocol + hostname : "";
+    try {
+        const res = await axios.post(`/api/v1/auth/login`, reqData);
+        payload.data = res?.data;
+        return payload;
+    } catch (e) {
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
+        return payload;
+    }
+};
+
+export const register = async (reqData) => {
+    let payload = { data: null, error: null, reqData };
+    try {
+        const res = await axios.post(`/api/v1/auth/signup`, reqData);
+        payload.data = res?.data;
+        return payload;
+    } catch (e) {
+        payload.error = {
+            status: e.response?.data?.error?.statusCode || e.response?.status,
+            message: e.response?.data?.message || e.response?.statusText,
+        };
         return payload;
     }
 };

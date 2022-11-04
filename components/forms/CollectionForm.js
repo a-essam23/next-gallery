@@ -19,7 +19,6 @@ export default function CollectionForm({
         const ARs = [4 / 5, 3 / 4, 2 / 3, 1 / 1, 5 / 6, 6 / 7, 7 / 8];
         return ARs[Math.floor(Math.random() * ARs.length)];
     }, []);
-    console.log(AR());
     return (
         <Form
             onFinish={onFinish}

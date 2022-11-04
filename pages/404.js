@@ -5,7 +5,7 @@ export default function Custom404() {
     useEffect(() => {
         setTimeout(() => {
             Router.replace("/");
-        }, 3000);
+        }, 1500);
     }, []);
     return (
         <Layout>
