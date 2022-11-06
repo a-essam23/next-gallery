@@ -16,17 +16,6 @@ const useFetch = () => {
     // const [response, setResponse] = useState(null);
     const { user, addUser, removeUser } = useAuth();
     const token = user?.token;
-    // const handleDelete = async ({ type, name }) => {
-    //     setIsLoading(true);
-    //     const { data, error } = await deleteOne("", type, name);
-    //     setIsLoading(false);
-    //     if (error) {
-    //         setMsg({ content: error.message, status: "fail" });
-    //     } else {
-    //         setMsg({ content: "Added!", status: "success" });
-    //     }
-    //     return { data, error };
-    // };
 
     const handleUpload = async (formData, type) => {
         setIsLoading(true);
@@ -67,6 +56,7 @@ const useFetch = () => {
         } else {
             setMsg({ content: "Deleted!", status: "success" });
         }
+        return { data, error };
     };
 
     const handleLogin = async (formData) => {
@@ -103,11 +93,10 @@ const useFetch = () => {
         setIsLoading(false);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
-            return [];
         } else {
             setMsg(null);
-            return data;
         }
+        return { data, error };
     };
 
     return {

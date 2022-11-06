@@ -9,17 +9,17 @@ import {
 } from "../components";
 import { useAuth, useLang } from "../context";
 import { checkJWTcookie, ServerSideErrorHandler } from "../lib";
+import { getOne } from "../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
-    let error;
-    // const { data, error } = await getOne(
-    //     context.req.headers.host,
-    //     "group",
-    //     "group1",
-    //     jwt
-    // );
-    // console.log(error);
+    const { data, error } = await getOne(
+        context.req.headers.host,
+        "main",
+        "",
+        jwt
+    );
+    console.log(data, error);
 
     if (error) return ServerSideErrorHandler(context, error);
 
@@ -85,7 +85,6 @@ export async function getServerSideProps(context) {
 export default function Home({ groups = [], models, imageList }) {
     const { langData } = useLang();
     const { user } = useAuth();
-    console.log(user);
     return (
         <Layout>
             <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 xl:h-144 2xl:h-216">

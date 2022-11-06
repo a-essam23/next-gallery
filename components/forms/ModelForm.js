@@ -22,7 +22,7 @@ export default function ModelForm({
         >
             <Form.Item
                 name="name"
-                label="Model code"
+                label="Model name"
                 initialValue={content.name}
             >
                 <Input required placeholder="Ex: AA, BB, CA" />

@@ -9,6 +9,7 @@ const Expire = ({ children, delay = 0 }) => {
             setVisible(false);
         }, delay * 1000);
         return () => clearTimeout(timer);
+        // eslint-disable-next-line
     }, []);
 
     return visible ? <>{children}</> : <></>;

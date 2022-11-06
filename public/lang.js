@@ -16,6 +16,9 @@ export const english = {
     search: "search",
     home: "home",
     customers: "our customers",
+    admin: "admin",
+    loginText: "Already have an account? Log in",
+    registerText: "Already have an account? Log in",
 };
 
 export const arabic = {
@@ -38,4 +41,7 @@ export const arabic = {
     search: "إبحث",
     home: "الصفحة الرئيسيه",
     customers: "عملائنا",
+    admin: "أدمن",
+    loginText: "Already have an account? Log in",
+    registerText: "Don't have an account? Register now!",
 };

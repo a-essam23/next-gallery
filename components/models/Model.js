@@ -20,7 +20,7 @@ export default function Model({
     const router = useRouter();
     return (
         <div
-            className={`flex w-full h-full relative transition-all cursor-pointer shadow-xl hover:scale-105 ${className}`}
+            className={`flex flex-col w-full h-full relative transition-all cursor-pointer shadow-xl hover:scale-105 ${className}`}
             onMouseLeave={() => setIsHovering(false)}
             onMouseOver={() => setIsHovering(true)}
             onClick={

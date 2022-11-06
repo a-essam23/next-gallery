@@ -9,7 +9,7 @@ import {
     Message,
     RegisterForm,
 } from "../components";
-import { useAuth } from "../context";
+import { useAuth, useLang } from "../context";
 import { useFetch } from "../hooks";
 
 export const getServerSideProps = async (context) => {
@@ -25,6 +25,7 @@ export default function Loginpage({}) {
     const router = useRouter();
     const { isLoading, msg, handleRegister, handleLogin } = useFetch();
     const { user } = useAuth();
+    const { langData } = useLang();
     return (
         <Layout className={"items-center"} title={"Login"}>
             <div className="absolute shadow-cd rounded max-w-xs lg:max-w-2xl 2xl:max-w-4xl w-max h-max m-auto bg-slate-100 p-6 xl:p-6 2xl:p-16">
@@ -48,7 +49,7 @@ export default function Loginpage({}) {
                             setIsRegister(false);
                         }}
                     >
-                        Already have an account? Log in
+                        {langData["registerText"]}
                     </button>
                 ) : (
                     <button
@@ -57,7 +58,7 @@ export default function Loginpage({}) {
                             setIsRegister(true);
                         }}
                     >
-                        Don't have an account? Register now!
+                        {langData["loginText"]}
                     </button>
                 )}
                 <Loading isLoading={isLoading} />

@@ -5,6 +5,7 @@
   "scripts": {
     "dev:server": "nodemon server/server.js",
     "dev": "node server/server.js",
+    "dev:client":"next dev",
     "build": "next build",
     "start": "node server/server.js",
     "lint": "next lint"
@@ -15,6 +16,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@next/font": "^13.0.2",
     "antd": "^4.23.5",
     "antd-img-crop": "^4.2.6",
     "aws-sdk": "^2.1231.0",

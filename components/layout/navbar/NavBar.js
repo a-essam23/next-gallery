@@ -18,7 +18,7 @@ function NavBar() {
                     Router.push("/");
                 }}
             >
-                <img src="/imgs/logo-placeholder.png" className="" alt="logo" />
+                <img src="/imgs/logo.png" className="" alt="logo" />
                 {/* <img src={phone} alt="whats" /> */}
             </div>
             <div className="flex gap-4">
@@ -33,7 +33,7 @@ function NavBar() {
                 </Link>
                 {user?.role === "admin" && (
                     <Link href="/admin">
-                        <a className="">ADMIN</a>
+                        <a className={classes.item}>{langData.admin}</a>
                     </Link>
                 )}
             </div>

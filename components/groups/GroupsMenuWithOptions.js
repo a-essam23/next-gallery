@@ -5,7 +5,7 @@ import { Menu } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FormModal, Loading, Message } from "../../components";
-import { useAuth } from "../../context";
+import { useAuth, useLang } from "../../context";
 import { useFetch } from "../../hooks";
 import { getAll } from "../../services";
 
@@ -15,12 +15,12 @@ export default function GroupsMenuWithOptions({}) {
     const [isShown, setIsShown] = useState(false);
     const [groups, setGroups] = useState([]);
     const { user } = useAuth();
+    const { langData } = useLang();
     const { isLoading, msg, handleDelete, handleGetAll } = useFetch();
     useEffect(() => {
-        handleGetAll("group").then((data) => setGroups(data));
-        // getAll("", "group", user?.token).then(({ data, error }) => {
-        //     setGroups(data || []);
-        // });
+        handleGetAll("group").then(({ data, error }) => setGroups(data || []));
+
+        // eslint-disable-next-line
     }, [isShown]);
     // groups = Array(6)
     //     .fill()
@@ -40,7 +40,7 @@ export default function GroupsMenuWithOptions({}) {
                 />
             )}
             <div className="text-2xl roudned bg-slate-300 text-white text-center tracking-widest font-bold py-2 px-4 items-center justify-between flex overflow-hidden">
-                GROUPS
+                {langData.groups.toUpperCase()}
                 <PlusCircleTwoTone
                     onClick={() => {
                         setIsShown(true);

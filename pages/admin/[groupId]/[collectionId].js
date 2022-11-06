@@ -12,7 +12,7 @@ import {
 } from "../../../components";
 import { getOne } from "../../../services";
 import { useFetch } from "../../../hooks";
-import { ServerSideErrorHandler } from "../../../lib";
+import { checkJWTcookie, ServerSideErrorHandler } from "../../../lib";
 
 ///TODO
 export async function getServerSideProps(context) {

@@ -42,6 +42,9 @@ import Box from "./ui/Box";
 import Loading from "./ui/Loading/Loading";
 import Message from "./ui/Message";
 import Expire from "./ui/Expire";
+
+import LanguageSelection from "./layout/LanguageSelection";
+
 export {
     Expire,
     Loading,
@@ -80,4 +83,5 @@ export {
     ImageInputWall,
     Counter,
     RegisterForm,
+    LanguageSelection,
 };

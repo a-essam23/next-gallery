@@ -17,8 +17,9 @@ import {
     Loading,
 } from "../../components";
 import { useAuth, useLang } from "../../context";
+import LanguageSelection from "./LanguageSelection";
 
-export default function AdminLayout({ children, className = "" }) {
+export default function AdminLayout({ children, className = "", title }) {
     const { language, dir } = useLang();
     const { user } = useAuth();
     const router = useRouter();
@@ -27,12 +28,14 @@ export default function AdminLayout({ children, className = "" }) {
             if (!user) router.replace("/login");
             if (user?.role !== "admin") router.replace("/");
         }
+        // eslint-disable-next-line
     }, [user]);
 
     return (
         <AntLayout dir={dir} lang={language} className="bg-white">
+            <LanguageSelection />
             <AntHeader className="main-theme h-auto p-0 m-0 flex sticky z-10 top-0 shadow-lg">
-                <Header />
+                <Header title={title} />
                 <NavBar />
             </AntHeader>
             <AntContent className="bg-white">

@@ -28,8 +28,14 @@ export const getAll = async (hostname = null, type = null, token) => {
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
@@ -59,8 +65,14 @@ export const getOne = async (
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
@@ -98,8 +110,14 @@ export const updateOne = async (
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
@@ -135,8 +153,14 @@ export const postOne = async (
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
@@ -175,8 +199,14 @@ export const deleteOne = async (
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
@@ -213,8 +243,14 @@ export const deleteMany = async (
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
@@ -229,8 +265,14 @@ export const login = async (reqData) => {
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
@@ -244,8 +286,14 @@ export const register = async (reqData) => {
         return payload;
     } catch (e) {
         payload.error = {
-            status: e.response?.data?.error?.statusCode || e.response?.status,
-            message: e.response?.data?.message || e.response?.statusText,
+            status:
+                e.response?.data?.error?.statusCode ||
+                e.response?.status ||
+                500,
+            message:
+                e.response?.data?.message ||
+                e.response?.statusText ||
+                "Bad Request: Unhandeled Error",
         };
         return payload;
     }
