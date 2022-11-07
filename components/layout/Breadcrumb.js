@@ -9,19 +9,18 @@ import { useLang } from "../../context";
 ////TODO REMODELL >>> FIX HREFS!
 export default function Breadcrumb() {
     const router = useRouter();
-    const pathname = router.pathname;
+    const pathname = router.asPath;
     const { langData, language } = useLang();
     function getBreadCrumbs() {
-        const paths = pathname.split("/");
-        if (paths.length === 1) return null;
+        const paths = pathname.split("/").filter((path) => path.length > 0);
+        console.log(paths);
+        if (!paths.length) return null;
 
         const crumbList = paths.map((path, index) => {
-            const dynamicPath = path.match(/\[([^)]+)\]/);
-            const path_ = dynamicPath
-                ? router.query[dynamicPath[1]]
-                : langData[decodeURI(path)] || decodeURI(path);
+            const path_ = langData[decodeURI(path)] || decodeURI(path);
             const href =
                 paths.slice(0, index).join("/") + `${path_ ? "/" + path_ : ""}`;
+
             return {
                 path: path_,
                 href,
@@ -29,15 +28,14 @@ export default function Breadcrumb() {
         });
         return (
             <>
-                <BreadcrumbItem key={v4()} className="px-1 ">
+                <BreadcrumbItem key={v4()} className="">
                     <Link href="/">
                         <a>{langData["home"].toUpperCase()}</a>
                     </Link>
                 </BreadcrumbItem>
-                {crumbList.map(({ href, path }, index) => {
-                    if (index === 0) return;
+                {crumbList.map(({ href, path }) => {
                     return (
-                        <BreadcrumbItem key={v4()}>
+                        <BreadcrumbItem key={v4()} className="">
                             <Link href={href}>
                                 <a>{path.toUpperCase()}</a>
                             </Link>

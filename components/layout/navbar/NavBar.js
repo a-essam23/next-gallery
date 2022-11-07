@@ -10,18 +10,18 @@ function NavBar() {
     const { user } = useAuth();
     return (
         <div
-            className={`container flex items-center md:py-1 lg:py-2 xl:py-3 2xl:py-4 gap-4 justify-between `}
+            className={`container flex items-center md:py-1 lg:py-2 xl:py-3 2xl:py-4 gap-4 justify-between text-sm md:text-lg xl:text-xl`}
         >
-            <div
-                className={`cursor-pointer w-20 h-auto md:w-24 xl:w-24 `}
-                onClick={() => {
-                    Router.push("/");
-                }}
-            >
-                <img src="/imgs/logo.png" className="" alt="logo" />
-                {/* <img src={phone} alt="whats" /> */}
-            </div>
-            <div className="flex gap-4">
+            <Link className={``} href="/">
+                <a>
+                    <img
+                        src="/imgs/logo.png"
+                        className="w-20 h-auto md:w-24 xl:w-24"
+                        alt="logo"
+                    />
+                </a>
+            </Link>
+            <div className="flex gap-4 ">
                 <Link href="/collections">
                     <a className={`${classes.item} `}>{langData.explore}</a>
                 </Link>

@@ -19,8 +19,6 @@ export async function getServerSideProps(context) {
         "",
         jwt
     );
-    console.log(data, error);
-
     if (error) return ServerSideErrorHandler(context, error);
 
     const models = [

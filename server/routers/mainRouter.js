@@ -11,7 +11,7 @@ router
     .post(restrictTo("admin", "data-entry"), mainController.createMainPage);
 
 router
-    .route("/:id")
+    .route("/:code")
     .get(mainController.getOneMain)
     .patch(restrictTo("admin", "data-entry"), mainController.updateMain)
     .delete(restrictTo("admin", "data-entry"), mainController.deleteMainPage);

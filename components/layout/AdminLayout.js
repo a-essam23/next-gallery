@@ -23,13 +23,6 @@ export default function AdminLayout({ children, className = "", title }) {
     const { language, dir } = useLang();
     const { user } = useAuth();
     const router = useRouter();
-    useEffect(() => {
-        if (router.pathname !== "/login" && router.pathname !== "/404") {
-            if (!user) router.replace("/login");
-            if (user?.role !== "admin") router.replace("/");
-        }
-        // eslint-disable-next-line
-    }, [user]);
 
     return (
         <AntLayout dir={dir} lang={language} className="bg-white">

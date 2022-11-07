@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, Switch } from "antd";
 import { CropDragger } from "../../components";
 
 export default function GroupForm({
@@ -9,6 +9,7 @@ export default function GroupForm({
         onFinish,
         content = { name: null },
         isDisabled,
+        onCheckChange = () => {},
     },
     onChange,
 }) {
@@ -26,7 +27,10 @@ export default function GroupForm({
             >
                 <Input required placeholder="Ex: models, projects, molds" />
             </Form.Item>
-            <Form.Item label="Key" className="">
+            <Form.Item label="Watermark">
+                <Switch className="bg-sky-600" onChange={onCheckChange} />
+            </Form.Item>
+            <Form.Item label="Group Image" name="Key" className="">
                 <CropDragger
                     isDisabled={isDisabled}
                     aspectRatio={aspectRatio}

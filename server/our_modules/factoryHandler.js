@@ -127,6 +127,7 @@ exports.deleteOne = (Model) =>
 
 exports.update = (Model) =>
     catchAsync(async (req, res, next) => {
+        console.log(req.params);
         const doc = await Model.findOneAndUpdate(
             { name: req.params.code },
             { $set: req.body },
@@ -134,7 +135,7 @@ exports.update = (Model) =>
         );
 
         if (req.body.name) {
-            if (doc.genre === "group") {
+            if (doc?.genre === "group") {
                 doc.folders.forEach(async (folder) => {
                     await Model.findOneAndUpdate(
                         { name: folder },
@@ -142,7 +143,7 @@ exports.update = (Model) =>
                         { new: true }
                     );
                 });
-            } else if (doc.genre === "folder") {
+            } else if (doc?.genre === "folder") {
                 doc.images.forEach(async (image) => {
                     await Model.findOneAndUpdate(
                         { name: image },

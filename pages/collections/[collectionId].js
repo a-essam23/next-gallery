@@ -10,7 +10,7 @@ import {
     ModelInfo,
     Searchbar,
 } from "../../components";
-import { ServerSideErrorHandler } from "../../lib";
+import { checkJWTcookie, ServerSideErrorHandler } from "../../lib";
 import { getOne } from "../../services";
 
 export async function getServerSideProps(context) {

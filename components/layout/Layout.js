@@ -15,19 +15,12 @@ import {
 import { useAuth, useLang } from "../../context";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { Oswald } from "@next/font/google";
 
 export default function Layout({ children, className, title }) {
-    const oswald = Oswald({ weight: "400", subsets: "latin" });
     const { language, dir } = useLang();
     const { user } = useAuth();
     const router = useRouter();
-    useEffect(() => {
-        if (router.pathname !== "/login" && router.pathname !== "/404") {
-            if (!user) router.replace("/login");
-        }
-        // eslint-disable-next-line
-    }, [user]);
+
     //// TODO FIX COMPONENTS
     return (
         <AntLayout dir={dir} lang={language} className="bg-white">

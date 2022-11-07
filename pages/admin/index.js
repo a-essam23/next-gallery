@@ -12,21 +12,29 @@ import TextArea from "antd/lib/input/TextArea";
 import Dragger from "antd/lib/upload/Dragger";
 import { checkJWTcookie, ServerSideErrorHandler } from "../../lib";
 import { getOne } from "../../services";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
+    if (!jwt) {
+        return {
+            redirect: {
+                permenant: false,
+                destination: "/login",
+                source: context.req.headers?.referer,
+            },
+        };
+    }
     const { data, error } = await getOne(
         context.req.headers.host,
         "main",
         "",
         jwt
     );
-    console.log(data[0], error);
 
     if (error) return ServerSideErrorHandler(context, error);
-    let allGroups = [];
+    // let allGroups = [];
     // for (let i = 0; i < 4; i++) {
     //     allGroups.push({
     //         image: "/imgs/placeholder.jpg",
@@ -92,24 +100,39 @@ export async function getServerSideProps(context) {
     //     whatsapp: "",
     //     pinterest: "",
     // };
+    console.log(data[0]);
     return {
-        props: { pageData: data[0] }, // will be passed to the page component as props
+        props: { pageData: data[0] || null }, // will be passed to the page component as props
     };
 }
 //// TODO SPLIT ABOUT US PAGE INTO DIFFERENT COMPONENTS
 export default function AdminPage({
-    pageData,
-    allGroups = [],
-    allModels = [],
+    pageData = { groups: [], images: [], data: {} },
 }) {
     //// ADD SMARTER SEARCH FOR MODELS SELECt
     const { langData } = useLang();
     const { groups, images, data } = pageData;
     const [mainData, setMainData] = useState(pageData);
-    const { msg, isLoading, handleUpload, handleDelete } = useFetch();
+    const [allGroups, setAllGroups] = useState([]);
+    const [allModels, setAllModels] = useState([]);
+    const { msg, isLoading, handleUpload, handleDelete, handleGetAll } =
+        useFetch();
+
+    useEffect(() => {
+        handleGetAll("group").then(({ data, error }) =>
+            setAllGroups(data || [])
+        );
+        handleGetAll("image").then(({ data, error }) =>
+            setAllModels(data || [])
+        );
+
+        // return () => {};
+        // eslint-disable-next-line
+    }, []);
+
     return (
         <AdminLayout title="Admin" className="">
-            <div className="flex justify-center h-16">
+            <div className="flex justify-center h-16 pb-2">
                 <Button
                     className="bg-blue-600 h-full text-white w-full"
                     size="large"
@@ -124,22 +147,15 @@ export default function AdminPage({
             <Loading isLoading={isLoading} />
             <Message icon options={msg} size="lg" />
             <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 xl:h-144  ">
-                <div className="sm:basis-3/5 h-96 sm:h-full w-full center border-2">
+                <div className="sm:basis-3/5 h-96 sm:h-full w-full center shadow-cd">
                     <ImageInputWall
-                        onUpload={(file) =>
-                            handleUpload(
-                                {
-                                    name: file.name,
-                                    Key: file,
-                                    folder: "main",
-                                },
-                                "model"
-                            )
-                        }
-                        onRemove={(file) => handleDelete("model", file.name)}
+                        type={"image"}
                         images={data?.swiper}
                         onFinish={(imageList) => {
-                            console.log(imageList);
+                            setMainData({
+                                ...mainData,
+                                data: { ...mainData.data, swiper: imageList },
+                            });
                         }}
                     />
                 </div>
@@ -147,13 +163,17 @@ export default function AdminPage({
                     <Select
                         mode="multiple"
                         className="w-full"
+                        onChange={(gps) => {
+                            console.log(gps);
+                            setMainData({ ...mainData, groups: gps });
+                        }}
                         defaultValue={
-                            groups.length && groups.map((gp) => gp.id)
+                            groups?.length ? groups.map((gp) => gp.id) : []
                         }
                     >
                         {allGroups.map((gp) => {
                             return (
-                                <Select.Option key={gp.id} value={gp.id}>
+                                <Select.Option key={gp._id} value={gp._id}>
                                     {gp.name}
                                 </Select.Option>
                             );
@@ -169,11 +189,17 @@ export default function AdminPage({
                 <Select
                     mode="multiple"
                     className="w-full"
-                    defaultValue={images.length && images.map((md) => md.id)}
+                    onChange={(imgs) => {
+                        console.log(imgs);
+                        setMainData({ ...mainData, images: imgs });
+                    }}
+                    defaultValue={
+                        images?.length ? images.map((md) => md.id) : []
+                    }
                 >
                     {allModels.map((md) => {
                         return (
-                            <Select.Option key={md.id} value={md.id}>
+                            <Select.Option key={md._id} value={md._id}>
                                 {md.name}
                             </Select.Option>
                         );
@@ -211,7 +237,17 @@ export default function AdminPage({
                 {langData.customers.toUpperCase()}
             </section>
             <section>
-                <ImageInputWall className="border-2 rounded" images={[]} />
+                <ImageInputWall
+                    className="border-2 rounded"
+                    images={mainData?.data?.customers || []}
+                    type="image"
+                    onFinish={(imageList) => {
+                        setMainData({
+                            ...mainData,
+                            data: { ...mainData.data, customers: imageList },
+                        });
+                    }}
+                />
             </section>
             <section className="text-3xl 2xl:text-4xl text-center ">
                 {langData.contact.toUpperCase()}

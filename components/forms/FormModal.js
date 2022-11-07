@@ -6,10 +6,8 @@ import {
     CollectionForm,
     Message,
     Loading,
-    Expire,
 } from "../../components";
 import { useFetch } from "../../hooks";
-import { updateOne } from "../../services";
 
 export default function FormModal({
     className,
@@ -27,14 +25,18 @@ export default function FormModal({
 }) {
     const [previewImage, setPreviewImage] = useState(content.image);
     const [fileToUpload, setFileToUpload] = useState(null);
+    const [useWatermark, setUseWatermark] = useState(false);
     const { isLoading, msg, handleUpload, handleUpdate } = useFetch();
-    // const [isLoading, setIsLoading] = useState(false);
-    // const [msg, setMsg] = useState();
     const previewFileHandler = async (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        setFileToUpload(file);
+
         reader.addEventListener("loadend", () => {
+            if (!useWatermark) {
+                setFileToUpload(file);
+                setPreviewImage(reader.result);
+                return;
+            }
             //// TODO MAKE A MORE DYNAMIC WATERMARK WRITER
             const img = document.createElement("img");
             img.src = reader.result;
@@ -74,19 +76,6 @@ export default function FormModal({
             // ;
         });
     };
-    // const handleUpload = async (formData) => {
-    //     setIsLoading(true);
-    //     const { data, error } = await postOne("", content.type, {
-    //         ...formData,
-    //         Key: fileToUpload,
-    //     });
-    //     setIsLoading(false);
-    //     if (error) {
-    //         setMsg({ err: true, content: error });
-    //     } else {
-    //         setMsg({ err: false, content: "Added!" });
-    //     }
-    // };
 
     const options = {
         content,
@@ -101,6 +90,9 @@ export default function FormModal({
             : async (d) =>
                   await handleUpload({ ...d, Key: fileToUpload }, content.type),
         isDisabled: isUpdate,
+        onCheckChange: (checked) => {
+            setUseWatermark(checked);
+        },
     };
 
     const forms = {
@@ -116,9 +108,9 @@ export default function FormModal({
                 onClick={showClickHander}
             ></div>
             <div
-                className={`bg-white flex h-4/5 2xl:h-200 w-8/12 m-auto fixed z-20 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 ${className}`}
+                className={`bg-white flex h-144 xl:h-4/5 2xl:h-200 w-11/12 xl:w-8/12 m-auto fixed z-20 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 ${className}`}
             >
-                <div className="flex relative basis-2/5 outline-2 outline outline-gray-300 p-4">
+                <div className="flex relative basis-2/5 p-4 border-r-2 border-gray-200">
                     <div className="flex w-full justify-center items-center ">
                         <img
                             src={previewImage}
@@ -128,7 +120,7 @@ export default function FormModal({
                     </div>
                 </div>
 
-                <div className="basis-3/5 outline-gray-300 outline-2 outline ">
+                <div className="basis-3/5  ">
                     <div className="flex flex-1 ">
                         <RadioButtons
                             items={["group", "collection", "model"]}

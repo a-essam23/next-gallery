@@ -62,6 +62,7 @@ const useFetch = () => {
     const handleLogin = async (formData) => {
         setIsLoading(true);
         const { data, error } = await login(formData);
+        console.log(data, error);
         setIsLoading(false);
         if (error) {
             setMsg({ content: error.message, status: "fail" });

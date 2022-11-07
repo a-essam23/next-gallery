@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext({
@@ -7,6 +8,8 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
+    const router = useRouter();
+    const paths = router.asPath.split("/").filter((path) => path.length > 0);
     const [user, setUser] = useState(null);
 
     const addUser = (userObject) => {
@@ -20,7 +23,17 @@ export const AuthProvider = ({ children }) => {
     // useEffect(() => {
     //     localStorage.setItem("token", user.token);
     // }, [user.token]);
+    useEffect(() => {
+        console.log(!user);
+        if (paths[0] === "login" || paths[0] === "404") return;
 
+        if (!user) router.replace("/login");
+
+        if (paths[0] === "admin") {
+            if (user?.role !== "admin") router.replace("/login");
+        }
+        // eslint-disable-next-line
+    }, [user, paths]);
     const context = {
         user,
         addUser,

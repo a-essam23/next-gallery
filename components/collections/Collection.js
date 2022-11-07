@@ -16,7 +16,7 @@ function Collection({
             }}
         >
             <img
-                src={sizes.original}
+                src={sizes.small}
                 alt={name}
                 className="object-cover w-full h-full hover:brightness-75 rounded-2xl "
             />

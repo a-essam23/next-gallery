@@ -18,7 +18,10 @@ export default function GroupsMenuWithOptions({}) {
     const { langData } = useLang();
     const { isLoading, msg, handleDelete, handleGetAll } = useFetch();
     useEffect(() => {
-        handleGetAll("group").then(({ data, error }) => setGroups(data || []));
+        if (!isShown)
+            handleGetAll("group").then(({ data, error }) =>
+                setGroups(data || [])
+            );
 
         // eslint-disable-next-line
     }, [isShown]);

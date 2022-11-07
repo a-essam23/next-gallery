@@ -87,9 +87,7 @@ export default function AdminCollectionPage({ models }) {
                     <ModelWithOptions
                         key={v4()}
                         data={album}
-                        onClickDelete={() =>
-                            handleDelete((type = "model"), album.name)
-                        }
+                        onClickDelete={() => handleDelete("model", album.name)}
                         onClickEdit={() => {
                             setModalContent({
                                 type: "model",
