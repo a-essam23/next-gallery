@@ -29,10 +29,9 @@ export async function getServerSideProps(context) {
     const { data, error } = await getOne(
         context.req.headers.host,
         "main",
-        "",
+        "main",
         jwt
     );
-
     if (error) return ServerSideErrorHandler(context, error);
     // let allGroups = [];
     // for (let i = 0; i < 4; i++) {
@@ -100,9 +99,8 @@ export async function getServerSideProps(context) {
     //     whatsapp: "",
     //     pinterest: "",
     // };
-    console.log(data[0]);
     return {
-        props: { pageData: data[0] || null }, // will be passed to the page component as props
+        props: { pageData: data?.data || null }, // will be passed to the page component as props
     };
 }
 //// TODO SPLIT ABOUT US PAGE INTO DIFFERENT COMPONENTS
@@ -111,7 +109,6 @@ export default function AdminPage({
 }) {
     //// ADD SMARTER SEARCH FOR MODELS SELECt
     const { langData } = useLang();
-    const { groups, images, data } = pageData;
     const [mainData, setMainData] = useState(pageData);
     const [allGroups, setAllGroups] = useState([]);
     const [allModels, setAllModels] = useState([]);
@@ -150,7 +147,7 @@ export default function AdminPage({
                 <div className="sm:basis-3/5 h-96 sm:h-full w-full center shadow-cd">
                     <ImageInputWall
                         type={"image"}
-                        images={data?.swiper}
+                        images={pageData.data?.swiper}
                         onFinish={(imageList) => {
                             setMainData({
                                 ...mainData,
@@ -164,11 +161,12 @@ export default function AdminPage({
                         mode="multiple"
                         className="w-full"
                         onChange={(gps) => {
-                            console.log(gps);
                             setMainData({ ...mainData, groups: gps });
                         }}
                         defaultValue={
-                            groups?.length ? groups.map((gp) => gp.id) : []
+                            pageData?.groups?.length
+                                ? pageData.groups.map((gp) => gp._id)
+                                : []
                         }
                     >
                         {allGroups.map((gp) => {
@@ -179,7 +177,7 @@ export default function AdminPage({
                             );
                         })}
                     </Select>
-                    <FourBoxes groups={groups} />
+                    <FourBoxes groups={pageData?.groups} />
                 </div>
             </section>
             <section className="text-3xl 2xl:text-4xl text-center ">
@@ -190,11 +188,12 @@ export default function AdminPage({
                     mode="multiple"
                     className="w-full"
                     onChange={(imgs) => {
-                        console.log(imgs);
                         setMainData({ ...mainData, images: imgs });
                     }}
                     defaultValue={
-                        images?.length ? images.map((md) => md.id) : []
+                        pageData?.images?.length
+                            ? pageData.images.map((img) => img._id)
+                            : []
                     }
                 >
                     {allModels.map((md) => {
@@ -206,7 +205,7 @@ export default function AdminPage({
                     })}
                 </Select>
                 <ModelSwiper
-                    images={images}
+                    images={pageData.images}
                     size={16}
                     showCode
                     autoplay={false}

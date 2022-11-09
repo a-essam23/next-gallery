@@ -1,5 +1,5 @@
 const next = require("next");
-require("dotenv").config();
+// require("dotenv").config();
 
 const dev = process.env.NODE_ENV !== "production";
 const nextServer = next({ dev });

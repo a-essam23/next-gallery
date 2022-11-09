@@ -5,9 +5,9 @@
   "scripts": {
     "dev:server": "nodemon server/server.js",
     "dev": "node server/server.js",
-    "dev:client":"next dev",
-    "build": "next build",
-    "start": "node server/server.js",
+    "dev:client": "next dev",
+    "build": "NODE_ENV=production next build",
+    "start": "NODE_ENV=production node server/server.js",
     "lint": "next lint"
   },
   "dependencies": {

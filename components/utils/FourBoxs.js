@@ -6,7 +6,7 @@ export default function FourBoxes({
     groups = Array(4),
 }) {
     //// TODO CREATE COMPONENT FOR BOX INSTEAD!
-
+    console.log(groups);
     return (
         <div className={"flex flex-1 gap-4 w-full h-full " + className}>
             <div className="flex flex-col gap-4 w-full h-full ">
