@@ -13,76 +13,78 @@ import { getOne } from "../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
+    // if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
     const { data, error } = await getOne(
         context.req.headers.host,
         "main",
-        "",
+        "main",
         jwt
     );
-    if (error) return ServerSideErrorHandler(context, error);
+    // if (error) return ServerSideErrorHandler(context, error);
 
-    const models = [
-        {
-            image: "/imgs/placeholder.jpg",
-            folder: "Collection1",
-            name: `Model1`,
-            _id: 0,
-        },
-        {
-            image: "/imgs/placeholder.jpg",
-            folder: "Collection1",
-            name: `Model2`,
-            _id: 1,
-        },
-        {
-            image: "/imgs/placeholder.jpg",
-            folder: "Collection1",
-            name: `Model3`,
-            _id: 2,
-        },
-        {
-            image: "/imgs/placeholder.jpg",
-            folder: "Collection1",
-            name: `Model4`,
-            _id: 3,
-        },
-    ];
+    // const models = [
+    //     {
+    //         image: "/imgs/placeholder.jpg",
+    //         folder: "Collection1",
+    //         name: `Model1`,
+    //         _id: 0,
+    //     },
+    //     {
+    //         image: "/imgs/placeholder.jpg",
+    //         folder: "Collection1",
+    //         name: `Model2`,
+    //         _id: 1,
+    //     },
+    //     {
+    //         image: "/imgs/placeholder.jpg",
+    //         folder: "Collection1",
+    //         name: `Model3`,
+    //         _id: 2,
+    //     },
+    //     {
+    //         image: "/imgs/placeholder.jpg",
+    //         folder: "Collection1",
+    //         name: `Model4`,
+    //         _id: 3,
+    //     },
+    // ];
 
-    const imageList = [
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-        "/imgs/blank.jpg",
-        "/imgs/blank-blue.jpg",
-    ];
+    // const imageList = [
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    //     "/imgs/blank.jpg",
+    //     "/imgs/blank-blue.jpg",
+    // ];
     return {
-        props: { groups: [], models, imageList }, // will be passed to the page component as props
+        props: { pageData: data || { groups: [], models: [], imageList: [] } }, // will be passed to the page component as props
     };
 }
 
-export default function Home({ groups = [], models, imageList }) {
+export default function Home({ pageData }) {
     const { langData } = useLang();
     const { user } = useAuth();
+    const { groups, models, imageList } = pageData;
     return (
         <Layout>
             <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 xl:h-144 2xl:h-216">
@@ -117,7 +119,7 @@ export default function Home({ groups = [], models, imageList }) {
                 <ModelSwiper models={models} size={16} showCode activeLink />
             </section>
             <section id="about">
-                <About imageList={imageList} card={{}} />
+                <About imageList={imageList || []} card={{}} />
             </section>
             <section id="contact">
                 <Contact />

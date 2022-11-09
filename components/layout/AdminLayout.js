@@ -47,7 +47,6 @@ export default function AdminLayout({ children, className = "", title }) {
                     <AntContent
                         className={`${className} xl:mx-6 bg-white min-h-screen h-full `}
                     >
-                        <Counter />
                         {user && children}
                     </AntContent>
                 </AntLayout>

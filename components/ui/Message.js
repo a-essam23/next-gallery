@@ -23,7 +23,7 @@ export default function Message({
         <>
             {options && (
                 <div
-                    className={`flex w-full h-full justify-center ${
+                    className={`flex w-full h-max justify-center items-center ${
                         sizes[size]?.text || sizes["md"].text
                     } ${
                         options.status === "success"
@@ -37,7 +37,7 @@ export default function Message({
                             size={sizes[size]?.icon || "lg"}
                         />
                     )}
-                    {text && options?.content && options.content}
+                    {text && options?.content && <span>{options.content}</span>}
                 </div>
             )}
         </>

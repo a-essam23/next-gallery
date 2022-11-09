@@ -38,10 +38,10 @@ app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
 app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
-    console.log("development");
+    console.log("development".blue);
     // app.use(morgan("dev"));
 } else {
-    console.log("production");
+    console.log("production".yellow);
 }
 app.use(compression());
 app.use((req, res, next) => {

@@ -49,7 +49,7 @@ export default function Loginpage({}) {
                             setIsRegister(false);
                         }}
                     >
-                        {langData["registerText"]}
+                        {langData["loginText"]}
                     </button>
                 ) : (
                     <button
@@ -58,12 +58,12 @@ export default function Loginpage({}) {
                             setIsRegister(true);
                         }}
                     >
-                        {langData["loginText"]}
+                        {langData["registerText"]}
                     </button>
                 )}
                 <Loading isLoading={isLoading} />
                 <Message icon options={msg} />
-                {/* <div
+                {/* <div_
                     className="flex px-4 pt-4 justify-evenly "
                 >
                     <FontAwesomeIcon

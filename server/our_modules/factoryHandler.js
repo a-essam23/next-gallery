@@ -112,7 +112,7 @@ exports.deleteOne = (Model) =>
             })
         );
         //it is supposed to filter and search for the specific folder and delete the image inside its array of images
-
+        // TODO FIX DELETING !
         await Model.findOneAndUpdate(
             { name: image.folder },
             { $pull: { images: image.name } },

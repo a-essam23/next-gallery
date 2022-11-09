@@ -33,7 +33,6 @@ export default function Layout({ children, className, title }) {
             <AntContent
                 className={`container flex flex-col main-theme min-h-screen relative ${className}`}
             >
-                <Counter />
                 {children}
             </AntContent>
             <AntFooter className="m-0 p-0 mt-16">

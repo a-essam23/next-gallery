@@ -1,8 +1,6 @@
-import { message } from "antd";
 import axios from "axios";
 
-const protocol =
-    process.env.NODE_ENV === "development" ? "http://" : "https://";
+const protocol = process.env.NODE_ENV === "development" ? "http://" : "http://";
 
 //// FIX TOO MANY REQUESTS ERROR !
 
@@ -264,6 +262,7 @@ export const login = async (reqData) => {
         payload.data = res?.data;
         return payload;
     } catch (e) {
+        console.log(e);
         payload.error = {
             status:
                 e.response?.data?.error?.statusCode ||
