@@ -27,7 +27,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function CollectionsPage({ collections = [] }) {
-    // const [isLoading, setIsLoading] = useState(true);
     return (
         <Layout>
             <Searchbar

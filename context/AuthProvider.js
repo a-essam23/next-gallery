@@ -24,13 +24,15 @@ export const AuthProvider = ({ children }) => {
     //     localStorage.setItem("token", user.token);
     // }, [user.token]);
     useEffect(() => {
-        console.log(!user);
         if (paths[0] === "login" || paths[0] === "404") return;
 
-        if (!user) router.replace("/login");
+        // if (!user) router.replace("/login");
 
         if (paths[0] === "admin") {
-            if (user?.role !== "admin") router.replace("/login");
+            if (!user?.role || user?.role !== "admin") {
+                console.log("Permision denied not admin", user?.role);
+                router.replace("/login");
+            }
         }
         // eslint-disable-next-line
     }, [user, paths]);

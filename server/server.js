@@ -22,7 +22,7 @@ nextServer
             // .connect(process.env.DATABASE_LOCAL)
             .connect(DB, { dbName: "roman" })
             .then(() => {
-                console.log("DB connection successful!".cyan.underline);
+                console.log("DB connection successful!".cyan);
             });
 
         app.get("*", (req, res) => {
