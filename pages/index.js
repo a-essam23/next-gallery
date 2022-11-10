@@ -96,6 +96,7 @@ export default function Home({ pageData }) {
                             ? pageData?.data?.swiper.map((img) => {
                                   return (
                                       <img
+                                          key={img?._id}
                                           alt={img?.name}
                                           src={img?.sizes?.original}
                                           className="w-full h-full object-cover"

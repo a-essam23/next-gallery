@@ -19,8 +19,8 @@ nextServer
         );
 
         await mongoose
-            .connect(process.env.DATABASE_LOCAL)
-            // .connect(DB, { dbName: "roman" })
+            // .connect(process.env.DATABASE_LOCAL)
+            .connect(DB, { dbName: "roman" })
             .then(() => {
                 console.log("DB connection successful!".cyan);
             });

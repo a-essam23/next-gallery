@@ -54,7 +54,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
         Body: fs.readFileSync(req.files[0].path),
         ACL: "public-read",
     };
-
+    /// TODO MAKE DIMENTIONS DYMANIC
     let newImage = await Image.create({
         Key: req.files[0].originalname,
         name: req.body.name,
@@ -62,7 +62,9 @@ exports.createImage = catchAsync(async (req, res, next) => {
         folder: req.body.folder,
         sizes: {
             original: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
-            small: `https://ik.imagekit.io/rr0ybvdll/tr:w-100,h-100/${params.Key}`,
+            small: `https://ik.imagekit.io/rr0ybvdll/tr:w-${300},h-${300}/${
+                params.Key
+            }`,
         },
 
         // createdBy: req.user.id,

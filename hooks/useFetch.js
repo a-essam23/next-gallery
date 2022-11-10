@@ -69,7 +69,7 @@ const useFetch = () => {
         setIsLoading(false);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
-            setUser(null);
+            addUser(null);
             return false;
         } else {
             setMsg({ content: "Logged in... redirecting", status: "success" });

@@ -23,16 +23,15 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (paths[0] === "login" || paths[0] === "404" || paths[0] === "500")
             return;
-
         if (!user) router.replace("/login");
 
         if (paths[0] === "admin") {
-            console.log(user);
             if (user?.role !== "admin") {
                 console.log("Permision denied not admin", user?.role);
                 router.replace("/login");
             }
         }
+
         // eslint-disable-next-line
     }, [user, paths]);
 

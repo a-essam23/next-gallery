@@ -9,7 +9,6 @@ import {
 import { Button, Form, Input, Select } from "antd";
 import { useLang } from "../../context";
 import TextArea from "antd/lib/input/TextArea";
-import Dragger from "antd/lib/upload/Dragger";
 import { checkJWTcookie, ServerSideErrorHandler } from "../../lib";
 import { getOne } from "../../services";
 import { useEffect, useState } from "react";
@@ -101,7 +100,7 @@ export default function AdminPage({
 }) {
     //// ADD SMARTER SEARCH FOR MODELS SELECt
     const { langData } = useLang();
-    const [mainData, setMainData] = useState(pageData);
+    const [mainData, setMainData] = useState({ data: { ...pageData?.data } });
     const [allGroups, setAllGroups] = useState([]);
     const [allModels, setAllModels] = useState([]);
     const { msg, isLoading, handleUpdate, handleGetAll } = useFetch();
@@ -149,7 +148,7 @@ export default function AdminPage({
                     size="large"
                     type="primary"
                     onClick={async () => {
-                        console.log(mainData);
+                        // console.log(mainData);
                         await handleUpdate(mainData, "main", "main");
                     }}
                 >
@@ -170,6 +169,7 @@ export default function AdminPage({
                 </div>
                 <div className="sm:basis-2/5 h-96 sm:h-full w-full center flex flex-col gap-2">
                     <Select
+                        maxLength={4}
                         mode="multiple"
                         className="w-full"
                         onChange={(gps) => {
@@ -217,7 +217,7 @@ export default function AdminPage({
                     })}
                 </Select>
                 <ModelSwiper
-                    images={pageData.images}
+                    models={pageData?.images}
                     size={16}
                     showCode
                     autoplay={false}
