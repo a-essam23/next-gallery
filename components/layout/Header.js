@@ -3,7 +3,7 @@ import Head from "next/head";
 export default function Header({ title = "" }) {
     return (
         <Head>
-            <title>{"Roman Classic" + (title && ` | ${title}`)}</title>
+            <title>{"Roman Classic" + (title ? ` | ${title}` : "")}</title>
             <meta charSet="UTF-8"></meta>
             <meta name="description" content=""></meta>
             <meta name="keywords" content="Gallery Application"></meta>

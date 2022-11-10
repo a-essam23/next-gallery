@@ -13,14 +13,14 @@ import { getOne } from "../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
-    // if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
+    if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
     const { data, error } = await getOne(
         context.req.headers.host,
         "main",
         "main",
         jwt
     );
-    // if (error) return ServerSideErrorHandler(context, error);
+    if (error) return ServerSideErrorHandler(context, error);
 
     // const models = [
     //     {
@@ -77,38 +77,38 @@ export async function getServerSideProps(context) {
     //     "/imgs/blank-blue.jpg",
     // ];
     return {
-        props: { pageData: data || { groups: [], models: [], imageList: [] } }, // will be passed to the page component as props
+        props: {
+            pageData: data.data || { groups: [], models: [], data: {} },
+        },
     };
 }
 
 export default function Home({ pageData }) {
     const { langData } = useLang();
-    const { user } = useAuth();
-    const { groups, models, imageList } = pageData;
     return (
         <Layout>
             <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 xl:h-144 2xl:h-216">
                 <SwiperTemplate
-                    showIndex
                     autoplay
                     delay={10}
-                    items={Array(4)
-                        .fill()
-                        .map((i) => {
-                            return (
-                                <img
-                                    alt={"swiper-template-placeholder"}
-                                    key={v4()}
-                                    src="/imgs/placeholder.jpg"
-                                    className="h-full w-full object-cover"
-                                />
-                            );
-                        })}
+                    items={
+                        pageData?.data?.swiper
+                            ? pageData?.data?.swiper.map((img) => {
+                                  return (
+                                      <img
+                                          alt={img?.name}
+                                          src={img?.sizes?.original}
+                                          className="w-full h-full object-cover"
+                                      />
+                                  );
+                              })
+                            : []
+                    }
                     className="sm:basis-3/5 h-96 sm:h-full w-full shadow-cd center "
                 />
                 <FourBoxes
                     activeLink
-                    groups={groups}
+                    groups={pageData?.groups}
                     className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 "
                 />
             </section>
@@ -116,13 +116,32 @@ export default function Home({ pageData }) {
                 {langData.latest.toUpperCase()}
             </section>
             <section>
-                <ModelSwiper models={models} size={16} showCode activeLink />
+                <ModelSwiper
+                    models={pageData?.images}
+                    size={16}
+                    showCode
+                    activeLink
+                />
             </section>
             <section id="about">
-                <About imageList={imageList || []} card={{}} />
+                <About
+                    imageList={pageData?.data?.customers || []}
+                    card={{
+                        description: pageData?.data?.about?.content,
+                        previewImg:
+                            pageData?.data?.about?.cover?.sizes?.original,
+                        title: pageData?.data?.about?.title,
+                    }}
+                />
             </section>
             <section id="contact">
-                <Contact />
+                <Contact
+                    hrefs={{
+                        facebook: pageData?.data?.contact?.facebook,
+                        whatsapp: pageData?.data?.contact?.whatsapp,
+                        pinterest: pageData?.data?.contact?.pinterest,
+                    }}
+                />
             </section>
         </Layout>
     );

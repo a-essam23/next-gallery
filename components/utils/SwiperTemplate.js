@@ -34,14 +34,11 @@ export default function SwiperTemplate({
         >
             {items.map((item, i) => {
                 return (
-                    <SwiperSlide
-                        className="w-full h-full"
-                        key={item?._id || v4()}
-                    >
+                    <SwiperSlide className="w-full h-full" key={v4()}>
                         {item}
                         {showIndex && (
                             <span className="absolute top-0 left-0 opacity-75 p-2 text-xl bg-black text-white">
-                                {i + 1}
+                                {item?.name || i + 1}
                             </span>
                         )}
                     </SwiperSlide>

@@ -46,7 +46,7 @@ export default function About({
                 {imageList.map((image) => (
                     <div className="w-full h-full" key={v4()}>
                         <img
-                            src={image}
+                            src={image?.sizes?.original}
                             alt={"ROMANCLASSIC"}
                             className="object-cover w-full h-full"
                         />

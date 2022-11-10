@@ -27,7 +27,7 @@ export default function ModelInfo({
                     className="object:cover w-full max-h-full md:rounded md:rounded-b-none lg:rounded-tr-none lg:rounded-l "
                 />
             </div>
-            <div className="gap-2 md:gap-4 sm:rounded-b lg:rounded-bl-none lg:rounded-r flex flex-col basis-5/12 flex-grow lg:shadow-lgb">
+            <div className="gap-2 md:gap-4 sm:rounded-b lg:rounded-bl-none lg:rounded-r flex flex-col basis-5/12 flex-grow lg:shadow-lgb ">
                 <div className="grid grid-cols-3 gap-3 pt-4 sm:gap-6 2xl:gap-8 rounded">
                     <div className="flex px-4 gap-5 sm:gap-8 2xl:gap-4 ">
                         <a href="/facebook">

@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import classes from "./Contact.module.css";
 
-export default function Contact({ className, hrefs = [] }) {
+export default function Contact({ className, hrefs = {} }) {
     return (
         <>
             <div className={classes.cards}>
@@ -22,7 +22,7 @@ export default function Contact({ className, hrefs = [] }) {
                         </p>
 
                         <a
-                            href={hrefs[0] || ""}
+                            href={hrefs?.facebook || ""}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -41,7 +41,7 @@ export default function Contact({ className, hrefs = [] }) {
                         </p>
 
                         <a
-                            href={hrefs[1] || ""}
+                            href={hrefs?.whatsapp || ""}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -59,7 +59,7 @@ export default function Contact({ className, hrefs = [] }) {
                         </p>
 
                         <a
-                            href={hrefs[2] || ""}
+                            href={hrefs?.pinterest || ""}
                             target="_blank"
                             rel="noopener noreferrer"
                         >

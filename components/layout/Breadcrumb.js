@@ -13,9 +13,8 @@ export default function Breadcrumb() {
     const { langData, language } = useLang();
     function getBreadCrumbs() {
         const paths = pathname.split("/").filter((path) => path.length > 0);
-        console.log(paths);
-        if (!paths.length) return null;
 
+        if (!paths.length) return null;
         const crumbList = paths.map((path, index) => {
             const path_ = langData[decodeURI(path)] || decodeURI(path);
             const href =

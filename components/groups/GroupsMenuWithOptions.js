@@ -14,14 +14,15 @@ export default function GroupsMenuWithOptions({}) {
     const [current, setCurrent] = useState(null);
     const [isShown, setIsShown] = useState(false);
     const [groups, setGroups] = useState([]);
-    const { user } = useAuth();
     const { langData } = useLang();
     const { isLoading, msg, handleDelete, handleGetAll } = useFetch();
     useEffect(() => {
         if (!isShown)
-            handleGetAll("group").then(({ data, error }) =>
-                setGroups(data || [])
-            );
+            handleGetAll("group").then(({ data, error }) => {
+                if (!error) {
+                    setGroups(data);
+                }
+            });
 
         // eslint-disable-next-line
     }, [isShown]);
@@ -52,7 +53,7 @@ export default function GroupsMenuWithOptions({}) {
             </div>
             <Loading isLoading={isLoading} />
             <Message icon options={msg} />
-            {groups.length && (
+            {groups.length > 0 && (
                 <Menu
                     className="h-full border-b-2 shadow rounded "
                     defaultSelectedKeys={["1"]}
@@ -65,14 +66,14 @@ export default function GroupsMenuWithOptions({}) {
                             label: (
                                 <div className="">
                                     <Link
-                                        href={`/admin/${group.name.toLowerCase()}`}
+                                        href={`/admin/${group?.name.toLowerCase()}`}
                                     >
                                         <a
                                             onClick={(e) => {
-                                                setCurrent(group._id);
+                                                setCurrent(group?._id);
                                             }}
                                         >
-                                            {group.name.toUpperCase() || "NULL"}
+                                            {group?.name.toUpperCase()}
                                         </a>
                                     </Link>
                                     <FontAwesomeIcon
@@ -81,7 +82,7 @@ export default function GroupsMenuWithOptions({}) {
                                         className="absolute right-0 top-2/4 -translate-y-2/4 mr-4 "
                                         size="lg"
                                         onClick={() => {
-                                            handleDelete("group", group.name);
+                                            handleDelete("group", group?.name);
                                         }}
                                     />
                                 </div>

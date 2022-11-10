@@ -17,15 +17,7 @@ import { useFetch } from "../../hooks";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
-    if (!jwt) {
-        return {
-            redirect: {
-                permenant: false,
-                destination: "/login",
-                source: context.req.headers?.referer,
-            },
-        };
-    }
+    if (!jwt) ServerSideErrorHandler(context, { status: 401 });
     const { data, error } = await getOne(
         context.req.headers.host,
         "main",
@@ -112,8 +104,30 @@ export default function AdminPage({
     const [mainData, setMainData] = useState(pageData);
     const [allGroups, setAllGroups] = useState([]);
     const [allModels, setAllModels] = useState([]);
-    const { msg, isLoading, handleUpload, handleDelete, handleGetAll } =
-        useFetch();
+    const { msg, isLoading, handleUpdate, handleGetAll } = useFetch();
+
+    const editPageData_data = (keys = [], value) => {
+        if (keys.length === 1) {
+            setMainData({
+                ...mainData,
+                data: {
+                    ...mainData?.data,
+                    [keys[0]]: value,
+                },
+            });
+        } else if (keys.length === 2) {
+            setMainData({
+                ...mainData,
+                data: {
+                    ...mainData?.data,
+                    [keys[0]]: {
+                        ...mainData?.data?.[keys[0]],
+                        [keys[1]]: value,
+                    },
+                },
+            });
+        }
+    };
 
     useEffect(() => {
         handleGetAll("group").then(({ data, error }) =>
@@ -134,8 +148,9 @@ export default function AdminPage({
                     className="bg-blue-600 h-full text-white w-full"
                     size="large"
                     type="primary"
-                    onClick={() => {
+                    onClick={async () => {
                         console.log(mainData);
+                        await handleUpdate(mainData, "main", "main");
                     }}
                 >
                     Save
@@ -149,10 +164,7 @@ export default function AdminPage({
                         type={"image"}
                         images={pageData.data?.swiper}
                         onFinish={(imageList) => {
-                            setMainData({
-                                ...mainData,
-                                data: { ...mainData.data, swiper: imageList },
-                            });
+                            editPageData_data(["swiper"], imageList);
                         }}
                     />
                 </div>
@@ -216,19 +228,48 @@ export default function AdminPage({
                 <section className="text-3xl 2xl:text-4xl text-center ">
                     {langData.about.toUpperCase()}
                 </section>
-                <Form className="border-2 rounded p-2" size="large">
-                    <Form.Item>
-                        <Input name="title" placeholder="Title" />
+                <Form
+                    className="border-2 rounded p-2"
+                    size="large"
+                    onFinish={(data) => editPageData_data(["about"], data)}
+                >
+                    <Form.Item
+                        initialValue={pageData?.data?.about?.title}
+                        name="title"
+                    >
+                        <Input placeholder="Title" />
                     </Form.Item>
                     <Form.Item>
-                        <Dragger>Upload Image</Dragger>
+                        <ImageInputWall
+                            size={1}
+                            type={"image"}
+                            onFinish={(fileList) => {
+                                editPageData_data(
+                                    ["about", "cover"],
+                                    fileList[0]
+                                );
+                            }}
+                        />
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item
+                        initialValue={pageData?.data?.about?.content}
+                        name="content"
+                    >
                         <TextArea
                             rows={4}
                             name="content"
                             placeholder="Content"
                         />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            danger
+                            size="large"
+                            htmlType="submit"
+                        >
+                            UPDATE
+                        </Button>
                     </Form.Item>
                 </Form>
             </section>
@@ -241,10 +282,7 @@ export default function AdminPage({
                     images={mainData?.data?.customers || []}
                     type="image"
                     onFinish={(imageList) => {
-                        setMainData({
-                            ...mainData,
-                            data: { ...mainData.data, customers: imageList },
-                        });
+                        editPageData_data(["customers"], imageList);
                     }}
                 />
             </section>
@@ -252,15 +290,42 @@ export default function AdminPage({
                 {langData.contact.toUpperCase()}
             </section>
             <section className="">
-                <Form layout="inline" className="p-2 w-full " size="large">
-                    <Form.Item className="w-3/12">
-                        <Input name="facebook" placeholder="Facebook" />
+                <Form
+                    layout="inline"
+                    className="p-2 w-full "
+                    size="large"
+                    onFinish={(d) => editPageData_data(["contact"], d)}
+                >
+                    <Form.Item
+                        name="facebook"
+                        className="w-3/12"
+                        initialValue={pageData?.data?.contact?.facebook}
+                    >
+                        <Input placeholder="Facebook" />
                     </Form.Item>
-                    <Form.Item className="w-3/12">
-                        <Input name="whatsapp" placeholder="Whatsapp" />
+                    <Form.Item
+                        name="whatsapp"
+                        className="w-3/12"
+                        initialValue={pageData?.data?.contact?.whatsapp}
+                    >
+                        <Input placeholder="Whatsapp" />
                     </Form.Item>
-                    <Form.Item className="w-3/12">
-                        <Input name="pinterest" placeholder="Pinterest" />
+                    <Form.Item
+                        name="pinterest"
+                        className="w-3/12"
+                        initialValue={pageData?.data?.contact?.pinterest}
+                    >
+                        <Input placeholder="Pinterest" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            danger
+                            size="large"
+                            htmlType="submit"
+                        >
+                            UPDATE
+                        </Button>
                     </Form.Item>
                 </Form>
             </section>

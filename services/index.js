@@ -256,7 +256,6 @@ export const deleteMany = async (
 
 export const login = async (reqData) => {
     let payload = { data: null, error: null, reqData };
-    // const host = hostname ? protocol + hostname : "";
     try {
         const res = await axios.post(`/api/v1/auth/login`, reqData);
         payload.data = res?.data;

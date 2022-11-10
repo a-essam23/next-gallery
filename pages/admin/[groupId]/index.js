@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 } from "uuid";
 import {
     AdminLayout,
@@ -12,8 +12,9 @@ import {
     Loading,
     Message,
 } from "../../../components";
+import { useFetch } from "../../../hooks";
 import { checkJWTcookie, ServerSideErrorHandler } from "../../../lib";
-import { deleteOne, getOne } from "../../../services";
+import { getOne } from "../../../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
@@ -35,23 +36,22 @@ export async function getServerSideProps(context) {
     //         };
     //     });
     return {
-        props: { collections: data.folders || [] }, // will be passed to the page component as props
+        props: { collections_: data?.folders || [] }, // will be passed to the page component as props
     };
 }
 //// TODO REPLACE ADMIN SSR WITH CSR FOR AUTH VALIDATION!
 
 //// TODO REPLACE STATE WITH REDUCER
 
-export default function AdminGrouppage({ collections = [] }) {
+export default function AdminGrouppage({ collections_ = [] }) {
     const router = useRouter();
     const groupId = router.query.groupId;
     const [isShown, setIsShown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-    // const [collections, setcollections] = useState(ssCollections);
+    // eslint-disable-next-line
+    const [collections, setcollections] = useState(collections_ || []);
     const [modalContent, setModalContent] = useState({ group: groupId });
-    const [isLoading, setIsLoading] = useState(false);
-    const [msg, setMsg] = useState(null);
-
+    const { isLoading, msg, handleDelete } = useFetch();
     ////TODO ADD CHECK/UNCHECK ALL BUTTON
 
     ///TODO CREATE A MESSAGE COMPOENENT WITH ICONS
@@ -60,21 +60,8 @@ export default function AdminGrouppage({ collections = [] }) {
     //     console.log(isShown);
     // }, [isShown]);
 
-    useEffect(() => {}, [isShown]);
-
-    const handleDelete = async (type, name, setIsLoading, setMsg) => {
-        setIsLoading(true);
-        const { data, error } = await deleteOne("", type, name);
-        setIsLoading(false);
-        if (error) {
-            setMsg({ content: error, status: "fail" });
-        } else {
-            setMsg({ content: "Added!", status: "success" });
-        }
-    };
-
     return (
-        <AdminLayout isLoading={isLoading}>
+        <AdminLayout>
             {isShown && (
                 <FormModal
                     isUpdate={isUpdate}
@@ -107,7 +94,7 @@ export default function AdminGrouppage({ collections = [] }) {
                 <Loading isLoading={isLoading} />
                 <Message options={msg} icon timeout={2} />
             </div>
-            {collections.length > 0 ? (
+            {collections.length ? (
                 <Grid className="p-4">
                     {collections.map((collection) => (
                         <CollectionWithOptions
@@ -117,7 +104,7 @@ export default function AdminGrouppage({ collections = [] }) {
                                 setModalContent({
                                     type: "model",
                                     group: groupId,
-                                    collection: collection.name,
+                                    collection: collection?.name,
                                 });
                                 // setModalType("model");
                                 // setSelectedCollection(collection.name);
@@ -130,19 +117,14 @@ export default function AdminGrouppage({ collections = [] }) {
                                     type: "collection",
                                     name: collection.name,
                                     currentName: collection.name,
-                                    image: collection.sizes.original,
+                                    image: collection?.sizes?.original,
                                 });
                                 setIsUpdate(true);
                                 setIsShown(true);
                             }}
-                            onClickDelete={() => {
-                                handleDelete(
-                                    "collection",
-                                    collection.name,
-                                    setIsLoading,
-                                    setMsg
-                                );
-                            }}
+                            onClickDelete={() =>
+                                handleDelete("collection", collection?.name)
+                            }
                             onCheck={(check) => console.log(check)}
                         />
                     ))}

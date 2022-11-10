@@ -19,6 +19,7 @@ const useFetch = () => {
 
     const handleUpload = async (formData, type) => {
         setIsLoading(true);
+        setMsg(null);
         const { data, error } = await postOne("", type, formData, token);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
@@ -31,6 +32,7 @@ const useFetch = () => {
 
     const handleUpdate = async (formData, type, name) => {
         setIsLoading(true);
+        setMsg(null);
         const { data, error } = await updateOne(
             "",
             type,
@@ -49,6 +51,7 @@ const useFetch = () => {
 
     const handleDelete = async (type, name) => {
         setIsLoading(true);
+        setMsg(null);
         const { data, error } = await deleteOne("", type, name, token);
         setIsLoading(false);
         if (error) {
@@ -61,11 +64,12 @@ const useFetch = () => {
 
     const handleLogin = async (formData) => {
         setIsLoading(true);
+        setMsg(null);
         const { data, error } = await login(formData);
-        console.log(data, error);
         setIsLoading(false);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
+            setUser(null);
             return false;
         } else {
             setMsg({ content: "Logged in... redirecting", status: "success" });
@@ -76,6 +80,7 @@ const useFetch = () => {
 
     const handleRegister = async (formData) => {
         setIsLoading(true);
+        setMsg(null);
         const { data, error } = await register(formData);
         setIsLoading(false);
         if (error) {
@@ -90,6 +95,7 @@ const useFetch = () => {
 
     const handleGetAll = async (type) => {
         setIsLoading(true);
+        setMsg(null);
         const { data, error } = await getAll("", type, token);
         setIsLoading(false);
         if (error) {

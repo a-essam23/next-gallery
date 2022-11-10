@@ -34,7 +34,6 @@ export default function ImageInputWall({
             },
             type
         );
-        console.log(data, error);
         if (!error) {
             setImagesList([...imagesList, data]);
         }
@@ -87,7 +86,7 @@ export default function ImageInputWall({
                     maxCount={size}
                     beforeUpload={onUploadHandler}
                 >
-                    {imagesList.length < 5 && (
+                    {imagesList.length < size && (
                         <div className="w-32 h-20">
                             <p className="ant-upload-drag-icon m-0 p-0">
                                 <InboxOutlined />

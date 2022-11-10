@@ -6,23 +6,18 @@ import {
 } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import {
-    GroupsMenuWithOptions,
     Header,
     Breadcrumb,
     Footer,
     NavBar,
-    Counter,
-    Loading,
+    GroupsMenuWithOptions,
 } from "../../components";
-import { useAuth, useLang } from "../../context";
+import { useLang } from "../../context";
 import LanguageSelection from "./LanguageSelection";
 
 export default function AdminLayout({ children, className = "", title }) {
     const { language, dir } = useLang();
-    const { user } = useAuth();
-    const router = useRouter();
 
     return (
         <AntLayout dir={dir} lang={language} className="bg-white">
@@ -47,7 +42,7 @@ export default function AdminLayout({ children, className = "", title }) {
                     <AntContent
                         className={`${className} xl:mx-6 bg-white min-h-screen h-full `}
                     >
-                        {user && children}
+                        {children}
                     </AntContent>
                 </AntLayout>
             </AntContent>
