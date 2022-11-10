@@ -1,7 +1,7 @@
 const next = require("next");
 
 const dev = process.env.NODE_ENV !== "production";
-const nextServer = next({ dev, port, hostname });
+const nextServer = next({ dev });
 const handle = nextServer.getRequestHandler();
 
 nextServer
