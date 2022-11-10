@@ -7,7 +7,7 @@
     "dev": "node server/server_next.js",
     "dev:client": "next dev",
     "build": "NODE_ENV=production next build",
-    "start": "NODE_ENV=production node server/server.js",
+    "start": "NODE_ENV=production node server/server_next.js",
     "lint": "next lint"
   },
   "dependencies": {
