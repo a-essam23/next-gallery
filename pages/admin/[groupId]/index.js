@@ -55,7 +55,7 @@ export default function AdminGrouppage({ collections_ = [] }) {
     ////TODO ADD CHECK/UNCHECK ALL BUTTON
     useEffect(() => {
         setCollections(collections_);
-    }, [groupId]);
+    }, [collections_]);
     ///TODO CREATE A MESSAGE COMPOENENT WITH ICONS
 
     // useEffect(() => {
