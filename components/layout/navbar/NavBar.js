@@ -10,7 +10,7 @@ function NavBar() {
     const { user } = useAuth();
     return (
         <div
-            className={`container flex items-center md:py-1 lg:py-2 xl:py-3 2xl:py-4 gap-4 justify-between text-sm md:text-lg xl:text-xl`}
+            className={`container flex items-center p-5 md:py-1 lg:py-2 xl:py-3 2xl:py-4 gap-4 justify-between text-sm md:text-lg xl:text-xl`}
         >
             <Link className={``} href="/">
                 <a>

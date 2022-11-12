@@ -52,7 +52,9 @@ exports.createFolder = catchAsync(async (req, res, next) => {
         ACL: "public-read",
     };
 
-    let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-100,h-100/${params.Key}`;
+    let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-${300},h-${300}/${
+        params.Key
+    }`;
 
     let newFolder = await Image.create({
         Key: req.files[0].originalname,

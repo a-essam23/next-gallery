@@ -42,7 +42,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-export default function AdminCollectionPage({ models }) {
+export default function AdminCollectionPage({ models = [] }) {
     const router = useRouter();
     const collectionId = router.query.collectionId;
     const [modalContent, setModalContent] = useState({
@@ -50,8 +50,7 @@ export default function AdminCollectionPage({ models }) {
     });
     const [isShown, setIsShown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-    const { isLoading, msg, handleUpdate, handleDelete } = useFetch();
-
+    const { handleDelete } = useFetch();
     return (
         <AdminLayout>
             {isShown && (

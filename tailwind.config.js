@@ -18,6 +18,10 @@ module.exports = {
             boxShadow: {
                 cd: "6px 5px 3px 0px rgb(0 0 0 / 0.1), 0px 0px 1px 1px rgb(0 0 0 / 0.1)",
                 lgb: "0px 0px 15px -3px rgb(0 0 0 / 0.1), 5px 0px 10px 0px rgb(0 0 0 / 0.1)",
+                boxLeft:
+                    "-5px 5px 10px -5px rgb(0 0 0 / 10%), 0px 0px 0px 1px rgb(0 0 0 / 10%)",
+                boxRight:
+                    "5px 5px 10px -5px rgb(0 0 0 / 10%), 0px 0px 0px 1px rgb(0 0 0 / 10%)",
             },
             spacing: {
                 88: "22rem",

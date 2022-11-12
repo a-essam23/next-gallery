@@ -15,6 +15,7 @@ import { getOne } from "../../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
+    console.log(context.query);
     if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
 
     const { data, error } = await getOne(
@@ -26,27 +27,24 @@ export async function getServerSideProps(context) {
 
     if (error) return ServerSideErrorHandler(context, error);
     return {
-        props: { models: data?.images || [] }, // will be passed to the page component as props
+        props: {
+            models: data?.images || [],
+            swipeRef: context.query?.swipeRef || null,
+        }, // will be passed to the page component as props
     };
 }
 
-export default function ModelPage({ models = [] }) {
+export default function ModelPage({ models = [], swipeRef = null }) {
     ////TODO SEARCHBARS
     const router = useRouter();
     const collectionId = router.query.collectionId;
     // const [searchParams, setSearchParams] = useSearchParams();
     // const [models, setmodels] = useState([]);
-    const [isShown, setIsShown] = useState(false);
-    const [slideIndex, setSlideIndex] = useState(1);
-    // const { isAr } = useLang();
+    const [isShown, setIsShown] = useState(swipeRef ? true : false);
 
-    useEffect(() => {
-        if (router.query.ref) {
-            setSlideIndex(router.query.ref || 0);
-            setIsShown(true);
-        }
-        // eslint-disable-next-line
-    }, []);
+    const [slideIndex, setSlideIndex] = useState(
+        swipeRef ? models.findIndex((el) => el._id === swipeRef) : null
+    );
 
     useEffect(() => {
         isShown
@@ -71,7 +69,7 @@ export default function ModelPage({ models = [] }) {
                             setIsShown(false);
                         }}
                     ></div>
-                    <div className="h-4/5 lg:h-auto xl:max-h-160 2xl:max-h-232 w-11/12 sm:w-9/12 md:w-8/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 lg:justify-center lg:items-center flex bg-white rounded m-auto z-20 fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 overflow-y-scroll no-scrollbar lg:overflow-y-hidden">
+                    <div className="h-4/5 lg:h-auto xl:max-h-160 2xl:max-h-232 w-11/12 sm:w-9/12 md:w-8/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 lg:justify-center lg:items-center flex bg-white rounded-3xl m-auto z-20 fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 overflow-y-scroll no-scrollbar lg:overflow-y-hidden">
                         <Swiper
                             onSwiper={(swiper) => {
                                 swiper.slideTo(slideIndex, 0);

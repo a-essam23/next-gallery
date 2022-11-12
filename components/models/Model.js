@@ -27,7 +27,7 @@ export default function Model({
                 onClick ||
                 (() => {
                     activeLink &&
-                        router.push(`/collections/${folder}?ref=${_id}`);
+                        router.push(`/collections/${folder}?swipeRef=${_id}`);
                 })
             }
         >

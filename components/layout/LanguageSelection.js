@@ -4,24 +4,24 @@ export default function LanguageSelection({}) {
     const { changeLanguage } = useLang();
     return (
         <div
-            className={`absolute flex w-max gap-1 mt-2 mx-2 text-sm top-14 md:top-1 flex-col z-20 order-1`}
+            className={`absolute items-end justify-end flex w-full px-4 md:px-6 gap-1 text-sm top-14 mt-1 md:top-4 md:flex-col `}
         >
-            <div
-                className="cursor-pointer hover:text-sky-900 hover:underline "
-                onClick={() => {
-                    changeLanguage("ar");
-                }}
-            >
-                العربيه
-            </div>
-            <div
-                className="cursor-pointer hover:text-sky-900 hover:underline"
+            <button
+                className="hover:text-sky-900 hover:underline z-20"
                 onClick={() => {
                     changeLanguage("en");
                 }}
             >
                 English
-            </div>
+            </button>
+            <button
+                className="hover:text-sky-900 hover:underline z-20"
+                onClick={() => {
+                    changeLanguage("ar");
+                }}
+            >
+                العربيه
+            </button>
         </div>
     );
 }

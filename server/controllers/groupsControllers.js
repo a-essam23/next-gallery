@@ -45,7 +45,9 @@ exports.createGroup = catchAsync(async (req, res, next) => {
         ACL: "public-read",
     };
 
-    let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-100,h-100/${params.Key}`;
+    let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-${300},h-${300}/${
+        params.Key
+    }`;
     console.log(req.files);
 
     let newGroup = await Image.create({

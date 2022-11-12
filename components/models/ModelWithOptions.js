@@ -21,7 +21,7 @@ export default function ModelWithOptions({
             <Card
                 className="overflow-clip "
                 cover={
-                    <div className="h-full w-full ">
+                    <div className="h-120 xl:h-96 ">
                         <img
                             alt={name}
                             src={sizes.small}

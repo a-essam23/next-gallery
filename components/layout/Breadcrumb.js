@@ -8,30 +8,23 @@ import { useLang } from "../../context";
 
 ////TODO REMODELL >>> FIX HREFS!
 export default function Breadcrumb() {
+    const { langData, language } = useLang();
     const router = useRouter();
     const pathname = router.asPath;
-    const { langData, language } = useLang();
     function getBreadCrumbs() {
-        const paths = pathname.split("/").filter((path) => path.length > 0);
-
-        if (!paths.length) return null;
-        const crumbList = paths.map((path, index) => {
-            const path_ = langData[decodeURI(path)] || decodeURI(path);
-            const href =
-                paths.slice(0, index).join("/") + `${path_ ? "/" + path_ : ""}`;
-
+        if (pathname === "/") return null;
+        const paths = pathname.split("/");
+        const crumbList = paths.map((path, i) => {
+            if (path.lastIndexOf("?")) path = path.split("?")[0];
+            if (path.length === 0) path = "home";
             return {
-                path: path_,
-                href,
+                path: langData[decodeURI(path)] || decodeURI(path),
+                href: paths.slice(0, i + 1).join("/") || "/",
             };
         });
+        //
         return (
             <>
-                <BreadcrumbItem key={v4()} className="">
-                    <Link href="/">
-                        <a>{langData["home"].toUpperCase()}</a>
-                    </Link>
-                </BreadcrumbItem>
                 {crumbList.map(({ href, path }) => {
                     return (
                         <BreadcrumbItem key={v4()} className="">
