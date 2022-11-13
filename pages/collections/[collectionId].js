@@ -100,8 +100,6 @@ export default function ModelPage({ models = [], swipeRef = null }) {
                             key={v4()}
                             data={model}
                             onClick={(e) => {
-                                e.preventDefault();
-                                console.log("clicked!!");
                                 setIsShown(true);
                                 setSlideIndex(i);
                             }}

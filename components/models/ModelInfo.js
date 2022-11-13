@@ -20,9 +20,9 @@ export default function ModelInfo({
     const { width, windowSize } = useDimensions();
     return width > 1024 ? (
         <div
-            className={`py-0 sm:py-6 md:py-8 flex lg:py-10 xl:px-8 xl:py-8 2xl:px-8 w-full 2xl:w-11/12 h-full overflow-scroll no-scrollbar lg:overflow-hidden ${+className}`}
+            className={`py-0 sm:py-6 md:py-8 flex lg:py-10 xl:px-8 xl:py-8 2xl:px-8 min-w-full 2xl:w-11/12 h-full overflow-scroll no-scrollbar lg:overflow-hidden ${+className}`}
         >
-            <div className="basis-7/12 flex w-full justify-center items-center lg:shadow-boxLeft rounded-3xl lg:rounded-r-none lg:max-h-120 xl:max-h-144 2xl:max-h-full">
+            <div className="basis-7/12 h-full flex w-full justify-center items-center lg:shadow-boxLeft rounded-3xl lg:rounded-r-none lg:max-h-120 xl:h-144 2xl:h-216">
                 <img
                     src={sizes.original}
                     alt={name}

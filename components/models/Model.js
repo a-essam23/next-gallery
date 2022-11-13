@@ -31,7 +31,7 @@ export default function Model({
                 })
             }
         >
-            <div className="w-full h-full">
+            <div className="w-full h-full ">
                 <img
                     src={sizes.original}
                     alt={name}
@@ -39,8 +39,10 @@ export default function Model({
                 />
             </div>
             {!isHovering && showCode && (
-                <div className="absolute top-0 left-0 bg-black opacity-75 p-4 lg:p-3 xl:p-4 pointer-events-none ">
-                    <h3 className="text-white font-bold text-2xl">{name}</h3>
+                <div className="w-max max-w-full absolute top-0 left-0 bg-black opacity-75 p-1 lg:p-3 xl:p-4 pointer-events-none overflow-clip">
+                    <span className="text-white font-bold lg:text-2xl overflow-clip">
+                        {name}
+                    </span>
                 </div>
             )}
         </div>

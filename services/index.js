@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const protocol =
-    process.env.NODE_ENV === "development" ? "http://" : "https://";
+const protocol = `${process.env.PROTOCOL}://` || "http://";
 
 //// FIX TOO MANY REQUESTS ERROR !
 
