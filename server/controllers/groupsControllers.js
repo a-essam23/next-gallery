@@ -107,7 +107,7 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
             console.log("data", data);
         })
     );
-    const groups = await Image.deleteMany({ group: { $in: groupsnames } });
+    const groups = await Image.deleteMany({ name: { $in: groupsnames } });
     const images = await Image.deleteMany({
         name: { $in: groupsnames },
     });
