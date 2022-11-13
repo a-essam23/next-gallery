@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import {
     AdminLayout,
@@ -49,11 +49,13 @@ export default function AdminGrouppage({ collections_ = [] }) {
     const [isShown, setIsShown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     // eslint-disable-next-line
-    const [collections, setcollections] = useState(collections_ || []);
+    const [collections, setCollections] = useState(collections_ || []);
     const [modalContent, setModalContent] = useState({ group: groupId });
     const { isLoading, msg, handleDelete } = useFetch();
     ////TODO ADD CHECK/UNCHECK ALL BUTTON
-
+    useEffect(() => {
+        setCollections(collections_);
+    }, [collections_]);
     ///TODO CREATE A MESSAGE COMPOENENT WITH ICONS
 
     // useEffect(() => {

@@ -1,2 +1,3 @@
 import useFetch from "./useFetch";
-export { useFetch };
+import useDimensions from "./useDimensions";
+export { useFetch, useDimensions };

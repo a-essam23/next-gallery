@@ -3,6 +3,7 @@ import { useAuth } from "../context";
 import {
     deleteOne,
     getAll,
+    getOne,
     login,
     postOne,
     register,
@@ -18,8 +19,8 @@ const useFetch = () => {
     const token = user?.token;
 
     const handleUpload = async (formData, type) => {
-        setIsLoading(true);
         setMsg(null);
+        setIsLoading(true);
         const { data, error } = await postOne("", type, formData, token);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
@@ -31,8 +32,8 @@ const useFetch = () => {
     };
 
     const handleUpdate = async (formData, type, name) => {
-        setIsLoading(true);
         setMsg(null);
+        setIsLoading(true);
         const { data, error } = await updateOne(
             "",
             type,
@@ -106,6 +107,19 @@ const useFetch = () => {
         return { data, error };
     };
 
+    const handleGetOne = async (type, name) => {
+        setIsLoading(true);
+        setMsg(null);
+        const { data, error } = await getOne("", type, name, token);
+        setIsLoading(false);
+        if (error) {
+            setMsg({ content: error.message, status: "fail" });
+        } else {
+            setMsg(null);
+        }
+        return { data, error };
+    };
+
     return {
         isLoading,
         msg,
@@ -115,6 +129,7 @@ const useFetch = () => {
         handleLogin,
         handleRegister,
         handleGetAll,
+        handleGetOne,
     };
 };
 

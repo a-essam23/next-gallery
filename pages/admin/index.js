@@ -13,6 +13,7 @@ import { checkJWTcookie, ServerSideErrorHandler } from "../../lib";
 import { getOne } from "../../services";
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
@@ -91,19 +92,24 @@ export async function getServerSideProps(context) {
     //     pinterest: "",
     // };
     return {
-        props: { pageData: data?.data || null }, // will be passed to the page component as props
+        props: { pageData: data.data }, // will be passed to the page component as props
     };
 }
 //// TODO SPLIT ABOUT US PAGE INTO DIFFERENT COMPONENTS
+
 export default function AdminPage({
     pageData = { groups: [], images: [], data: {} },
 }) {
     //// ADD SMARTER SEARCH FOR MODELS SELECt
+    const router = useRouter();
     const { langData } = useLang();
-    const [mainData, setMainData] = useState({ data: { ...pageData?.data } });
+    const [mainData, setMainData] = useState({
+        data: pageData.data,
+    });
     const [allGroups, setAllGroups] = useState([]);
     const [allModels, setAllModels] = useState([]);
-    const { msg, isLoading, handleUpdate, handleGetAll } = useFetch();
+    const { msg, isLoading, handleUpdate, handleGetAll, handleGetOne } =
+        useFetch();
 
     const editPageData_data = (keys = [], value) => {
         if (keys.length === 1) {
@@ -129,6 +135,11 @@ export default function AdminPage({
     };
 
     useEffect(() => {
+        // handleGetOne("main", "main").then(({ data, error }) => {
+        //     if (error) router.replace("/login");
+        //     console.log(data);
+        //     setMainData(data);
+        // });
         handleGetAll("group").then(({ data, error }) =>
             setAllGroups(data || [])
         );
@@ -231,7 +242,15 @@ export default function AdminPage({
                 <Form
                     className="border-2 rounded p-2"
                     size="large"
-                    onFinish={(data) => editPageData_data(["about"], data)}
+                    onFinish={(data) => {
+                        setMainData({
+                            ...mainData,
+                            data: {
+                                ...mainData?.data,
+                                about: { ...mainData?.data?.about, ...data },
+                            },
+                        });
+                    }}
                 >
                     <Form.Item
                         initialValue={pageData?.data?.about?.title}
