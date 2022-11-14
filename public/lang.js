@@ -19,6 +19,8 @@ export const english = {
     admin: "admin",
     loginText: "Already have an account? Log in",
     registerText: "Don't have an account? Register now!",
+    comments: "comments",
+    comingSoon: "coming soon",
 };
 
 export const arabic = {
@@ -44,4 +46,6 @@ export const arabic = {
     admin: "أدمن",
     loginText: "Already have an account? Log in",
     registerText: "Don't have an account? Register now!",
+    comments: "التعليقات",
+    comingSoon: "قريباً",
 };

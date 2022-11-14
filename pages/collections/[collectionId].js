@@ -50,6 +50,9 @@ export default function ModelPage({ models = [], swipeRef = null }) {
         isShown
             ? (document.body.style.overflowY = "hidden")
             : (document.body.style.overflowY = "scroll");
+        return () => {
+            document.body.style.overflowY = "scroll";
+        };
     }, [isShown]);
 
     return (
@@ -79,12 +82,12 @@ export default function ModelPage({ models = [], swipeRef = null }) {
                                 clickable: true,
                             }}
                             modules={[Pagination, Navigation]}
-                            className="flex justify-cemter items-center"
+                            className="flex justify-center items-center w-full h-full"
                         >
                             {models.map((model) => (
                                 <SwiperSlide
                                     key={model._id}
-                                    className="py-5 px-5 sm:px-10 md:px-12 lg:px-14 xl:py-0 xl:px-4 flex justify-center items-center max-h-full max-w-full"
+                                    className="py-5 px-5 sm:px-10 md:px-12 lg:px-14 xl:py-0 xl:px-4 justify-center items-center flex h-full w-full"
                                 >
                                     <ModelInfo data={model} className="" />
                                 </SwiperSlide>

@@ -7,7 +7,7 @@ import {
     ModelSwiper,
     SwiperTemplate,
 } from "../components";
-import { useAuth, useLang } from "../context";
+import { useLang } from "../context";
 import { checkJWTcookie, ServerSideErrorHandler } from "../lib";
 import { getOne } from "../services";
 
@@ -99,7 +99,7 @@ export default function Home({ pageData }) {
                                           key={img?._id}
                                           alt={img?.name}
                                           src={img?.sizes?.original}
-                                          className="w-full h-full object-cover"
+                                          className="w-full h-full object-fill"
                                       />
                                   );
                               })
