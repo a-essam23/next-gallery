@@ -6,6 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 
 exports.createComment = catchAsync(async (req, res, next) => {
   const image = await Image.findOne({ name: req.params.code });
+  console.log(image);
   if (image.genre !== "image") {
     return next(new AppError("Comments are valid on images only", 400));
   }

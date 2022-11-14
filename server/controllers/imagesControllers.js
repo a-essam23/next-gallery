@@ -16,7 +16,7 @@ const factory = require("../our_modules/factoryHandler");
 const Image = require("../models/imageModel");
 const multer = require("multer");
 const upload = require("../config/multerConfig");
-
+const Comment = require("../models/commentModel");
 // const Jimp = require("jimp");
 const deleteFiles = () => {
   const dir = join(dirname(require.main.filename) + "/files");
@@ -91,7 +91,8 @@ exports.getOneImage = catchAsync(async (req, res, next) => {
   if (!image) {
     return next(new AppError(`no image found with the Name provided`, 404));
   }
-  image.comments = await Image.find({ name: { $in: image.comments } });
+
+  image.comments = await Comment.find({ _id: { $in: image.comments } });
 
   res.status(200).json({
     status: "success",
@@ -150,7 +151,7 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
   );
   //delete images
   const images = await Image.deleteMany({ name: { $in: imagesnames } });
-
+  // const comments = await Comment.deleteMany({_id:})
   res.status(204).json({
     status: "success",
   });

@@ -76,7 +76,7 @@ exports.getOneGroup = catchAsync(async (req, res, next) => {
     return next(new AppError(`no group found with the Code provided`, 404));
   }
   // console.log(image.folders);
-  group.folders = await Image.find({ name: { $in: group.folders } });
+  group.folders = await Image.find({ _id: { $in: group.folders } });
 
   res.status(200).json({
     status: "success",
