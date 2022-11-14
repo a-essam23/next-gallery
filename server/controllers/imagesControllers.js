@@ -134,15 +134,16 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
   // let document = await Image.findOne({ name: imagesnames[0] });
   // console.log(imagesnames[0].folder);
   // console.log(document.folder);
-  let folder = await Image.findOne({ name: document.folder });
-  console.log(folder, "folder");
+  let folder = await Image.findOne({ name: imagesnames[0] });
+
+  console.log(folder.folder, "folder");
   let result = [];
   for (let i = 0; i < arrayOfIds.length; i++) {
     result.push(arrayOfIds[i]._id);
   }
   console.log(result);
   await Image.findOneAndUpdate(
-    { name: imagesnames[0].folder },
+    { name: folder.folder },
     //you need to pull id's here as folders has an array of image ids not names anymore
     { $pull: { images: { $in: result } } },
     { new: true }
