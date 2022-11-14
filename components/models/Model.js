@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { v4 } from "uuid";
+import { useLang } from "../../context";
 export default function Model({
     data: {
         _id = v4(),
@@ -16,13 +17,11 @@ export default function Model({
     showCode = true,
     onClick,
 }) {
-    const [isHovering, setIsHovering] = useState(false);
     const router = useRouter();
+    const { isAr } = useLang();
     return (
         <div
-            className={`flex flex-col w-full h-full relative transition-all cursor-pointer shadow-xl hover:scale-105 ${className}`}
-            onMouseLeave={() => setIsHovering(false)}
-            onMouseOver={() => setIsHovering(true)}
+            className={`flex w-full h-full relative  cursor-pointer shadow-xl hover:scale-105 group ${className}`}
             onClick={
                 onClick ||
                 (() => {
@@ -31,16 +30,25 @@ export default function Model({
                 })
             }
         >
-            <div className="w-full h-full">
+            <div className="">
                 <img
                     src={sizes.original}
                     alt={name}
                     className={"object-cover w-full h-full"}
                 />
             </div>
-            {!isHovering && showCode && (
-                <div className="absolute top-0 left-0 bg-black opacity-75 p-4 lg:p-3 xl:p-4 pointer-events-none ">
-                    <h3 className="text-white font-bold text-2xl">{name}</h3>
+            {showCode && (
+                <div
+                    className={`w-max max-w-full absolute top-0 group-hover:opacity-0
+                    ${isAr ? "right-0" : "left-0"} 
+                    bg-black opacity-75 p-1 lg:p-3 xl:p-4 pointer-events-none overflow-auto`}
+                >
+                    <h3
+                        dir="ltr"
+                        className="text-white font-bold lg:text-2xl max-w-full text-clip"
+                    >
+                        {name}
+                    </h3>
                 </div>
             )}
         </div>

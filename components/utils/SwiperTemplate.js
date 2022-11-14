@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper";
 import { v4 } from "uuid";
-import "swiper/css/bundle";
-import { useMemo, useState } from "react";
 
 export default function SwiperTemplate({
     items,

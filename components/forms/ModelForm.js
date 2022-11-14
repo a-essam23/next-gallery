@@ -4,7 +4,7 @@ import { CropDragger } from "../../components";
 export default function ModelForm({
     options: {
         previewFile,
-        aspectRatio = 1 / 1,
+        aspectRatio = 3 / 4,
         selectedCollection,
         fileList,
         onFinish,

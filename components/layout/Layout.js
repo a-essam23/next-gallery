@@ -12,14 +12,10 @@ import {
     Counter,
     LanguageSelection,
 } from "../../components";
-import { useAuth, useLang } from "../../context";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useLang } from "../../context";
 
 export default function Layout({ children, className, title }) {
     const { language, dir } = useLang();
-    const { user } = useAuth();
-    const router = useRouter();
 
     //// TODO FIX COMPONENTS
     return (
