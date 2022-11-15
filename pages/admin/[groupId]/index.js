@@ -19,12 +19,12 @@ import { getOne } from "../../../services";
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
     if (!jwt) ServerSideErrorHandler(context, { status: 401 });
-    const { data, error } = await getOne(
-        context.req.headers.host,
-        "group",
-        context.query.groupId,
-        jwt
-    );
+    const { data, error } = await getOne({
+        hostname: context.req.headers.host,
+        type: "group",
+        name: context.query.groupId,
+        token: jwt,
+    });
     if (error) return ServerSideErrorHandler(context, error);
     // const collections = Array(5)
     //     .fill()
@@ -51,16 +51,12 @@ export default function AdminGrouppage({ collections_ = [] }) {
     // eslint-disable-next-line
     const [collections, setCollections] = useState(collections_ || []);
     const [modalContent, setModalContent] = useState({ group: groupId });
-    const { isLoading, msg, handleDelete } = useFetch();
+    const { isLoading, msg, handleDelete, setMsg, handleUpdate } = useFetch();
     ////TODO ADD CHECK/UNCHECK ALL BUTTON
     useEffect(() => {
         setCollections(collections_);
+        setMsg(null);
     }, [collections_]);
-    ///TODO CREATE A MESSAGE COMPOENENT WITH ICONS
-
-    // useEffect(() => {
-    //     console.log(isShown);
-    // }, [isShown]);
 
     return (
         <AdminLayout>
@@ -108,8 +104,6 @@ export default function AdminGrouppage({ collections_ = [] }) {
                                     group: groupId,
                                     collection: collection?.name,
                                 });
-                                // setModalType("model");
-                                // setSelectedCollection(collection.name);
                                 setIsUpdate(false);
                                 setIsShown(true);
                             }}
@@ -125,9 +119,26 @@ export default function AdminGrouppage({ collections_ = [] }) {
                                 setIsShown(true);
                             }}
                             onClickDelete={() =>
-                                handleDelete("collection", collection?.name)
+                                handleDelete(
+                                    "collection",
+                                    collection?.name
+                                ).then(({ data, error }) => {
+                                    if (!error)
+                                        setCollections(
+                                            collections.filter(
+                                                (c) => c._id !== c._id
+                                            )
+                                        );
+                                })
                             }
-                            onCheck={(check) => console.log(check)}
+                            onCheck={(check) =>
+                                handleUpdate(
+                                    { active: check },
+                                    "collection",
+                                    collection?.name,
+                                    true
+                                )
+                            }
                         />
                     ))}
                 </Grid>

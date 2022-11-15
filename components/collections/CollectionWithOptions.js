@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
-import { Card, Checkbox } from "antd";
+import { Card, Switch } from "antd";
 import { EditTwoTone, DeleteTwoTone, FileAddTwoTone } from "@ant-design/icons";
+import { useState } from "react";
 
 export default function CollectionWithOptions({
     data: {
@@ -9,7 +10,7 @@ export default function CollectionWithOptions({
             original: "/imgs/blank.jpg",
             small: "/imgs/blank.jpg",
         },
-        visible = true,
+        active = true,
         group = null,
         images = [],
     },
@@ -19,8 +20,9 @@ export default function CollectionWithOptions({
     onCheck,
 }) {
     const router = useRouter();
+    const [isActive, setIsActive] = useState(active);
     return (
-        <div className="relative">
+        <div className={`relative ${isActive ? "" : "brightness-50"}`}>
             <Card
                 cover={
                     <div
@@ -36,7 +38,7 @@ export default function CollectionWithOptions({
                         <img
                             alt={name}
                             src={sizes.small}
-                            className="h-full w-full object-fit  "
+                            className="h-full w-full object-fit"
                         />
                     </div>
                 }
@@ -55,14 +57,15 @@ export default function CollectionWithOptions({
                     <span className="text-white">{images?.length || 0}</span>
                 </div>
             </Card>
-            <Checkbox
-                name="visible"
-                className="absolute top-0 right-0 "
-                defaultChecked={visible}
-                onChange={(e) => {
-                    onCheck(e.target.checked);
+            <Switch
+                name="active"
+                className="absolute top-0 right-0 bg-blue-500"
+                defaultChecked={active}
+                onChange={(checked) => {
+                    setIsActive(checked);
+                    onCheck(checked);
                 }}
-            ></Checkbox>
+            ></Switch>
         </div>
     );
 }

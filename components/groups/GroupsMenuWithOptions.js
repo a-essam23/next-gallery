@@ -5,9 +5,8 @@ import { Menu } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FormModal, Loading, Message } from "../../components";
-import { useAuth, useLang } from "../../context";
+import { useLang } from "../../context";
 import { useFetch } from "../../hooks";
-import { getAll } from "../../services";
 
 ///TODO FIX MENU CURRENT
 export default function GroupsMenuWithOptions({}) {

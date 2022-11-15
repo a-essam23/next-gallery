@@ -1,5 +1,6 @@
-import { Card, Checkbox } from "antd";
+import { Card, Checkbox as Switch } from "antd";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
+import { useState } from "react";
 
 export default function ModelWithOptions({
     data: {
@@ -10,14 +11,15 @@ export default function ModelWithOptions({
         name = null,
         collection = null,
         size = null,
-        visible = true,
+        active = true,
         onCheck = () => {},
     },
     onClickEdit,
     onClickDelete,
 }) {
+    const [isActive, setIsActive] = useState(active);
     return (
-        <div className="relative">
+        <div className={`relative ${isActive ? "" : "brightness-50"}`}>
             <Card
                 className="overflow-clip "
                 cover={
@@ -41,14 +43,15 @@ export default function ModelWithOptions({
                 <div className="text-center font-bold"> {name}</div>
                 <p className="text-center text-red-600">{size}</p>
             </Card>
-            <Checkbox
-                name="visible"
+            <Switch
+                name="active"
                 className="absolute top-0 right-0 "
-                defaultChecked={visible}
-                onChange={(e) => {
-                    onCheck(e.target.checked);
+                defaultChecked={active}
+                onChange={(checked) => {
+                    setIsActive(checked);
+                    onCheck(checked);
                 }}
-            ></Checkbox>
+            ></Switch>
         </div>
     );
 }

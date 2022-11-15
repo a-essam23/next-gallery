@@ -1,27 +1,28 @@
 import { Button, Form, Input } from "antd";
+import { useLang } from "../../context";
 
 export default function RegisterForm({ onFinish }) {
+    const { langData } = useLang();
     return (
         <Form size="middle" layout="vertical" className="" onFinish={onFinish}>
-            <div className="text-3xl font-bold pb-6">Register</div>
+            <div className="text-3xl font-bold pb-6 capitalize">
+                {langData.register}
+            </div>
+            <div className="font-bold pb-2 capitalize">{langData.name}</div>
             <Form.Item
                 autoComplete="name"
                 name="name"
-                label="Name"
                 required
                 className="font-bold"
             >
                 <Input className="rounded" required />
             </Form.Item>
-            <Form.Item
-                name="email"
-                label="Email"
-                autoComplete="email"
-                className="font-bold"
-            >
+            <div className="font-bold pb-2 capitalize">{langData.email}</div>
+            <Form.Item name="email" autoComplete="email" className="font-bold">
                 <Input className="rounded" required />
             </Form.Item>
-            <Form.Item name="password" label="Password" className="font-bold">
+            <div className="font-bold pb-2 capitalize">{langData.password}</div>
+            <Form.Item name="password" className="font-bold">
                 <Input
                     autoComplete="new-password"
                     className="rounded"
@@ -29,11 +30,10 @@ export default function RegisterForm({ onFinish }) {
                     required
                 />
             </Form.Item>
-            <Form.Item
-                name="passwordConfirm"
-                label="Confrim password"
-                className="font-bold"
-            >
+            <div className="font-bold pb-2 capitalize">
+                {langData.confirmPassword}
+            </div>
+            <Form.Item name="passwordConfirm" className="font-bold">
                 <Input
                     autoComplete="new-password"
                     className="rounded"
@@ -42,13 +42,13 @@ export default function RegisterForm({ onFinish }) {
                 />
             </Form.Item>
             <Button
-                className="mb-4 rounded"
+                className="mb-4 rounded capitalize"
                 type="primary"
                 htmlType="submit"
                 danger
                 size="large"
             >
-                Register
+                {langData.register}
             </Button>
         </Form>
     );

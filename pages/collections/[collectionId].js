@@ -18,12 +18,12 @@ export async function getServerSideProps(context) {
     console.log(context.query);
     if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
 
-    const { data, error } = await getOne(
-        context.req.headers.host,
-        "folder",
-        context.query.collectionId,
-        jwt
-    );
+    const { data, error } = await getOne({
+        hostname: context.req.headers.host,
+        type: "folder",
+        name: context.query.collectionId,
+        token: jwt,
+    });
 
     if (error) return ServerSideErrorHandler(context, error);
     return {

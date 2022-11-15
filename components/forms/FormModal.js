@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import {
     RadioButtons,
@@ -103,13 +105,16 @@ export default function FormModal({
 
     return (
         <>
-            <div
-                className="fixed bg-black opacity-50 w-screen h-screen left-0 top-0 cursor-pointer z-10 "
-                onClick={showClickHander}
-            ></div>
+            <div className="fixed bg-black opacity-50 w-screen h-screen left-0 top-0 z-10 "></div>
             <div
                 className={`bg-white flex h-144 xl:h-4/5 2xl:h-200 w-11/12 xl:w-8/12 m-auto fixed z-20 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 ${className}`}
             >
+                <FontAwesomeIcon
+                    icon={faXmarkCircle}
+                    size="3x"
+                    className="text-red-500 border-2 rounded-full bg-white cursor-pointer"
+                    onClick={showClickHander}
+                />
                 <div className="flex relative basis-2/5 p-4 border-r-2 border-gray-200">
                     <div className="flex w-full justify-center items-center ">
                         <img

@@ -14,12 +14,12 @@ import { getOne } from "../services";
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
     if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
-    const { data, error } = await getOne(
-        context.req.headers.host,
-        "main",
-        "main",
-        jwt
-    );
+    const { data, error } = await getOne({
+        hostname: context.req.headers.host,
+        type: "main",
+        name: "main",
+        token: jwt,
+    });
     if (error) return ServerSideErrorHandler(context, error);
 
     // const models = [
@@ -118,6 +118,7 @@ export default function Home({ pageData }) {
             </section>
             <section>
                 <ModelSwiper
+                    className="pt-6"
                     models={pageData?.images}
                     size={16}
                     showCode

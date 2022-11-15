@@ -21,7 +21,9 @@ export default function Model({
     const { isAr } = useLang();
     return (
         <div
-            className={`flex w-full h-full relative  cursor-pointer shadow-xl hover:scale-105 group ${className}`}
+            className={`flex w-full h-full relative cursor-pointer shadow-xl
+            hover:scale-110 transition ease-in-out hover:-translate-y-2
+            group ${className}`}
             onClick={
                 onClick ||
                 (() => {
@@ -30,18 +32,16 @@ export default function Model({
                 })
             }
         >
-            <div className="">
-                <img
-                    src={sizes.original}
-                    alt={name}
-                    className={"object-cover w-full h-full"}
-                />
-            </div>
+            <img
+                src={sizes.original}
+                alt={name}
+                className={"object-cover w-full h-full"}
+            />
             {showCode && (
                 <div
-                    className={`w-max max-w-full absolute top-0 group-hover:opacity-0
+                    className={`w-max max-w-full absolute top-0 group-hover:opacity-0 break-words
                     ${isAr ? "right-0" : "left-0"} 
-                    bg-black opacity-75 p-1 lg:p-3 xl:p-4 pointer-events-none overflow-auto`}
+                    bg-black opacity-75 p-1 lg:p-3 xl:p-4 pointer-events-none `}
                 >
                     <h3
                         dir="ltr"

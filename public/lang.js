@@ -17,10 +17,16 @@ export const english = {
     home: "home",
     customers: "our customers",
     admin: "admin",
+    login: "login",
+    register: "register",
     loginText: "Already have an account? Log in",
     registerText: "Don't have an account? Register now!",
     comments: "comments",
     comingSoon: "coming soon",
+    name: "name",
+    email: "email",
+    password: "password",
+    confirmPassword: "confirm password",
 };
 
 export const arabic = {
@@ -44,8 +50,14 @@ export const arabic = {
     home: "الصفحة الرئيسيه",
     customers: "عملائنا",
     admin: "أدمن",
-    loginText: "Already have an account? Log in",
-    registerText: "Don't have an account? Register now!",
+    login: "تسجيل",
+    loginText: "لديك حساب بالفعل؟ أضغط هنا",
+    register: "تسجيل الدخول",
+    registerText: "ليس لديك حساب؟ سجل الأن!",
     comments: "التعليقات",
     comingSoon: "قريباً",
+    name: "الأسم",
+    email: "الأيميل",
+    password: "الباسورد",
+    confirmPassword: "تأكيد الباسورد",
 };
