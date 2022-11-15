@@ -31,7 +31,13 @@ exports.deleteFolderValidation = {
 };
 
 exports.hideFolderValidation = {
-  params: Joi.object().required().keys({
-    code: Joi.string().required(),
+  body: Joi.object().required().keys({
+    active: Joi.boolean(),
   }),
+  params: Joi.object()
+    .required()
+    .keys({
+      code: Joi.string().required(),
+    })
+    .options({ allowUnknown: true }),
 };

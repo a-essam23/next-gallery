@@ -27,7 +27,17 @@ exports.updateImageValidation = {
     })
     .options({ allowUnknown: true }),
 };
-
+exports.hideImageValidation = {
+  body: Joi.object().required().keys({
+    active: Joi.boolean(),
+  }),
+  params: Joi.object()
+    .required()
+    .keys({
+      code: Joi.string().required(),
+    })
+    .options({ allowUnknown: true }),
+};
 exports.deleteImageValidation = {
   params: Joi.object()
     .required()

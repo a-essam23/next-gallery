@@ -18,25 +18,30 @@ router.route("/").get(imagesControllers.getAllImages);
 // router.route("/search").get(imagesControllers.searchAllImages);
 
 router.route("/upload").post(
-    multerConfig.imageUpload.any(),
-    // imagesControllers.setUserIds,
-    // resizeImage(100, 100),
-    imagesControllers.createImage
+  multerConfig.imageUpload.any(),
+  // imagesControllers.setUserIds,
+  // resizeImage(100, 100),
+  imagesControllers.createImage
 );
 
 router
-    .route("/:code")
-    .get(
-        validation(validators.getOneImageValidation),
-        imagesControllers.getOneImage
-    )
-    .patch(
-        validation(validators.updateImageValidation),
-        imagesControllers.updateImage
-    )
-    .delete(
-        validation(validators.deleteImageValidation),
-        imagesControllers.deleteImages
-    );
-
+  .route("/:code")
+  .get(
+    validation(validators.getOneImageValidation),
+    imagesControllers.getOneImage
+  )
+  .patch(
+    validation(validators.updateImageValidation),
+    imagesControllers.updateImage
+  )
+  .delete(
+    validation(validators.deleteImageValidation),
+    imagesControllers.deleteImages
+  );
+router
+  .route("/hide/:code")
+  .patch(
+    validation(validators.hideImageValidation),
+    imagesControllers.hideImages
+  );
 module.exports = router;

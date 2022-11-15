@@ -93,6 +93,12 @@ exports.getOneImage = catchAsync(async (req, res, next) => {
     if (!image) {
         return next(new AppError(`no image found with the Name provided`, 404));
     }
+    const image = await Image.findOne({
+        $and: [{ name: req.params.code }, { genre: "image" }],
+    }).select({ folders: 0, images: 0 });
+    if (!image) {
+        return next(new AppError(`no image found with the Name provided`, 404));
+    }
 
     image.comments = await Comment.find({ _id: { $in: image.comments } });
 

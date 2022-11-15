@@ -31,12 +31,13 @@ exports.deleteGroupValidation = {
 };
 
 exports.hideGroupsValidation = {
-  params: Joi.object().required().keys({
-    code: Joi.string().required(),
+  body: Joi.object().required().keys({
+    active: Joi.boolean(),
   }),
-  body: Joi.object()
+  params: Joi.object()
     .required()
     .keys({
-      active: Joi.boolean().valid(false).required(),
-    }),
+      code: Joi.string().required(),
+    })
+    .options({ allowUnknown: true }),
 };

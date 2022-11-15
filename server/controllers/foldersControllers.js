@@ -87,7 +87,7 @@ exports.getOneFolder = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
   const folder = await Image.findOne({
     $and: [{ genre: "folder" }, { name: req.params.code }],
-  });
+  }).select({ folders: 0, comments: 0 });
   if (!folder) {
     return next(new AppError(`no folder found with the name provided`, 404));
   }
