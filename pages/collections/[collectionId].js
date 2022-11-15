@@ -11,24 +11,23 @@ import {
     Searchbar,
 } from "../../components";
 import { checkJWTcookie, ServerSideErrorHandler } from "../../lib";
-import { getOne } from "../../services";
+import { getAll } from "../../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
     if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
 
-    const { data, error } = await getOne({
+    const { data, error } = await getAll({
         hostname: context.req.headers.host,
-        type: "folder",
-        name: context.query.collectionId,
+        type: "image",
         token: jwt,
-        filter: "active=true",
+        filter: `active=true&folder=${context.query.collectionId}`,
     });
-
+    console.log(data);
     if (error) return ServerSideErrorHandler(context, error);
     return {
         props: {
-            models: data?.images || [],
+            models: data || [],
             swipeRef: context.query?.swipeRef || null,
         }, // will be passed to the page component as props
     };
