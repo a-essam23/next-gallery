@@ -87,7 +87,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
 exports.getOneImage = catchAsync(async (req, res, next) => {
   const image = await Image.findOne({
     $and: [{ name: req.params.code }, { genre: "image" }],
-  });
+  }).select({ folders: 0, images: 0 });
   if (!image) {
     return next(new AppError(`no image found with the Name provided`, 404));
   }
@@ -131,10 +131,6 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
     })
   );
 
-  //
-  // let document = await Image.findOne({ name: imagesnames[0] });
-  // console.log(imagesnames[0].folder);
-  // console.log(document.folder);
   let folder = await Image.findOne({ name: imagesnames[0] });
 
   console.log(folder.folder, "folder");

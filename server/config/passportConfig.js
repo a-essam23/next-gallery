@@ -14,28 +14,28 @@ passport.deserializeUser(async (id, done) => {
   done(null, user);
 });
 
-// passport.use(
-//   new FacebookStrategy(
-//     {
-//       callbackURL: `http://localhost:$${process.env.PORT}/auth/facebook/redirect`,
-//       clientID: process.env.FACEBOOK_CLIENTID,
-//       clientSecret: process.env.FACEBOOK_SECRET,
-//     },
-//     async (accessToken, refreshToken, profile, done) => {
-//       const user = await User.findOne({ facebookId: profile.id });
-//       if (user) {
-//         return done(null, user);
-//       } else {
-//         const newUser = new User({
-//           name: profile.displayName,
-//           facebookId: profile.id,
-//         });
-//         const savedUser = await newUser.save();
-//         return done(null, savedUser);
-//       }
-//     }
-//   )
-// );
+passport.use(
+  new FacebookStrategy(
+    {
+      callbackURL: `http://localhost:${process.env.PORT}/auth/facebook/redirect`,
+      clientID: process.env.FACEBOOK_CLIENTID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const user = await User.findOne({ facebookId: profile.id });
+      if (user) {
+        return done(null, user);
+      } else {
+        const newUser = new User({
+          name: profile.displayName,
+          facebookId: profile.id,
+        });
+        const savedUser = await newUser.save();
+        return done(null, savedUser);
+      }
+    }
+  )
+);
 
 // passport.use(
 //   new GoogleStrategy(
