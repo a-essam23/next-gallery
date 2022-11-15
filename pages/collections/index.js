@@ -16,8 +16,7 @@ export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
     if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
 
-    const { group } = context.query;
-    let filter = "active=ture";
+    let filter = "active=true";
     for (const query in context.query) {
         filter = `${filter}&${query}=${context.query[query]}`;
     }
@@ -26,7 +25,7 @@ export async function getServerSideProps(context) {
         hostname: context.req.headers.host,
         type: "folder",
         token: jwt,
-        filter: group ? `group=${group}` : "",
+        filter: filter,
     });
 
     if (error) return ServerSideErrorHandler(context, error);

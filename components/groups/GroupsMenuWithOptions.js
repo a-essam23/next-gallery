@@ -17,7 +17,7 @@ export default function GroupsMenuWithOptions({}) {
     const { isLoading, msg, handleDelete, handleGetAll } = useFetch();
     useEffect(() => {
         if (!isShown)
-            handleGetAll("group").then(({ data, error }) => {
+            handleGetAll("group", "active=true").then(({ data, error }) => {
                 if (!error) {
                     setGroups(data);
                 }
@@ -25,15 +25,6 @@ export default function GroupsMenuWithOptions({}) {
 
         // eslint-disable-next-line
     }, [isShown]);
-    // groups = Array(6)
-    //     .fill()
-    //     .map((el, i) => {
-    //         return {
-    //             name: `GROUP${i + 1}`,
-    //             _id: i,
-    //         };
-    //     });
-
     return (
         <div className=" h-max">
             {isShown && (

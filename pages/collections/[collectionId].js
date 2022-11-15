@@ -15,7 +15,6 @@ import { getOne } from "../../services";
 
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
-    console.log(context.query);
     if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
 
     const { data, error } = await getOne({
@@ -23,6 +22,7 @@ export async function getServerSideProps(context) {
         type: "folder",
         name: context.query.collectionId,
         token: jwt,
+        filter: "active=true",
     });
 
     if (error) return ServerSideErrorHandler(context, error);

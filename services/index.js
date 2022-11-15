@@ -17,10 +17,12 @@ export const getAll = async ({
         payload.error = "Bad request: no type or hostname";
         return payload;
     }
-
+    console.log(
+        `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-genre,-updatedAt&sort=createdAt&${filter}`
+    );
     try {
         const res = await axios.get(
-            `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-folders,-genre,-updatedAt&sort=createdAt&${filter}`,
+            `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-genre,-updatedAt&sort=createdAt&${filter}`,
             {
                 headers: {
                     Authorization: "Bearer " + token,
@@ -110,7 +112,7 @@ export const updateOne = async ({
         if (type === "model") type = "image";
 
         const res = await axios.patch(
-            `${host}/api/v1/${type}/${hide ? "/hide" : ""}${name}`,
+            `${host}/api/v1/${type}/${hide ? "hide/" : ""}${name}`,
             reqData,
             {
                 headers: {

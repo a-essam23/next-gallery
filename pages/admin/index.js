@@ -140,10 +140,10 @@ export default function AdminPage({
         //     console.log(data);
         //     setMainData(data);
         // });
-        handleGetAll("group").then(({ data, error }) =>
+        handleGetAll("group", "active=true").then(({ data, error }) =>
             setAllGroups(data || [])
         );
-        handleGetAll("image").then(({ data, error }) =>
+        handleGetAll("image", "active=true").then(({ data, error }) =>
             setAllModels(data || [])
         );
 

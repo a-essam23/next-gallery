@@ -19,7 +19,6 @@ import { checkJWTcookie, ServerSideErrorHandler } from "../../../lib";
 ///TODO
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
-    // console.log(jwt);
     if (!jwt) ServerSideErrorHandler(context, { status: 401 });
     const { data, error } = await getOne({
         hostname: context.req.headers.host,
@@ -28,16 +27,6 @@ export async function getServerSideProps(context) {
         token: jwt,
     });
     if (error) return ServerSideErrorHandler(context, error);
-    // const models = Array(10)
-    //     .fill()
-    //     .map((el, i) => {
-    //         return {
-    //             name: `Model${i + 1}`,
-    //             _id: i,
-    //             image: `/imgs/placeholder.jpg`,
-    //             visible: i % 3,
-    //         };
-    //     });
     return {
         props: { models_: data.images || [] }, // will be passed to the page component as props
     };
@@ -52,7 +41,7 @@ export default function AdminCollectionPage({ models_ = [] }) {
     const [models, setModels] = useState(models_);
     const [isShown, setIsShown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-    const { handleDelete, msg, isLoading } = useFetch();
+    const { handleDelete, msg, isLoading, handleUpdate } = useFetch();
     return (
         <AdminLayout>
             {isShown && (
@@ -112,6 +101,14 @@ export default function AdminCollectionPage({ models_ = [] }) {
                             setIsUpdate(true);
                             setIsShown(true);
                         }}
+                        onCheck={(check) =>
+                            handleUpdate(
+                                { active: check },
+                                "model",
+                                album?.name,
+                                true
+                            )
+                        }
                     />
                 ))}
             </Grid>

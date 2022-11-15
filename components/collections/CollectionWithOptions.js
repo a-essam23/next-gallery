@@ -17,7 +17,7 @@ export default function CollectionWithOptions({
     onClickAdd,
     onClickEdit,
     onClickDelete,
-    onCheck,
+    onCheck = () => {},
 }) {
     const router = useRouter();
     const [isActive, setIsActive] = useState(active);
@@ -59,7 +59,7 @@ export default function CollectionWithOptions({
             </Card>
             <Switch
                 name="active"
-                className="absolute top-0 right-0 bg-blue-500"
+                className="absolute top-1 right-1 bg-blue-500"
                 defaultChecked={active}
                 onChange={(checked) => {
                     setIsActive(checked);
