@@ -31,6 +31,7 @@ export default function ImageInputWall({
                 name: file.name,
                 Key: file,
                 folder: "main",
+                active: false,
             },
             type
         );

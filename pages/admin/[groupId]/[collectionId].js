@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import {
     ModelWithOptions,
@@ -9,6 +9,8 @@ import {
     Grid,
     AdminLayout,
     Searchbar,
+    Loading,
+    Message,
 } from "../../../components";
 import { getOne } from "../../../services";
 import { useFetch } from "../../../hooks";
@@ -17,40 +19,32 @@ import { checkJWTcookie, ServerSideErrorHandler } from "../../../lib";
 ///TODO
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
-    // console.log(jwt);
     if (!jwt) ServerSideErrorHandler(context, { status: 401 });
-    const { data, error } = await getOne(
-        context.req.headers.host,
-        "folder",
-        context.query.collectionId,
-        jwt
-    );
-
+    const { data, error } = await getOne({
+        hostname: context.req.headers.host,
+        type: "folder",
+        name: context.query.collectionId,
+        token: jwt,
+    });
     if (error) return ServerSideErrorHandler(context, error);
-    // const models = Array(10)
-    //     .fill()
-    //     .map((el, i) => {
-    //         return {
-    //             name: `Model${i + 1}`,
-    //             _id: i,
-    //             image: `/imgs/placeholder.jpg`,
-    //             visible: i % 3,
-    //         };
-    //     });
     return {
-        props: { models: data.images || [] }, // will be passed to the page component as props
+        props: { models_: data.images || [] }, // will be passed to the page component as props
     };
 }
 
-export default function AdminCollectionPage({ models = [] }) {
+export default function AdminCollectionPage({ models_ = [] }) {
     const router = useRouter();
     const collectionId = router.query.collectionId;
     const [modalContent, setModalContent] = useState({
         collection: collectionId,
     });
+    const [models, setModels] = useState(models_);
     const [isShown, setIsShown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-    const { handleDelete } = useFetch();
+    const { handleDelete, msg, isLoading, handleUpdate } = useFetch();
+    useEffect(() => {
+        setModels(models_);
+    }, [models_]);
     return (
         <AdminLayout>
             {isShown && (
@@ -78,7 +72,8 @@ export default function AdminCollectionPage({ models = [] }) {
                     Add Model
                 </Button>
             </div>
-
+            <Loading isLoading={isLoading} />
+            <Message options={msg} icon={true} />
             {models.length === 0 && <EmptyPlaceHolder />}
 
             <Grid className="p-4">
@@ -86,7 +81,18 @@ export default function AdminCollectionPage({ models = [] }) {
                     <ModelWithOptions
                         key={v4()}
                         data={album}
-                        onClickDelete={() => handleDelete("model", album.name)}
+                        onClickDelete={() => {
+                            handleDelete("model", album.name).then(
+                                ({ data, error }) => {
+                                    if (!error)
+                                        setModels(
+                                            models.filter(
+                                                (m) => m._id !== album._id
+                                            )
+                                        );
+                                }
+                            );
+                        }}
                         onClickEdit={() => {
                             setModalContent({
                                 type: "model",
@@ -98,6 +104,14 @@ export default function AdminCollectionPage({ models = [] }) {
                             setIsUpdate(true);
                             setIsShown(true);
                         }}
+                        onCheck={(check) =>
+                            handleUpdate(
+                                { active: check },
+                                "model",
+                                album?.name,
+                                true
+                            )
+                        }
                     />
                 ))}
             </Grid>

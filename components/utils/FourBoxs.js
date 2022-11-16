@@ -9,12 +9,28 @@ export default function FourBoxes({
     return (
         <div className={"flex flex-1 gap-4 w-full h-full " + className}>
             <div className="flex flex-col gap-4 w-full h-full ">
-                <Box item={groups[0]} className="basis-2/5" />
-                <Box item={groups[1]} className="basis-3/5" />
+                <Box
+                    item={groups[0]}
+                    onClick={activeLink}
+                    className="basis-2/5"
+                />
+                <Box
+                    item={groups[1]}
+                    onClick={activeLink}
+                    className="basis-3/5"
+                />
             </div>
             <div className="flex flex-col gap-4 w-full h-full ">
-                <Box item={groups[2]} className="basis-3/5" />
-                <Box item={groups[3]} className="basis-2/5" />
+                <Box
+                    item={groups[2]}
+                    onClick={activeLink}
+                    className="basis-3/5"
+                />
+                <Box
+                    item={groups[3]}
+                    onClick={activeLink}
+                    className="basis-2/5"
+                />
             </div>
         </div>
     );

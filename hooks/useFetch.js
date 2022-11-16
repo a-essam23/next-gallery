@@ -21,6 +21,7 @@ const useFetch = () => {
     const handleUpload = async (formData, type) => {
         setMsg(null);
         setIsLoading(true);
+        console.log(formData);
         const { data, error } = await postOne("", type, formData, token);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
@@ -31,16 +32,17 @@ const useFetch = () => {
         return { data, error };
     };
 
-    const handleUpdate = async (formData, type, name) => {
+    const handleUpdate = async (formData, type, name, hide = false) => {
         setMsg(null);
         setIsLoading(true);
-        const { data, error } = await updateOne(
-            "",
+        const { data, error } = await updateOne({
+            hostname: "",
             type,
-            formData,
+            reqData: formData,
             name,
-            token
-        );
+            token,
+            hide,
+        });
         setIsLoading(false);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
@@ -94,10 +96,15 @@ const useFetch = () => {
         }
     };
 
-    const handleGetAll = async (type) => {
+    const handleGetAll = async (type, filter) => {
         setIsLoading(true);
         setMsg(null);
-        const { data, error } = await getAll("", type, token);
+        const { data, error } = await getAll({
+            hostname: "",
+            type,
+            token,
+            filter,
+        });
         setIsLoading(false);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
@@ -107,10 +114,16 @@ const useFetch = () => {
         return { data, error };
     };
 
-    const handleGetOne = async (type, name) => {
+    const handleGetOne = async (type, name, filter) => {
         setIsLoading(true);
         setMsg(null);
-        const { data, error } = await getOne("", type, name, token);
+        const { data, error } = await getOne({
+            hostname: "",
+            type,
+            name,
+            token,
+            filter,
+        });
         setIsLoading(false);
         if (error) {
             setMsg({ content: error.message, status: "fail" });
@@ -130,6 +143,7 @@ const useFetch = () => {
         handleRegister,
         handleGetAll,
         handleGetOne,
+        setMsg,
     };
 };
 

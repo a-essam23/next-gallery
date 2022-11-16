@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
-import { Card, Checkbox } from "antd";
+import { Card, Switch } from "antd";
 import { EditTwoTone, DeleteTwoTone, FileAddTwoTone } from "@ant-design/icons";
+import { useState } from "react";
 
 export default function CollectionWithOptions({
     data: {
@@ -9,18 +10,19 @@ export default function CollectionWithOptions({
             original: "/imgs/blank.jpg",
             small: "/imgs/blank.jpg",
         },
-        visible = true,
+        active = true,
         group = null,
         images = [],
     },
     onClickAdd,
     onClickEdit,
     onClickDelete,
-    onCheck,
+    onCheck = () => {},
 }) {
     const router = useRouter();
+    const [isActive, setIsActive] = useState(active);
     return (
-        <div className="relative">
+        <div className={`relative ${isActive ? "" : "brightness-50"}`}>
             <Card
                 cover={
                     <div
@@ -36,15 +38,24 @@ export default function CollectionWithOptions({
                         <img
                             alt={name}
                             src={sizes.small}
-                            className="h-full w-full object-fit  "
+                            className="h-full w-full object-fit"
                         />
                     </div>
                 }
                 actions={[
-                    <FileAddTwoTone key="Add" onClick={onClickAdd} />,
-                    <EditTwoTone key="Edit" onClick={onClickEdit} />,
+                    <FileAddTwoTone
+                        title="Add new model"
+                        key="Add"
+                        onClick={onClickAdd}
+                        twoToneColor="#8FDE32"
+                    />,
+                    <EditTwoTone
+                        title="Edit collection"
+                        key="Edit"
+                        onClick={onClickEdit}
+                    />,
                     <DeleteTwoTone
-                        key="Delete"
+                        key="Delete collection"
                         twoToneColor={"red"}
                         onClick={onClickDelete}
                     />,
@@ -55,14 +66,15 @@ export default function CollectionWithOptions({
                     <span className="text-white">{images?.length || 0}</span>
                 </div>
             </Card>
-            <Checkbox
-                name="visible"
-                className="absolute top-0 right-0 "
-                defaultChecked={visible}
-                onChange={(e) => {
-                    onCheck(e.target.checked);
+            <Switch
+                name="active"
+                className="absolute top-1 right-1 bg-blue-500"
+                defaultChecked={active}
+                onChange={(checked) => {
+                    setIsActive(checked);
+                    onCheck(checked);
                 }}
-            ></Checkbox>
+            ></Switch>
         </div>
     );
 }

@@ -18,12 +18,12 @@ import { useRouter } from "next/router";
 export async function getServerSideProps(context) {
     const jwt = checkJWTcookie(context);
     if (!jwt) ServerSideErrorHandler(context, { status: 401 });
-    const { data, error } = await getOne(
-        context.req.headers.host,
-        "main",
-        "main",
-        jwt
-    );
+    const { data, error } = await getOne({
+        hostname: context.req.headers.host,
+        type: "main",
+        name: "main",
+        token: jwt,
+    });
     if (error) return ServerSideErrorHandler(context, error);
     // let allGroups = [];
     // for (let i = 0; i < 4; i++) {
@@ -140,10 +140,10 @@ export default function AdminPage({
         //     console.log(data);
         //     setMainData(data);
         // });
-        handleGetAll("group").then(({ data, error }) =>
+        handleGetAll("group", "active=true").then(({ data, error }) =>
             setAllGroups(data || [])
         );
-        handleGetAll("image").then(({ data, error }) =>
+        handleGetAll("image", "active=true").then(({ data, error }) =>
             setAllModels(data || [])
         );
 

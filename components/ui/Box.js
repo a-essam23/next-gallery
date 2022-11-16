@@ -1,13 +1,19 @@
+import { useRouter } from "next/router";
+
 export default function Box({
     className,
-    onClick = () => {},
+    onClick = false,
     item = { sizes: { small: "/imgs/blank.jpg" }, name: "" },
 }) {
+    const router = useRouter();
     return (
         <div
-            onClick={(e) => {
-                onClick;
-            }}
+            onClick={
+                onClick &&
+                (() => {
+                    router.push(`/collections/?group=${item.name}`);
+                })
+            }
             className={`w-full h-full flex-grow min-h-0 bg-contain bg-white shadow-cd relative cursor-pointer ${className}`}
             style={{
                 backgroundImage: `url('${item?.sizes?.small}')`,

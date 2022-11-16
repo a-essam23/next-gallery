@@ -27,27 +27,29 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 const multer = require("multer");
 
 // app.use(helmet());
+
 const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: "Too many requests from this IP,please try again in an hour!",
+    max: 2500,
+    windowMs: 60 * 60 * 1000,
+    message: "Too many requests from this IP, please try again in an hour!",
 });
+
 app.use(express.json({ limit: "15kb" }));
 app.use("/api", limiter);
 app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
 app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
-  console.log("development".blue);
-  // app.use(morgan("dev"));
+    console.log("development".blue);
+    // app.use(morgan("dev"));
 } else {
-  console.log("production".yellow);
+    console.log("production".yellow);
 }
 app.use(compression());
 app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
+    req.requestTime = new Date().toISOString();
 
-  next();
+    next();
 });
 
 // app.use(flash());
@@ -86,16 +88,16 @@ app.use("/api/v1/group", groupRouter);
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/comments", commentRouter);
 
-app.all("*", (req, res, next) => {
-  // res.status(404).json({
-  //   status: "fail",
-  //   message: `Can't find ${req.originalUrl} on this server!`,
-  // });
-  const err = new Error(`Can't find ${req.originalUrl} on this server!`);
-  err.status = "fail";
-  err.statusCode = 404;
-  next(err);
-});
+// app.all("*", (req, res, next) => {
+//   // res.status(404).json({
+//   //   status: "fail",
+//   //   message: `Can't find ${req.originalUrl} on this server!`,
+//   // });
+//   const err = new Error(`Can't find ${req.originalUrl} on this server!`);
+//   err.status = "fail";
+//   err.statusCode = 404;
+//   next(err);
+// });
 
 app.use(globalErrorHandler);
 module.exports = app;

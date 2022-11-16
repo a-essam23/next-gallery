@@ -13,9 +13,10 @@ const DB = process.env.DATABASE.replace(
 
 mongoose
     .connect(
-        process.env.NODE_ENV === "development"
-            ? process.env.DATABASE_LOCAL
-            : DB,
+        // process.env.NODE_ENV === "development"
+        //     ? process.env.DATABASE_LOCAL
+        // :
+        DB,
         { dbName: "roman" }
     )
     .then(() => {
@@ -29,17 +30,12 @@ app.listen(port, hostname, function () {
 process.on("unhandledRejection", (err) => {
     console.log("UNHANDLED REJECTION!");
     console.log(err.stack);
-    server.close(() => {
-        process.exit(1);
-    });
 });
 
 process.on("uncaughtException", (err) => {
     console.log("Uncaught expection!");
     console.log(err.stack);
-    server.close(() => {
-        process.exit(1);
-    });
+    process.exit(1);
 });
 
 module.exports = app;

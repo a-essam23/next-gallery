@@ -4,7 +4,12 @@ const protocol = `${process.env.PROTOCOL}://` || "http://";
 
 //// FIX TOO MANY REQUESTS ERROR !
 
-export const getAll = async (hostname = null, type = null, token) => {
+export const getAll = async ({
+    hostname = null,
+    type = null,
+    token,
+    filter,
+}) => {
     let payload = { data: null, error: null };
     const host = hostname ? protocol + hostname : "";
 
@@ -12,16 +17,19 @@ export const getAll = async (hostname = null, type = null, token) => {
         payload.error = "Bad request: no type or hostname";
         return payload;
     }
-
+    console.log(
+        `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-genre,-updatedAt&sort=createdAt&${filter}`
+    );
     try {
         const res = await axios.get(
-            `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-folders,-genre,-updatedAt&sort=createdAt`,
+            `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-genre,-updatedAt&sort=createdAt&${filter}`,
             {
                 headers: {
                     Authorization: "Bearer " + token,
                 },
             }
         );
+
         payload.data = res?.data?.data?.doc;
         return payload;
     } catch (e) {
@@ -39,12 +47,13 @@ export const getAll = async (hostname = null, type = null, token) => {
     }
 };
 
-export const getOne = async (
+export const getOne = async ({
     hostname = null,
     type = null,
     name = null,
-    token = null
-) => {
+    token = null,
+    filter = "",
+}) => {
     let payload = { data: null, error: null };
 
     const host = hostname ? protocol + hostname : "";
@@ -54,11 +63,17 @@ export const getOne = async (
         return payload;
     }
     try {
-        const res = await axios.get(`${host}/api/v1/${type}/${name}`, {
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-        });
+        if (type === "collection") type = "folder";
+        if (type === "model") type = "image";
+        const res = await axios.get(
+            `${host}/api/v1/${type}/${name}?sort=createdAt&${filter}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
+        );
+        console.log(res?.data?.data);
         payload.data = res?.data?.data;
         return payload;
     } catch (e) {
@@ -76,13 +91,14 @@ export const getOne = async (
     }
 };
 
-export const updateOne = async (
+export const updateOne = async ({
     hostname = null,
     type = null,
     reqData = {},
     name = null,
-    token = null
-) => {
+    token = null,
+    hide = false,
+}) => {
     let payload = { data: null, error: null };
 
     const host = hostname ? protocol + hostname : "";
@@ -96,7 +112,7 @@ export const updateOne = async (
         if (type === "model") type = "image";
 
         const res = await axios.patch(
-            `${host}/api/v1/${type}/${name}`,
+            `${host}/api/v1/${type}/${hide ? "hide/" : ""}${name}`,
             reqData,
             {
                 headers: {

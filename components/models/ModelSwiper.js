@@ -8,6 +8,7 @@ export default function ModelSwiper({
     activeLink = false,
     showCode = false,
     autoplay = true,
+    className = "",
 }) {
     // const [albums, setAlbums] = useState([]);
     // setAlbums([]);
@@ -40,12 +41,12 @@ export default function ModelSwiper({
                 return (
                     <div
                         key={v4()}
-                        className="grid gap-8 grid-cols-2 lg:grid-cols-4 p-4 mb-8 "
+                        className={`grid gap-8 grid-cols-2 lg:grid-cols-4 p-4 mb-8 ${className}`}
                     >
                         <ModelList
                             activeLink={activeLink}
                             showCode={showCode}
-                            AlbumClassName="h-64 sm:h-64 md:h-72 xl:h-96 2xl:h-128"
+                            AlbumClassName="h-64 sm:h-64 md:h-72 xl:h-96 2xl:h-128 relative"
                             models={collection}
                         />
                     </div>

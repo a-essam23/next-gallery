@@ -131,6 +131,10 @@ exports.deleteImages = catchAsync(async (req, res, next) => {
     })
   );
 
+  //
+  // let document = await Image.findOne({ name: imagesnames[0] });
+  // console.log(imagesnames[0].folder);
+  // console.log(document.folder);
   let folder = await Image.findOne({ name: imagesnames[0] });
 
   console.log(folder.folder, "folder");

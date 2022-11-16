@@ -14,12 +14,18 @@ export default function Breadcrumb() {
     function getBreadCrumbs() {
         if (pathname === "/") return null;
         const paths = pathname.split("/");
+        console.log(paths);
         const crumbList = paths.map((path, i) => {
+            if (path.length === 0)
+                return {
+                    path: "home",
+                    href: "/",
+                };
             if (path.lastIndexOf("?")) path = path.split("?")[0];
-            if (path.length === 0) path = "home";
+            path = langData[decodeURI(path)] || decodeURI(path);
             return {
-                path: langData[decodeURI(path)] || decodeURI(path),
-                href: paths.slice(0, i + 1).join("/") || "/",
+                path,
+                href: paths.slice(0, i).join("/") + "/" + path || "/",
             };
         });
         //
