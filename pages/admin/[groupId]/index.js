@@ -56,6 +56,7 @@ export default function AdminGrouppage({ collections_ = [] }) {
     useEffect(() => {
         setCollections(collections_);
         setMsg(null);
+        // eslint-disable-next-line
     }, [collections_]);
 
     return (

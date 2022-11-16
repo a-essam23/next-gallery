@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import {
     ModelWithOptions,
@@ -42,6 +42,9 @@ export default function AdminCollectionPage({ models_ = [] }) {
     const [isShown, setIsShown] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const { handleDelete, msg, isLoading, handleUpdate } = useFetch();
+    useEffect(() => {
+        setModels(models_);
+    }, [models_]);
     return (
         <AdminLayout>
             {isShown && (

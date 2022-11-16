@@ -13,9 +13,10 @@ const DB = process.env.DATABASE.replace(
 
 mongoose
     .connect(
-        process.env.NODE_ENV === "development"
-            ? process.env.DATABASE_LOCAL
-            : DB,
+        // process.env.NODE_ENV === "development"
+        //     ? process.env.DATABASE_LOCAL
+        // :
+        DB,
         { dbName: "roman" }
     )
     .then(() => {

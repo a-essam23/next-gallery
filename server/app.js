@@ -27,11 +27,13 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 const multer = require("multer");
 
 // app.use(helmet());
+
 const limiter = rateLimit({
-    max: 100,
+    max: 2500,
     windowMs: 60 * 60 * 1000,
-    message: "Too many requests from this IP,please try again in an hour!",
+    message: "Too many requests from this IP, please try again in an hour!",
 });
+
 app.use(express.json({ limit: "15kb" }));
 app.use("/api", limiter);
 app.use(express.static(path.join(__dirname, `public`)));

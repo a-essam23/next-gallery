@@ -32,9 +32,14 @@ export default function ModelWithOptions({
                     </div>
                 }
                 actions={[
-                    <EditTwoTone key="Edit" onClick={onClickEdit} />,
+                    <EditTwoTone
+                        title="Edit model"
+                        key="Edit-model"
+                        onClick={onClickEdit}
+                    />,
                     <DeleteTwoTone
-                        key="Delete"
+                        title="Delete model"
+                        key="Delete-model"
                         twoToneColor={"red"}
                         onClick={onClickDelete}
                     />,
