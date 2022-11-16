@@ -64,8 +64,8 @@ exports.createImage = catchAsync(async (req, res, next) => {
         params.Key
       }`,
     },
-
-    // createdBy: req.user.id,
+    active: req.body.active,
+    createdBy: req.user.id,
     size: req.body.size,
     genre: "image",
   });

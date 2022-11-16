@@ -3,23 +3,34 @@ const passport = require("passport");
 const authController = require("../controllers/authController");
 const path = require("path");
 
-// router.post(
-//   "/login",
-//   passport.authenticate("local", {
-//     successRedirect: "/",
-//     failureRedirect: "/login",
-//     // failureFlash: true,}
-//   }),
-//   authController.login
-// );
+router.post(
+  "/facebook/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    // failureFlash: true,}
+  }),
+  authController.login
+);
 
-// router.get("/facebook", passport.authenticate("facebook"));
-
-// router.get(
-//   "/facebook/redirect",
-//   passport.authenticate("facebook"),
-//   authController.facebookLogin
-// );
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    successRedirect: "/profile",
+    failureRedirect: "/failed",
+  })
+);
+router.get("/profile", (req, res) => {
+  res.send("you are a valid user");
+});
+router.get("/failed", (req, res) => {
+  res.send("you failed");
+});
+router.get(
+  "/facebook/redirect",
+  passport.authenticate("facebook"),
+  authController.facebookLogin
+);
 
 // router.get(
 //   "/google",

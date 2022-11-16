@@ -80,7 +80,7 @@ exports.googleLogin = (req, res, next) => {
 exports.facebookLogin = (req, res, next) => {
   res.status(200).json({
     status: "success",
-    data: req.user,
+    data: "hey",
   });
 };
 

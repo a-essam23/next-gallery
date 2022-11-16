@@ -4,6 +4,7 @@ exports.createFolderValidation = {
   body: Joi.object().required().keys({
     name: Joi.string().required(),
     group: Joi.string().required(),
+    active: Joi.string().required(),
   }),
 };
 

@@ -60,7 +60,7 @@ exports.createFolder = catchAsync(async (req, res, next) => {
     Key: req.files[0].originalname,
 
     name: req.body.name,
-
+    createdBy: req.user.id,
     sizes: {
       original: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
       small: small,

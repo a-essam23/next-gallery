@@ -6,12 +6,12 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  done(null, user);
 });
 
 passport.deserializeUser(async (id, done) => {
-  const user = await User.findById(id);
-  done(null, user);
+  // const user = await User.findById(id);
+  return done(null, id);
 });
 
 passport.use(

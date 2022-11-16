@@ -33,7 +33,7 @@ const imageSchema = new mongoose.Schema(
       default: "image",
       enum: ["image", "folder", "group"],
     },
-    createdBy: { type: mongoose.Schema.ObjectId, ref: "User" },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },
   {

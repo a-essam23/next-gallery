@@ -8,6 +8,7 @@ exports.createImageValidation = {
       folder: Joi.string().required(),
       size: Joi.string().required(),
       genre: Joi.string().valid("image", "folder", "group").required(),
+      active: Joi.string().required(),
     }),
 };
 
