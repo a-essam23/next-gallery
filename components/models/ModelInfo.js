@@ -23,13 +23,13 @@ export default function ModelInfo({
     return width > 1024 ? (
         <div
             dir="ltr"
-            className={`py-0 sm:py-6 md:py-8 flex lg:py-10 xl:px-8 xl:py-8 2xl:px-8 min-w-full 2xl:w-11/12 h-full overflow-scroll no-scrollbar lg:overflow-hidden lg:h-184 xl:h-200 2xl:h-216 ${+className}`}
+            className={`py-0 sm:py-6 md:py-8 flex lg:py-10 xl:px-8 xl:py-8 2xl:px-8 min-w-full 2xl:w-11/12 h-full overflow-scroll no-scrollbar lg:overflow-hidden lg:h-144 xl:h-158 2xl:h-216 ${+className}`}
         >
             <div className="basis-7/12 h-full flex w-full justify-center items-center lg:shadow-boxLeft rounded-3xl lg:rounded-r-none ">
                 <img
                     src={sizes.original}
                     alt={name}
-                    className="h-full max-h-full md:rounded-3xl md:rounded-b-none lg:rounded-tr-none lg:rounded-l-3xl "
+                    className="object-cover w-full max-h-full md:rounded-3xl md:rounded-b-none lg:rounded-tr-none lg:rounded-l-3xl "
                 />
             </div>
             <div className="gap-2 md:gap-4 sm:rounded-b-3xl lg:rounded-bl-none lg:rounded-r-3xl flex flex-col basis-5/12 flex-grow lg:shadow-boxRight ">
