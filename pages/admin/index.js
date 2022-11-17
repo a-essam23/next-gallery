@@ -95,12 +95,14 @@ export async function getServerSideProps(context) {
         props: { pageData: data.data }, // will be passed to the page component as props
     };
 }
-//// TODO SPLIT ABOUT US PAGE INTO DIFFERENT COMPONENTS
 
 export default function AdminPage({
     pageData = { groups: [], images: [], data: {} },
 }) {
-    //// ADD SMARTER SEARCH FOR MODELS SELECt
+    //// TODO ADD SMARTER SEARCH FOR MODELS SELECt
+    //// TODO MAKE THE PAGE FULLY DYNAMIC
+    //// TODO VIEW IMAGES IN THE VOID >>> PLACE A MAX NO OF IMAGES INCLUDING VOID ONES
+
     const router = useRouter();
     const { langData } = useLang();
     const [mainData, setMainData] = useState({
@@ -150,6 +152,8 @@ export default function AdminPage({
         // return () => {};
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {}, [pageData]);
 
     return (
         <AdminLayout title="Admin" className="">
@@ -232,7 +236,6 @@ export default function AdminPage({
                     size={16}
                     showCode
                     autoplay={false}
-                    activeLink
                 />
             </section>
             <section>

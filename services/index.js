@@ -17,9 +17,6 @@ export const getAll = async ({
         payload.error = "Bad request: no type or hostname";
         return payload;
     }
-    console.log(
-        `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-genre,-updatedAt&sort=createdAt&${filter}`
-    );
     try {
         const res = await axios.get(
             `${host}/api/v1/image?genre=${type}&fields=-images,-__v,-Key,-comments,-folders,-genre,-updatedAt&sort=createdAt&${filter}`,

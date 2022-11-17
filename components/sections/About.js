@@ -16,7 +16,7 @@ export default function About({
                 }
             >
                 <div
-                    className="w-full h-full bg-cover relative"
+                    className="w-full h-full relative"
                     style={{
                         backgroundImage: `url('${previewImg}')`,
                         backgroundSize: "cover",
