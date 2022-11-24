@@ -140,7 +140,7 @@ export const postOne = async (
     reqData = null,
     token = null
 ) => {
-    let payload = { data: null, error: null, reqData };
+    let payload = { data: null, error: null };
     const host = hostname ? protocol + hostname : "";
 
     if (!type) {
@@ -229,7 +229,7 @@ export const deleteMany = async (
     reqData = null,
     token = null
 ) => {
-    let payload = { data: null, error: null, reqData };
+    let payload = { data: null, error: null };
 
     const host = hostname ? protocol + hostname : "";
 
@@ -268,7 +268,7 @@ export const deleteMany = async (
 };
 
 export const login = async (reqData) => {
-    let payload = { data: null, error: null, reqData };
+    let payload = { data: null, error: null };
     try {
         const res = await axios.post(`/api/v1/auth/login`, reqData);
         payload.data = res?.data;
@@ -290,7 +290,7 @@ export const login = async (reqData) => {
 };
 
 export const register = async (reqData) => {
-    let payload = { data: null, error: null, reqData };
+    let payload = { data: null, error: null };
     try {
         const res = await axios.post(`/api/v1/auth/signup`, reqData);
         payload.data = res?.data;
