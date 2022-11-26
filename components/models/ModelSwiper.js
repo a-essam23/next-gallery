@@ -41,12 +41,12 @@ export default function ModelSwiper({
                 return (
                     <div
                         key={v4()}
-                        className={`grid gap-8 grid-cols-2 lg:grid-cols-4 p-4 mb-8 ${className}`}
+                        className={`grid gap-8 grid-cols-2 xl:grid-cols-4 pb-12 ${className}`}
                     >
                         <ModelList
                             activeLink={activeLink}
                             showCode={showCode}
-                            AlbumClassName="h-64 sm:h-64 md:h-72 xl:h-96 2xl:h-128 relative"
+                            AlbumClassName=" relative"
                             models={collection}
                         />
                     </div>

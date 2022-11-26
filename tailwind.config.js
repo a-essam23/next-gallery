@@ -4,6 +4,7 @@ module.exports = {
         "./pages/**/*.{js,ts,jsx,tsx}",
         "./components/**/*.{js,ts,jsx,tsx}",
     ],
+    important: true,
     theme: {
         fontFamily: {
             silk: ['"Silkscreen"', "cursive"],
@@ -13,7 +14,8 @@ module.exports = {
                 "preview-image": "url('/src/assets/previewbg.jpg')",
             },
             fontSize: {
-                xs: ["9px", "10px"],
+                xs: ["11px", "12px"],
+                xxs: ["9px", "10px"],
             },
             boxShadow: {
                 cd: "6px 5px 3px 0px rgb(0 0 0 / 0.1), 0px 0px 1px 1px rgb(0 0 0 / 0.1)",
@@ -42,6 +44,9 @@ module.exports = {
                 232: "58rem",
                 280: "70rem",
             },
+        },
+        aspectRatio: {
+            "3/4": "3 / 4",
         },
     },
     plugins: [],

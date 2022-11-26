@@ -30,11 +30,11 @@ a {
 } */
 
 .container {
-    @apply w-11/12 md:w-10/12  mx-auto;
+    @apply w-11/12 md:w-10/12 mx-auto;
 }
 
 .main-theme {
-    background: white;
+    background-color: #881337 !important;
 }
 
 .transparent-white {
@@ -44,8 +44,9 @@ a {
 }
 
 section {
-    @apply mb-4 sm:mb-20 md:mb-20 lg:mb-20 2xl:mb-20;
+    /* @apply mb-4 sm:mb-20 md:mb-20 lg:mb-20 2xl:mb-72; */
 }
+
 .no-scrollbar {
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */

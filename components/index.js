@@ -31,6 +31,7 @@ import ModelSwiper from "./models/ModelSwiper";
 import ModelWithOptions from "./models/ModelWithOptions";
 
 import About from "./sections/About";
+import Customers from "./sections/Customers";
 import Contact from "./sections/Contact";
 import LoginForm from "./forms/LoginForm";
 import RegisterForm from "./forms/RegisterForm";
@@ -84,4 +85,5 @@ export {
     Counter,
     RegisterForm,
     LanguageSelection,
+    Customers,
 };

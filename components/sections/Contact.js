@@ -10,7 +10,9 @@ export default function Contact({ className, hrefs = {} }) {
     return (
         <>
             <div className={classes.cards}>
-                <div className={`${classes.services} grid grid-cols-3 gap-4`}>
+                <div
+                    className={`${classes.services} grid grid-cols-1 sm:grid-cols-3 gap-4`}
+                >
                     <div
                         className={`${classes["content"]} ${classes["content-1"]}`}
                     >

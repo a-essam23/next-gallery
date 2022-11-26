@@ -1,6 +1,6 @@
 .item {
     justify-self: flex-end;
-    color: black;
+    color: white;
     display: block;
     font-weight: bold;
     position: relative;
@@ -10,7 +10,7 @@
 }
 
 .item:hover {
-    color: rgb(47, 0, 255);
+    color: #ff006a;
     transition: all 250ms ease;
 }
 .item:after {

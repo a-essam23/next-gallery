@@ -4,20 +4,25 @@ import { useEffect } from "react";
 import { v4 } from "uuid";
 import { useLang } from "../../context";
 
-export default function Searchbar({ onFinish, className, choices = null }) {
+export default function Searchbar({
+    onFinish,
+    className = "",
+    choices = null,
+}) {
     const { langData, isAr } = useLang();
     return (
         <Form
             onFinish={onFinish}
-            className={`flex bg-white gap-2 ${className}`}
+            className={`w-full flex gap-2 ${className}`}
+            size="large"
         >
-            <FormItem name="value" className={`w-full`}>
-                <Input required size="large" />
+            <FormItem name="value" className={`w-full h-20 `}>
+                <Input required />
             </FormItem>
 
             {choices && (
                 <FormItem initialValue={choices[0]} name="type" className={``}>
-                    <Select size="large" className="">
+                    <Select className="">
                         {choices.map((choice) => {
                             return (
                                 <Select.Option key={v4()} value={choice}>
@@ -30,9 +35,8 @@ export default function Searchbar({ onFinish, className, choices = null }) {
             )}
             <Button
                 htmlType="submit"
-                size="large"
                 type="primary"
-                className="bg-blue-600"
+                className="bg-rose-900 hover:bg-rose-700"
             >
                 {langData.search.toUpperCase()}
             </Button>

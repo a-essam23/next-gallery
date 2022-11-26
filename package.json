@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:server": "nodemon server/server.js",
-    "dev": "node server/server_next.js",
+    "dev": "NODE_ENV=development node server/server_next.js",
     "dev:client": "next dev",
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server/server_next.js",
@@ -17,7 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "^13.0.2",
-    "antd": "^4.23.5",
+    "antd": "^5.0.1",
     "antd-img-crop": "^4.2.6",
     "aws-sdk": "^2.1231.0",
     "axios": "^1.1.3",

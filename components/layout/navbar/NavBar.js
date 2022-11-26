@@ -10,18 +10,18 @@ function NavBar() {
     const { user } = useAuth();
     return (
         <div
-            className={`container flex items-center p-5 md:py-1 lg:py-2 xl:py-3 2xl:py-4 gap-4 justify-between text-sm md:text-lg xl:text-xl`}
+            className={`h-full container flex items-center p-5 md:py-1 lg:py-2 gap-4 justify-between text-xs sm:text-sm md:text-lg xl:text-xl`}
         >
-            <Link className={``} href="/">
+            <Link className={`h-full`} href="/">
                 <a>
                     <img
                         src="/imgs/logo.png"
-                        className="w-20 h-auto md:w-24 xl:w-24"
+                        className="w-20 h-auto md:w-24 xl:w-28 2xl:w-32 invert"
                         alt="logo"
                     />
                 </a>
             </Link>
-            <div className="flex gap-4 ">
+            <div className="flex gap-4 h-full">
                 <Link href="/collections">
                     <a className={`${classes.item} `}>{langData.explore}</a>
                 </Link>

@@ -23,6 +23,7 @@ export default function Model({
         <div
             className={`flex w-full h-full relative cursor-pointer shadow-xl
             hover:scale-105 transition ease-in-out hover:-translate-y-2
+            aspect-3/4
             group ${className}`}
             onClick={
                 onClick ||

@@ -2,6 +2,7 @@ import { v4 } from "uuid";
 import {
     About,
     Contact,
+    Customers,
     FourBoxes,
     Layout,
     ModelSwiper,
@@ -86,8 +87,8 @@ export async function getServerSideProps(context) {
 export default function Home({ pageData }) {
     const { langData } = useLang();
     return (
-        <Layout>
-            <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 xl:h-144 2xl:h-216">
+        <Layout className={"gap-16 lg:gap-24 2xl:gap-32"}>
+            <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 lg:h-128 xl:h-158 2xl:h-216 aspect-3/4">
                 <SwiperTemplate
                     autoplay
                     delay={10}
@@ -113,9 +114,9 @@ export default function Home({ pageData }) {
                     className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 "
                 />
             </section>
-            <section className="text-3xl 2xl:text-4xl text-center ">
+            <div className="text-3xl 2xl:text-4xl text-center">
                 {langData.latest.toUpperCase()}
-            </section>
+            </div>
             <section>
                 <ModelSwiper
                     className="pt-6"
@@ -125,18 +126,18 @@ export default function Home({ pageData }) {
                     activeLink
                 />
             </section>
-            <section id="about">
-                <About
-                    imageList={pageData?.data?.customers || []}
-                    card={{
-                        description: pageData?.data?.about?.content,
-                        previewImg:
-                            pageData?.data?.about?.cover?.sizes?.original,
-                        title: pageData?.data?.about?.title,
-                    }}
-                />
-            </section>
-            <section id="contact">
+            <About
+                card={{
+                    description: pageData?.data?.about?.content,
+                    previewImg: pageData?.data?.about?.cover?.sizes?.original,
+                    title: pageData?.data?.about?.title,
+                }}
+            />
+            <div className="text-3xl 2xl:text-4xl text-center ">
+                {langData.customers.toUpperCase()}
+            </div>
+            <Customers imageList={pageData?.data?.customers || []} />
+            <section id="contact" className="w-full relative">
                 <Contact
                     hrefs={{
                         facebook: pageData?.data?.contact?.facebook,

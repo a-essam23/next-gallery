@@ -7,14 +7,14 @@ export default function Box({
 }) {
     const router = useRouter();
     return (
-        <div
+        <button
             onClick={
                 onClick &&
                 (() => {
                     router.push(`/collections/?group=${item.name}`);
                 })
             }
-            className={`w-full h-full flex-grow min-h-0 bg-contain bg-white shadow-cd relative cursor-pointer ${className}`}
+            className={`w-full h-full flex-grow min-h-0 bg-white shadow-cd relative cursor-pointer ${className}`}
             style={{
                 backgroundImage: `url('${item?.sizes?.small}')`,
                 backgroundSize: "cover",
@@ -29,6 +29,6 @@ export default function Box({
                     {item?.name.toUpperCase()}
                 </h1>
             </div>
-        </div>
+        </button>
     );
 }

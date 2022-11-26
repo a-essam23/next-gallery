@@ -43,7 +43,7 @@ export default function CollectionsPage({ collections_ = [] }) {
     }, [collections_]);
     // const [msg, setMsg] = useState(null);
     return (
-        <Layout>
+        <Layout className={"gap-0"}>
             <Searchbar
                 choices={["collection", "model"]}
                 onFinish={(payload) => {

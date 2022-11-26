@@ -3,7 +3,6 @@ require("dotenv").config({ path: ".env.local" });
 
 let port = process.env.PORT || 3000;
 let hostname = process.env.HOST || "localhost";
-
 const app = require("./app");
 const DB = process.env.DATABASE.replace(
     "<password>",
