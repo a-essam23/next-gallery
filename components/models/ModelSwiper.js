@@ -41,7 +41,7 @@ export default function ModelSwiper({
                 return (
                     <div
                         key={v4()}
-                        className={`grid gap-8 grid-cols-2 xl:grid-cols-4 pb-12 ${className}`}
+                        className={`grid gap-8 grid-cols-2 lg:grid-cols-4 pb-12 ${className}`}
                     >
                         <ModelList
                             activeLink={activeLink}

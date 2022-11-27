@@ -12,13 +12,12 @@ export default function Breadcrumb() {
     const router = useRouter();
     const pathname = router.asPath;
     function getBreadCrumbs() {
-        if (pathname === "/") return null;
+        if (pathname === "/" || pathname.startsWith("/#")) return null;
         const paths = pathname.split("/");
-        console.log(paths);
         const crumbList = paths.map((path, i) => {
             if (path.length === 0)
                 return {
-                    path: "home",
+                    path: langData["home"],
                     href: "/",
                 };
             if (path.lastIndexOf("?")) path = path.split("?")[0];

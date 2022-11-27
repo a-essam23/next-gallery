@@ -133,7 +133,7 @@ export default function Home({ pageData }) {
                     title: pageData?.data?.about?.title,
                 }}
             />
-            <div className="text-3xl 2xl:text-4xl text-center ">
+            <div className="text-3xl 2xl:text-4xl text-center font-bold">
                 {langData.customers.toUpperCase()}
             </div>
             <Customers imageList={pageData?.data?.customers || []} />

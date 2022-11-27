@@ -16,7 +16,7 @@ function NavBar() {
                 <a>
                     <img
                         src="/imgs/logo.png"
-                        className="w-20 h-auto md:w-24 xl:w-28 2xl:w-32 invert"
+                        className="w-20 h-auto md:w-24 xl:w-28 2xl:w-32 invert brightness-75"
                         alt="logo"
                     />
                 </a>

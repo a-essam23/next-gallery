@@ -12,7 +12,7 @@ export default function Footer() {
                 <img
                     alt="roman-classic-logo"
                     src="/imgs/logo.png"
-                    className="invert w-32 h-auto"
+                    className="invert w-32 h-auto brightness-75"
                 />
                 <span>© 2022</span>
             </div>

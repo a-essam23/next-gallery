@@ -5,7 +5,6 @@ import {
     useAuth,
     MetaProvider,
 } from "../context";
-import "antd/dist/reset.css";
 import "swiper/css/bundle";
 import "../styles/globals.css";
 import NextNProgress from "nextjs-progressbar";
