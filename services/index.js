@@ -70,7 +70,6 @@ export const getOne = async ({
                 },
             }
         );
-        console.log(res?.data?.data);
         payload.data = res?.data?.data;
         return payload;
     } catch (e) {

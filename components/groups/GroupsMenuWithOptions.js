@@ -3,6 +3,7 @@ import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FormModal, Loading, Message } from "../../components";
 import { useLang } from "../../context";
@@ -15,6 +16,12 @@ export default function GroupsMenuWithOptions({}) {
     const [groups, setGroups] = useState([]);
     const { langData } = useLang();
     const { isLoading, msg, handleDelete, handleGetAll } = useFetch();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (router.query?.groupId) setCurrent(router.query.groupId);
+        console.log("11", router.asPath);
+    }, [router.asPath]);
     useEffect(() => {
         if (!isShown)
             handleGetAll("group", "active=true").then(({ data, error }) => {
@@ -22,7 +29,7 @@ export default function GroupsMenuWithOptions({}) {
                     setGroups(data);
                 }
             });
-        return () => setIsShown(false);
+        // return () => setIsShown(false);
         // eslint-disable-next-line
     }, [isShown]);
     return (
@@ -58,13 +65,7 @@ export default function GroupsMenuWithOptions({}) {
                                     <Link
                                         href={`/admin/${group?.name.toLowerCase()}`}
                                     >
-                                        <a
-                                            onClick={(e) => {
-                                                setCurrent(group?._id);
-                                            }}
-                                        >
-                                            {group?.name.toUpperCase()}
-                                        </a>
+                                        <a>{group?.name.toUpperCase()}</a>
                                     </Link>
                                     <FontAwesomeIcon
                                         icon={faMinusCircle}
@@ -77,7 +78,7 @@ export default function GroupsMenuWithOptions({}) {
                                     />
                                 </div>
                             ),
-                            key: group._id,
+                            key: group.name,
                         }))
                     }
                 />

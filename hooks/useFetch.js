@@ -21,7 +21,6 @@ const useFetch = () => {
     const handleUpload = async (formData, type) => {
         setMsg(null);
         setIsLoading(true);
-        console.log(formData);
         const { data, error } = await postOne("", type, formData, token);
         if (error) {
             setMsg({ content: error.message, status: "fail" });

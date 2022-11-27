@@ -9,15 +9,16 @@ const Customers = ({ imageList, className }) => {
             }
             id="customers"
         >
-            {imageList.map((image, i) => (
-                <div className="w-full h-full" key={v4()}>
+            <div className="w-full h-full flex">
+                {imageList.map((image, i) => (
                     <img
+                        key={v4()}
                         src={image?.sizes?.original}
                         alt={`roman-classic-customers-${i}`}
-                        className="object-cover w-full h-full"
+                        className="object-cover aspect-3/4"
                     />
-                </div>
-            ))}
+                ))}
+            </div>
         </section>
     );
 };

@@ -12,24 +12,24 @@ export default function FourBoxes({
                 <Box
                     item={groups[0]}
                     onClick={activeLink}
-                    className="basis-2/5"
+                    className="basis-2/5 rounded-2xl"
                 />
                 <Box
                     item={groups[1]}
                     onClick={activeLink}
-                    className="basis-3/5"
+                    className="basis-3/5 rounded-2xl"
                 />
             </div>
             <div className="flex flex-col gap-4 w-full h-full ">
                 <Box
                     item={groups[2]}
                     onClick={activeLink}
-                    className="basis-3/5"
+                    className="basis-3/5 rounded-2xl"
                 />
                 <Box
                     item={groups[3]}
                     onClick={activeLink}
-                    className="basis-2/5"
+                    className="basis-2/5 rounded-2xl"
                 />
             </div>
         </div>

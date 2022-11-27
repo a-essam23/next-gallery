@@ -35,6 +35,7 @@ import Customers from "./sections/Customers";
 import Contact from "./sections/Contact";
 import LoginForm from "./forms/LoginForm";
 import RegisterForm from "./forms/RegisterForm";
+import Sidebar from "./sidebar/Sidebar";
 
 import Counter from "./utils/Counter";
 import Grid from "./ui/Grid";

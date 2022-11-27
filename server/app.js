@@ -47,6 +47,8 @@ if (process.env.NODE_ENV === "development") {
 }
 app.use(compression());
 app.use((req, res, next) => {
+    if (!req.originalUrl.startsWith("/_next"))
+        console.log(req.socket.remoteAddress, req.originalUrl);
     req.requestTime = new Date().toISOString();
 
     next();

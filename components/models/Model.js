@@ -12,6 +12,7 @@ export default function Model({
         name = "",
         folder = "",
     },
+    useOriginal = true,
     className = "",
     activeLink = false,
     showCode = true,
@@ -34,7 +35,7 @@ export default function Model({
             }
         >
             <img
-                src={sizes.original}
+                src={useOriginal ? sizes.original : sizes.small}
                 alt={name}
                 className={"object-cover w-full h-full"}
             />

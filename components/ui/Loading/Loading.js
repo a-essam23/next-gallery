@@ -5,7 +5,7 @@ export default function Loading({ isLoading }) {
         <>
             {isLoading && (
                 <div
-                    className={`flex w-full h-2 rounded-full ${
+                    className={`flex h-2 rounded-full ${
                         isLoading ? styles.isLoading : ""
                     }`}
                 />

@@ -56,3 +56,13 @@ section {
 .no-scrollbar::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
 }
+
+.striped-background {
+    background: repeating-linear-gradient(
+        -45deg,
+        white,
+        white 1000px,
+        #f4f4f5 1000px,
+        #f4f4f5 1500px
+    );
+}

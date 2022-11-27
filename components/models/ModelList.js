@@ -11,6 +11,7 @@ export default function ModelList({
         <>
             {models.map((mnodel) => (
                 <Model
+                    // useOriginal={false}
                     showCode={showCode}
                     key={v4()}
                     data={mnodel}

@@ -87,9 +87,10 @@ export async function getServerSideProps(context) {
 export default function Home({ pageData }) {
     const { langData } = useLang();
     return (
-        <Layout className={"gap-16 lg:gap-24 2xl:gap-32"}>
+        <Layout className={"gap-16 lg:gap-24 xl:gap-28 2xl:gap-32"}>
             <section className="w-full h-full gap-4 sm:flex sm:h-96 md:h-120 lg:h-128 xl:h-158 2xl:h-216 aspect-3/4">
                 <SwiperTemplate
+                    className="sm:basis-3/5 h-96 sm:h-full w-full shadow-cd center rounded-2xl"
                     autoplay
                     delay={10}
                     items={
@@ -100,18 +101,17 @@ export default function Home({ pageData }) {
                                           key={img?._id}
                                           alt={img?.name}
                                           src={img?.sizes?.original}
-                                          className="w-full h-full object-fill"
+                                          className="w-full h-full object-fill rounded-xl"
                                       />
                                   );
                               })
                             : []
                     }
-                    className="sm:basis-3/5 h-96 sm:h-full w-full shadow-cd center "
                 />
                 <FourBoxes
                     activeLink
                     groups={pageData?.groups}
-                    className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 "
+                    className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 rounded-2xl"
                 />
             </section>
             <div className="text-3xl 2xl:text-4xl text-center font-bold">
