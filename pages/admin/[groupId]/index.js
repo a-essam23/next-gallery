@@ -76,7 +76,7 @@ export default function AdminGrouppage({ collections_ = [] }) {
                 <Button
                     type="primary"
                     size="large"
-                    className="bg-blue-600 "
+                    className="bg-rose-600 hover:brightness-125 "
                     onClick={() => {
                         setModalContent({
                             type: "collection",
@@ -94,7 +94,7 @@ export default function AdminGrouppage({ collections_ = [] }) {
                 <Message options={msg} icon timeout={2} />
             </div>
             {collections.length ? (
-                <Grid className="p-4">
+                <Grid className="px-4">
                     {collections.map((collection) => (
                         <CollectionWithOptions
                             key={v4()}

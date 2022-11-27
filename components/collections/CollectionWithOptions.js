@@ -68,7 +68,7 @@ export default function CollectionWithOptions({
             </Card>
             <Switch
                 name="active"
-                className="absolute top-1 right-1 bg-blue-500"
+                className="absolute top-1 right-1 bg-rose-600"
                 defaultChecked={active}
                 onChange={(checked) => {
                     setIsActive(checked);

@@ -114,7 +114,7 @@ export default function Home({ pageData }) {
                     className="my-12 h-120 sm:h-full sm:my-0 sm:basis-2/5 "
                 />
             </section>
-            <div className="text-3xl 2xl:text-4xl text-center">
+            <div className="text-3xl 2xl:text-4xl text-center font-bold">
                 {langData.latest.toUpperCase()}
             </div>
             <section>

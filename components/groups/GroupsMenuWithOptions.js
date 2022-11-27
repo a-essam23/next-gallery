@@ -22,18 +22,18 @@ export default function GroupsMenuWithOptions({}) {
                     setGroups(data);
                 }
             });
-
+        return () => setIsShown(false);
         // eslint-disable-next-line
     }, [isShown]);
     return (
-        <div className=" h-max">
+        <div className="h-max">
             {isShown && (
                 <FormModal
                     showClickHander={() => setIsShown(false)}
                     content={{ type: "group" }}
                 />
             )}
-            <div className="text-2xl roudned bg-slate-300 text-white text-center tracking-widest font-bold py-2 px-4 items-center justify-between flex overflow-hidden">
+            <div className="text-2xl rounded-t-xl bg-slate-300 text-white text-center tracking-widest font-bold py-2 px-4 items-center justify-between flex overflow-hidden ">
                 {langData.groups.toUpperCase()}
                 <PlusCircleTwoTone
                     onClick={() => {
@@ -45,7 +45,7 @@ export default function GroupsMenuWithOptions({}) {
             <Message icon options={msg} />
             {groups.length > 0 && (
                 <Menu
-                    className="h-full border-b-2 shadow rounded "
+                    className="h-full "
                     defaultSelectedKeys={["1"]}
                     mode="vertical"
                     theme="light"

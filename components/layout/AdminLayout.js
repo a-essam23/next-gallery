@@ -33,14 +33,14 @@ export default function AdminLayout({ children, className = "", title }) {
                     className="w-full bg-white min-h-screen h-full max-w-full"
                 >
                     <Sider
-                        className="main-theme mr-4 xl:mr-0 "
+                        className="mr-4 xl:mr-0 rounded-t-2xl bg-white"
                         breakpoint="md"
-                        width={225}
+                        width={175}
                     >
                         <GroupsMenuWithOptions />
                     </Sider>
                     <AntContent
-                        className={`${className} xl:mx-6 bg-white min-h-screen h-full `}
+                        className={`xl:mx-6 pb-40 bg-white min-h-screen h-full flex flex-col ${className}`}
                     >
                         {children}
                     </AntContent>

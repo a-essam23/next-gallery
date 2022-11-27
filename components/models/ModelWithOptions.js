@@ -50,7 +50,7 @@ export default function ModelWithOptions({
             </Card>
             <Switch
                 name="active"
-                className="absolute top-0 right-0 bg-blue-500"
+                className="absolute top-0 right-0 bg-rose-600"
                 defaultChecked={active}
                 onChange={(checked) => {
                     setIsActive(checked);

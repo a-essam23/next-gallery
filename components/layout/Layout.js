@@ -25,7 +25,7 @@ export default function Layout({ children, className, title }) {
             <AntLayout dir={dir} lang={language} className="">
                 <Header title={title} />
                 <LanguageSelection />
-                <AntHeader className="h-auto p-0 m-0 flex justify-center main-theme sticky z-10 top-0 shadow-slate-600 shadow-md ">
+                <AntHeader className="h-auto p-0 m-0 flex justify-center main-theme sticky z-10 top-0 shadow-gray-700 shadow-md ">
                     <NavBar />
                 </AntHeader>
                 <Breadcrumb />

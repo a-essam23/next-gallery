@@ -156,10 +156,10 @@ export default function AdminPage({
     useEffect(() => {}, [pageData]);
 
     return (
-        <AdminLayout title="Admin" className="">
+        <AdminLayout title="Admin" className="gap-16">
             <div className="flex justify-center h-16 pb-2">
                 <Button
-                    className="bg-blue-600 h-full text-white w-full"
+                    className="bg-rose-900 hover:brightness-125 h-full text-white w-full"
                     size="large"
                     type="primary"
                     onClick={async () => {
@@ -238,10 +238,10 @@ export default function AdminPage({
                     autoplay={false}
                 />
             </section>
+            <section className="text-3xl 2xl:text-4xl text-center ">
+                {langData.about.toUpperCase()}
+            </section>
             <section>
-                <section className="text-3xl 2xl:text-4xl text-center ">
-                    {langData.about.toUpperCase()}
-                </section>
                 <Form
                     className="border-2 rounded p-2"
                     size="large"
