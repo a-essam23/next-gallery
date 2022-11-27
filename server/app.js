@@ -43,12 +43,13 @@ if (process.env.NODE_ENV === "development") {
     console.log("development".blue);
     // app.use(morgan("dev"));
 } else {
+    // app.set("trust proxy", true);
     console.log("production".yellow);
 }
 app.use(compression());
 app.use((req, res, next) => {
     if (!req.originalUrl.startsWith("/_next"))
-        console.log(req.socket.remoteAddress, req.originalUrl);
+        console.log("requesting ", req.originalUrl);
     req.requestTime = new Date().toISOString();
 
     next();

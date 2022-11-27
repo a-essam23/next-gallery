@@ -20,8 +20,9 @@ export default function GroupsMenuWithOptions({}) {
 
     useEffect(() => {
         if (router.query?.groupId) setCurrent(router.query.groupId);
-        console.log("11", router.asPath);
+        // eslint-disable-next-line
     }, [router.asPath]);
+
     useEffect(() => {
         if (!isShown)
             handleGetAll("group", "active=true").then(({ data, error }) => {
@@ -32,6 +33,7 @@ export default function GroupsMenuWithOptions({}) {
         // return () => setIsShown(false);
         // eslint-disable-next-line
     }, [isShown]);
+
     return (
         <div className="h-max">
             {isShown && (
