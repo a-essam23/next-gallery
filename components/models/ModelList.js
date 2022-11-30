@@ -6,12 +6,13 @@ export default function ModelList({
     AlbumClassName,
     showCode,
     activeLink,
+    useOriginal = true,
 }) {
     return (
         <>
             {models.map((mnodel) => (
                 <Model
-                    // useOriginal={false}
+                    useOriginal={useOriginal}
                     showCode={showCode}
                     key={v4()}
                     data={mnodel}

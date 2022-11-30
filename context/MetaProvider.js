@@ -20,4 +20,3 @@ export const MetaProvider = ({ children }) => {
 };
 
 export const useMeta = () => useContext(MetaContext);
-MetaProvider;

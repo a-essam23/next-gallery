@@ -16,6 +16,7 @@ const multer = require("multer");
 const { dirname, join } = require("path");
 const upload = require("../config/multerConfig");
 const { resizeImage } = require("../middlewares/resizeImage");
+const { getDimensions } = require("../our_modules/smallSteps");
 // const test = require("../files");
 const deleteFiles = () => {
     const dir = join(dirname(require.main.filename) + "/files");
@@ -44,10 +45,9 @@ exports.createGroup = catchAsync(async (req, res, next) => {
         Body: fs.readFileSync(req.files[0].path),
         ACL: "public-read",
     };
+    const { width, height } = getDimensions(req.files[0].path, 300);
 
-    let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-${300},h-${300}/${
-        params.Key
-    }`;
+    let small = `https://ik.imagekit.io/rr0ybvdll/tr:w-${width},h-${height}/${params.Key}`;
     // console.log(req.files);
 
     let newGroup = await Image.create({

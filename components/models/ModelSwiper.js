@@ -44,6 +44,7 @@ export default function ModelSwiper({
                         className={`grid gap-8 grid-cols-2 lg:grid-cols-4 pb-12 ${className}`}
                     >
                         <ModelList
+                            useOriginal={false}
                             activeLink={activeLink}
                             showCode={showCode}
                             AlbumClassName=" relative"

@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:server": "nodemon server/server.js",
     "dev": "NODE_ENV=development node server/server_next.js",
+    "dev:server": "nodemon server/server.js",
+    "dev:full": "NODE_ENV=development nodemon server/server_next.js",
     "dev:client": "next dev",
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server/server_next.js",
@@ -36,6 +37,7 @@
     "flash": "^1.1.0",
     "formidable": "^2.0.1",
     "helmet": "^5.1.1",
+    "image-size": "^1.0.2",
     "init": "^0.1.2",
     "jimp": "^0.16.2",
     "joi": "^17.6.4",
@@ -66,10 +68,12 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@types/react": "18.0.25",
     "autoprefixer": "^10.4.12",
     "eslint": "8.25.0",
     "eslint-config-next": "12.3.1",
     "postcss": "^8.4.18",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "typescript": "4.9.3"
   }
 }

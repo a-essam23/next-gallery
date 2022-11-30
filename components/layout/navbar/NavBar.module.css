@@ -10,7 +10,7 @@
 }
 
 .item:hover {
-    color: #ff006a;
+    color: rgb(255, 199, 199);
     transition: all 250ms ease;
 }
 .item:after {
