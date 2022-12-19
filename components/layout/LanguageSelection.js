@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { useLang } from "../../context";
 
 export default function LanguageSelection({}) {
@@ -14,6 +16,7 @@ export default function LanguageSelection({}) {
             >
                 English
             </button>
+            {/* <FontAwesomeIcon icon={faGlobe} className="z-20" size="xl" /> */}
             <button
                 className="hover:text-rose-700 hover:underline z-20"
                 onClick={() => {

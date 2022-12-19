@@ -33,9 +33,7 @@ export default function Breadcrumb() {
                 {crumbList.map(({ href, path }) => {
                     return (
                         <BreadcrumbItem key={v4()} className="">
-                            <Link href={href}>
-                                <a>{path.toUpperCase()}</a>
-                            </Link>
+                            <Link href={href}>{path.toUpperCase()}</Link>
                         </BreadcrumbItem>
                     );
                 })}
