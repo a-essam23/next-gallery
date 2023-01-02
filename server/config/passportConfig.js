@@ -17,12 +17,14 @@ passport.deserializeUser(async (id, done) => {
 passport.use(
   new FacebookStrategy(
     {
-      callbackURL: `http://localhost:${process.env.PORT}/auth/facebook/redirect`,
+      callbackURL: `http://localhost:${process.env.PORT}/api/v1/auth/facebook/redirect`,
       clientID: process.env.FACEBOOK_CLIENTID,
-      clientSecret: process.env.FACEBOOK_SECRET,
+      clientSecret: process.env.FACEBOOK_CLIENTSECRET,
     },
     async (accessToken, refreshToken, profile, done) => {
+      console.log(profile);
       const user = await User.findOne({ facebookId: profile.id });
+
       if (user) {
         return done(null, user);
       } else {

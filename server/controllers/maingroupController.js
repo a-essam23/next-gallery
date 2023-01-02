@@ -24,27 +24,21 @@ const deleteFiles = () => {
   readdirSync(dir).forEach((f) => rmSync(`${dir}/${f}`));
 };
 
-exports.createGroup = catchAsync(async (req, res, next) => {
-  const groupChecker = await Image.findOne({
+exports.createMaingroup = catchAsync(async (req, res, next) => {
+  const test2 = await Image.findOne({
     $or: [{ name: req.body.name }, { Key: req.files[0].originalname }],
   });
-  const maingroupChecker = await Image.findOne({
-    $and: [{ name: req.body.maingroup }, { genre: "maingroup" }],
-  });
-
   // console.log(test2);
-  if (groupChecker) {
+  if (test2) {
     deleteFiles();
     return next(
       new AppError(
-        "there is another group/code with the same code/group/Key name",
+        "there is another maingroup/code with the same code/group/Key name",
         409
       )
     );
   }
-  if (!maingroupChecker) {
-    return next(new AppError("maingroup name does not exist", 404));
-  }
+
   const params = {
     Bucket: "failasof",
     Key: `${req.files[0].originalname}`,
@@ -58,24 +52,16 @@ exports.createGroup = catchAsync(async (req, res, next) => {
 
   let newGroup = await Image.create({
     Key: req.files[0].originalname,
-
     name: req.body.name,
-    createdBy: req.user.id,
     sizes: {
       original: `https://${params.Bucket}.fra1.digitaloceanspaces.com/${params.Key}`,
       small: small,
     },
-    maingroup: req.body.maingroup,
-    genre: "group",
-    active: req.body.active,
+
+    genre: "maingroup",
   });
 
   const result = s3Client.send(new PutObjectCommand(params));
-  await Image.findOneAndUpdate(
-    { name: req.body.maingroup },
-    { $push: { groups: newGroup._id } },
-    { new: true }
-  );
   deleteFiles();
   res.status(201).json({
     status: "success",
@@ -83,7 +69,7 @@ exports.createGroup = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getOneGroup = catchAsync(async (req, res, next) => {
+exports.getOneMaingroup = catchAsync(async (req, res, next) => {
   // req.params.code.split(",").forEach((el) => el);
   const group = await Image.findOne({ name: req.params.code }).select({
     images: 0,
@@ -101,11 +87,11 @@ exports.getOneGroup = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteManyGroups = catchAsync(async (req, res, next) => {
-  let groupsnames = req.params.code.split(",");
+exports.deleteManyMaingroups = catchAsync(async (req, res, next) => {
+  let maingroupsnames = req.params.code.split(",");
 
   let arrayOfGroups = await Image.find({
-    $and: [{ name: { $in: groupsnames } }, { genre: "group" }],
+    $and: [{ name: { $in: maingroupsnames } }, { genre: "maingroup" }],
   }).select({
     Key: 1,
     _id: 0,
@@ -126,9 +112,12 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
       console.log("data", data);
     })
   );
-  const groups = await Image.deleteMany({ name: { $in: groupsnames } });
+  const maingroups = await Image.deleteMany({ name: { $in: maingroupsnames } });
+  //delete the groups inside the maingroup
+  //delete folders inside the groups
+  //delete the images inside this folders
   const images = await Image.deleteMany({
-    name: { $in: groupsnames },
+    name: { $in: maingroupsnames },
   });
 
   res.status(204).json({
@@ -136,6 +125,6 @@ exports.deleteManyGroups = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.hideGroup = factory.hide(Image);
-exports.deleteGroup = factory.deleteOne(Image);
-exports.updateGroup = factory.update(Image);
+exports.hideMaingroup = factory.hide(Image);
+exports.deleteMaingroup = factory.deleteOne(Image);
+exports.updateMaingroup = factory.update(Image);

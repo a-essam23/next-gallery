@@ -14,23 +14,23 @@ router.post(
 );
 
 router.get(
-  "/facebook/callback",
+  "/facebook/redirect",
   passport.authenticate("facebook", {
     successRedirect: "/profile",
     failureRedirect: "/failed",
   })
 );
 router.get("/profile", (req, res) => {
-  res.send("you are a valid user");
+  console.log("you are a valid user");
 });
 router.get("/failed", (req, res) => {
   res.send("you failed");
 });
-router.get(
-  "/facebook/redirect",
-  passport.authenticate("facebook"),
-  authController.facebookLogin
-);
+// router.get(
+//   "/facebook/redirect",
+//   passport.authenticate("facebook"),
+//   authController.facebookLogin
+// );
 
 // router.get(
 //   "/google",

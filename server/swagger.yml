@@ -23,7 +23,7 @@ servers:
 paths:
   /admin/login:
     post:
-      description: login in your account
+      description: login in the user account
       requestBody:
         required: true
         content:

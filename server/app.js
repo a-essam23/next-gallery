@@ -2,13 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const folderRouter = require("./routers/folder/folderRouter");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 const imageRouter = require("./routers/image/imageRouter");
 const groupRouter = require("./routers/group/groupRouter");
 const authRouter = require("./routers/authRouter");
 const adminRouter = require("./routers/admin/adminRouter");
 const rateLimit = require("express-rate-limit");
 const mainRouter = require("./routers/mainRouter");
+const maingroupRouter = require("./routers/maingroup/maingroupRouter");
 const passport = require("passport");
 const passportConfig = require("./config/passportConfig");
 const session = require("express-session");
@@ -29,30 +30,30 @@ const multer = require("multer");
 // app.use(helmet());
 
 const limiter = rateLimit({
-    max: 2500,
-    windowMs: 60 * 60 * 1000,
-    message: "Too many requests from this IP, please try again in an hour!",
+  max: 2500,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many requests from this IP, please try again in an hour!",
 });
 
 app.use(express.json({ limit: "15kb" }));
 app.use("/api", limiter);
 app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.static(path.join(__dirname, `files`)));
-app.use(cookieParser());
+// app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
-    console.log("development".blue);
-    // app.use(morgan("dev"));
+  console.log("development".blue);
+  // app.use(morgan("dev"));
 } else {
-    // app.set("trust proxy", true);
-    console.log("production".yellow);
+  // app.set("trust proxy", true);
+  console.log("production".yellow);
 }
 app.use(compression());
 app.use((req, res, next) => {
-    if (!req.originalUrl.startsWith("/_next"))
-        console.log("requesting ", req.originalUrl);
-    req.requestTime = new Date().toISOString();
+  if (!req.originalUrl.startsWith("/_next"))
+    console.log("requesting ", req.originalUrl);
+  req.requestTime = new Date().toISOString();
 
-    next();
+  next();
 });
 
 // app.use(flash());
@@ -90,7 +91,7 @@ app.use("/api/v1/folder", folderRouter);
 app.use("/api/v1/group", groupRouter);
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/comments", commentRouter);
-
+app.use("/api/v1/maingroup", maingroupRouter);
 // app.all("/api/v1/*", (req, res, next) => {
 //   // res.status(404).json({
 //   //   status: "fail",

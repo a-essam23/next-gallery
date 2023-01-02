@@ -1,19 +1,18 @@
 const Joi = require("joi");
 
-exports.createGroupValidation = {
+exports.createMaingroupValidation = {
   body: Joi.object().required().keys({
     name: Joi.string().required(),
-    maingroup: Joi.string().required(),
   }),
 };
 
-exports.getOneGroupValidation = {
+exports.getOneMaingroupValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
 };
 
-exports.updateGroupValidation = {
+exports.updateMaingroupValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
@@ -21,17 +20,17 @@ exports.updateGroupValidation = {
     .required()
     .keys({
       name: Joi.string(),
-      genre: Joi.string().valid("group"),
+      genre: Joi.string().valid("maingroup"),
     }),
 };
 
-exports.deleteGroupValidation = {
+exports.deleteMaingroupValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
 };
 
-exports.hideGroupsValidation = {
+exports.hideMaingroupValidation = {
   body: Joi.object().required().keys({
     active: Joi.boolean(),
   }),
