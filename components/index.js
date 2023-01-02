@@ -87,4 +87,5 @@ export {
     RegisterForm,
     LanguageSelection,
     Customers,
+    Sidebar,
 };

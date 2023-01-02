@@ -5,11 +5,10 @@ export default function Message({
         content: null,
         status: null,
     },
-    delay = 3,
     icon = false,
     text = true,
     size = "md",
-    className,
+    className = "",
 }) {
     //// TODO : ADD TIMEOUT PROPERTY!
     const icons = { fail: faTimes, success: faCheck };
@@ -22,6 +21,7 @@ export default function Message({
         <>
             {options && (
                 <div
+                    type=""
                     className={`flex w-full h-max justify-center items-center ${
                         sizes[size]?.text || sizes["md"].text
                     } ${

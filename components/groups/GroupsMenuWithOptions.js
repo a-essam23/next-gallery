@@ -67,7 +67,7 @@ export default function GroupsMenuWithOptions({}) {
                                     <Link
                                         href={`/admin/${group?.name.toLowerCase()}`}
                                     >
-                                        <a>{group?.name.toUpperCase()}</a>
+                                        {group?.name.toUpperCase()}
                                     </Link>
                                     <FontAwesomeIcon
                                         icon={faMinusCircle}
