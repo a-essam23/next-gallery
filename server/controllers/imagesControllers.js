@@ -18,6 +18,8 @@ const multer = require("multer");
 const upload = require("../config/multerConfig");
 const Comment = require("../models/commentModel");
 // const Jimp = require("jimp");
+const Logger = require("../services/logger.service");
+const logger = new Logger("imageController");
 const deleteFiles = () => {
   const dir = join(dirname(require.main.filename) + "/files");
 
@@ -26,17 +28,16 @@ const deleteFiles = () => {
 
 const Jimp = require("jimp");
 const { getDimensions } = require("../our_modules/smallSteps");
-const logger = require("../services/logger.service");
 
 exports.createImage = catchAsync(async (req, res, next) => {
   const checker = await Image.findOne({
     $or: [{ name: req.body.name }, { Key: req.files[0].originalname }],
   });
+  console.log(checker);
   const folderChecker = await Image.findOne({
     $and: [{ name: req.body.folder }, { genre: "folder" }],
   });
-  logger.info("return something");
-  console.log(req.body);
+
   if (checker) {
     deleteFiles();
     return next(new AppError("there is another image with the same name", 409));
@@ -80,6 +81,7 @@ exports.createImage = catchAsync(async (req, res, next) => {
   );
 
   deleteFiles();
+  logger.info("action", req.user.email);
   res.status(201).json({
     status: "success",
     data: newImage,
@@ -93,9 +95,9 @@ exports.getOneImage = catchAsync(async (req, res, next) => {
   if (!image) {
     return next(new AppError(`no image found with the Name provided`, 404));
   }
-  logger.info("HELLO");
-  image.comments = await Comment.find({ _id: { $in: image.comments } });
 
+  image.comments = await Comment.find({ _id: { $in: image.comments } });
+  logger.info("action", req.user.email);
   res.status(200).json({
     status: "success",
     data: image,

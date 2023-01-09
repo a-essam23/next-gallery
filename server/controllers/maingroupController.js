@@ -17,6 +17,8 @@ const { dirname, join } = require("path");
 const upload = require("../config/multerConfig");
 const { resizeImage } = require("../middlewares/resizeImage");
 const { getDimensions } = require("../our_modules/smallSteps");
+const Logger = require("../services/logger.service");
+const logger = new Logger("authController");
 // const test = require("../files");
 const deleteFiles = () => {
   const dir = join(dirname(require.main.filename) + "/files");

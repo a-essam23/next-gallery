@@ -1,0 +1,5 @@
+1/5/2023, 1:43:54 AM | INFO | return something |data "firstim243132" |
+1/5/2023, 1:46:12 AM | INFO | action |data "firstim243132" |
+1/5/2023, 1:46:34 AM | INFO | action |data "63b364fa888e4550676e1c7f" |
+1/5/2023, 1:47:38 AM | INFO | action |data {"_id":"63b364fa888e4550676e1c7f","name":"ahmed22","email":"failasof22@gmail.com","role":"user","createdAt":"2023-01-02T23:12:58.806Z","updatedAt":"2023-01-02T23:12:58.806Z","__v":0} |
+1/5/2023, 1:47:56 AM | INFO | action |data "failasof22@gmail.com" |

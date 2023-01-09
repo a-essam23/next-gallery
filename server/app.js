@@ -5,14 +5,15 @@ const folderRouter = require("./routers/folder/folderRouter");
 // const cookieParser = require("cookie-parser");
 const imageRouter = require("./routers/image/imageRouter");
 const groupRouter = require("./routers/group/groupRouter");
-const authRouter = require("./routers/authRouter");
-const adminRouter = require("./routers/admin/adminRouter");
+
+const usersRouter = require("./routers/users/usersRouter");
 const rateLimit = require("express-rate-limit");
 const mainRouter = require("./routers/mainRouter");
 const maingroupRouter = require("./routers/maingroup/maingroupRouter");
 const passport = require("passport");
 const passportConfig = require("./config/passportConfig");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("flash");
 const morgan = require("morgan");
 var cors = require("cors");
@@ -57,16 +58,20 @@ app.use((req, res, next) => {
 });
 
 // app.use(flash());
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: true,
+    cookie: { maxAge: 200000 },
+    resave: false,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://localhost:27017/roman",
+    }),
+  })
+);
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 const domainsFromEnv = process.env.CORS_DOMAINS || "";
 
@@ -84,9 +89,8 @@ const whitelist = domainsFromEnv.split(",").map((item) => item.trim());
 // };
 app.use(cors());
 
-app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/image", imageRouter);
-app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/folder", folderRouter);
 app.use("/api/v1/group", groupRouter);
 app.use("/api/v1/main", mainRouter);
