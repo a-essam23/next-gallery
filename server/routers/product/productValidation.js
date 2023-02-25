@@ -1,36 +1,37 @@
 const Joi = require("joi");
 
-exports.createMaingroupValidation = {
+exports.createProductValidation = {
   body: Joi.object().required().keys({
     name: Joi.string().required(),
+    category: Joi.string().required(),
+    active: Joi.string().required(),
   }),
 };
 
-exports.getOneMaingroupValidation = {
+exports.getOneProductValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
 };
 
-exports.updateMaingroupValidation = {
+exports.updateOneProductValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
-  body: Joi.object()
-    .required()
-    .keys({
-      name: Joi.string(),
-      genre: Joi.string().valid("maingroup"),
-    }),
+  body: Joi.object().required().keys({
+    size: Joi.string(),
+    name: Joi.string(),
+    group: Joi.string(),
+  }),
 };
 
-exports.deleteMaingroupValidation = {
+exports.deleteProductValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
 };
 
-exports.hideMaingroupValidation = {
+exports.hideProductValidation = {
   body: Joi.object().required().keys({
     active: Joi.boolean(),
   }),

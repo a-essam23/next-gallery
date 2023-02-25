@@ -45,7 +45,7 @@ const upload = multer({
 //   },
 // });
 module.exports = {
-  imageUpload: multer({ storage: imageStorage }),
+  unitUpload: multer({ storage: imageStorage }),
   // videoUpload: multer({ storage: videoStorage }),
   upload,
 };

@@ -13,27 +13,29 @@ const imageSchema = new mongoose.Schema(
     name: {
       type: String,
       lowercase: true,
-      required: [true, "every image must have a name!"],
+      required: [true, "every unit must have a name!"],
       unique: [true, "name must be unique"],
     },
-
+    genre: {
+      type: String,
+      required: true,
+      default: "unit",
+      enum: ["unit", "product", "category", "group"],
+      //to do, change the name of unit to view then category
+    },
     sizes: {
       small: String,
       original: String,
     },
     size: String,
     active: { type: Boolean, default: true },
-    folder: String,
+    product: String,
+    category: String,
+    units: Array,
+    products: Array,
+    categorys: Array,
     group: String,
-    images: Array,
-    folders: Array,
-    groups: Array,
-    genre: {
-      type: String,
-      required: true,
-      default: "image",
-      enum: ["image", "folder", "group", "maingroup"],
-    },
+
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },

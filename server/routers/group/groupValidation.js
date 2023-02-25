@@ -3,7 +3,6 @@ const Joi = require("joi");
 exports.createGroupValidation = {
   body: Joi.object().required().keys({
     name: Joi.string().required(),
-    maingroup: Joi.string().required(),
   }),
 };
 
@@ -31,7 +30,7 @@ exports.deleteGroupValidation = {
   }),
 };
 
-exports.hideGroupsValidation = {
+exports.hideGroupValidation = {
   body: Joi.object().required().keys({
     active: Joi.boolean(),
   }),

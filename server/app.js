@@ -1,15 +1,15 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const folderRouter = require("./routers/folder/folderRouter");
-// const cookieParser = require("cookie-parser");
-const imageRouter = require("./routers/image/imageRouter");
-const groupRouter = require("./routers/group/groupRouter");
+const productRouter = require("./routers/product/productRouter");
 
+const unitRouter = require("./routers/unit/unitRouter");
+const categoryRouter = require("./routers/category/categoryRouter");
+const { initializeApp } = require("firebase-admin/app");
 const usersRouter = require("./routers/users/usersRouter");
 const rateLimit = require("express-rate-limit");
 const mainRouter = require("./routers/mainRouter");
-const maingroupRouter = require("./routers/maingroup/maingroupRouter");
+const groupRouter = require("./routers/group/groupRouter");
 const passport = require("passport");
 const passportConfig = require("./config/passportConfig");
 const session = require("express-session");
@@ -17,18 +17,17 @@ const MongoStore = require("connect-mongo");
 const flash = require("flash");
 const morgan = require("morgan");
 var cors = require("cors");
-// const heroku = require("heroku");
+
 const globalErrorHandler = require("./controllers/errorController");
 const helmet = require("helmet");
 const server = require("./server");
 const compression = require("compression");
 const commentRouter = require("./routers/comment/commentRouter");
 const app = express();
+const test = initializeApp();
 require("colors");
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 const multer = require("multer");
-
-// app.use(helmet());
 
 const limiter = rateLimit({
   max: 2500,
@@ -89,23 +88,19 @@ const whitelist = domainsFromEnv.split(",").map((item) => item.trim());
 // };
 app.use(cors());
 
-app.use("/api/v1/image", imageRouter);
+app.use("/api/v1/unit", unitRouter);
 app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/folder", folderRouter);
-app.use("/api/v1/group", groupRouter);
+app.use("/api/v1/product", productRouter);
+app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/comments", commentRouter);
-app.use("/api/v1/maingroup", maingroupRouter);
-// app.all("/api/v1/*", (req, res, next) => {
-//   // res.status(404).json({
-//   //   status: "fail",
-//   //   message: `Can't find ${req.originalUrl} on this server!`,
-//   // });
-//   const err = new Error(`Can't find ${req.originalUrl} on this server!`);
-//   err.status = "fail";
-//   err.statusCode = 404;
-//   next(err);
-// });
+app.use("/api/v1/group", groupRouter);
+app.all("/api/v1/*", (req, res, next) => {
+  const err = new Error(`Can't find ${req.originalUrl} on this server!`);
+  err.status = "fail";
+  err.statusCode = 404;
+  next(err);
+});
 
 app.use(globalErrorHandler);
 module.exports = app;

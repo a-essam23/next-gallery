@@ -1,37 +1,37 @@
 const Joi = require("joi");
 
-exports.createFolderValidation = {
+exports.createCategoryValidation = {
   body: Joi.object().required().keys({
     name: Joi.string().required(),
     group: Joi.string().required(),
-    active: Joi.string().required(),
   }),
 };
 
-exports.getOneFolderValidation = {
+exports.getOneCategoryValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
 };
 
-exports.updateOneFolderValidation = {
+exports.updateCategoryValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
-  body: Joi.object().required().keys({
-    size: Joi.string(),
-    name: Joi.string(),
-    group: Joi.string(),
-  }),
+  body: Joi.object()
+    .required()
+    .keys({
+      name: Joi.string(),
+      genre: Joi.string().valid("category"),
+    }),
 };
 
-exports.deleteFolderValidation = {
+exports.deleteCategoryValidation = {
   params: Joi.object().required().keys({
     code: Joi.string().required(),
   }),
 };
 
-exports.hideFolderValidation = {
+exports.hideCategorysValidation = {
   body: Joi.object().required().keys({
     active: Joi.boolean(),
   }),

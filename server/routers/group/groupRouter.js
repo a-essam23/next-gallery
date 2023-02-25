@@ -1,47 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const groupsControllers = require("../../controllers/groupsControllers");
+const groupController = require("../../controllers/groupsController");
 const usersController = require("../../controllers/usersController");
 
 const multerConfig = require("../../config/multerConfig");
-const { validation } = require("../../middlewares/validation");
-const validators = require("./groupValidation");
+// const { validation } = require("../../middlewares/validation");
+// const validators = require("./groupValidation");
 const { protect } = require("../../middlewares/auth");
-
-// router.route("/").get(groupControllers.getAllgroup);
-// router.route("/search").get(groupControllers.searchAllgroup);
 
 router.use(protect);
 
-router
-  .route("/upload")
-  .post(
-    multerConfig.imageUpload.any(),
-    validation(validators.createGroupValidation),
-    groupsControllers.createGroup
-  );
+router.route("/upload").post(
+  multerConfig.unitUpload.any(),
+
+  groupController.createGroup
+);
 
 router
   .route("/:code")
-  .get(
-    validation(validators.getOneGroupValidation),
-    groupsControllers.getOneGroup
-  )
-  .patch(
-    validation(validators.updateGroupValidation),
-    groupsControllers.updateGroup
-  )
-  .delete(
-    // restrictTo("admin", "data-entry"),
-    validation(validators.deleteGroupValidation),
-    groupsControllers.deleteManyGroups
-  );
+  .get(groupController.getOneGroup)
+  .patch(groupController.updateGroup)
+  .delete(groupController.deleteManyGroups);
 
-router
-  .route("/hide/:code")
-  .patch(
-    validation(validators.hideGroupsValidation),
-    groupsControllers.hideGroup
-  );
+// router.route("/hide/:code").patch(groupController.hideGroup);
 
 module.exports = router;

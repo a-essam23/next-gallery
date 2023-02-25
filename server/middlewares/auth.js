@@ -4,17 +4,6 @@ const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
-// exports.isAuthMiddleware = function (req, res, next) {
-//   return !req.isAuthenticated()
-//     ? next(new AppError("You must log in", 401))
-//     : next();
-// };
-
-// exports.isAuthMiddleware = function (req, res, next) {
-//   res.locals.currentUser = req.user;
-//   next();
-// };
-
 exports.restrictTo = function (...roles) {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
