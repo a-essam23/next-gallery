@@ -266,28 +266,6 @@ export const deleteMany = async (
     }
 };
 
-export const login = async (reqData) => {
-    let payload = { data: null, error: null };
-    try {
-        const res = await axios.post(`/api/v1/auth/login`, reqData);
-        payload.data = res?.data;
-        return payload;
-    } catch (e) {
-        console.log(e);
-        payload.error = {
-            status:
-                e.response?.data?.error?.statusCode ||
-                e.response?.status ||
-                500,
-            message:
-                e.response?.data?.message ||
-                e.response?.statusText ||
-                "Bad Request: Unhandeled Error",
-        };
-        return payload;
-    }
-};
-
 export const register = async (reqData) => {
     let payload = { data: null, error: null };
     try {

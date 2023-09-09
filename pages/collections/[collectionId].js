@@ -14,20 +14,19 @@ import { checkJWTcookie, ServerSideErrorHandler } from "../../lib";
 import { getAll } from "../../services";
 
 export async function getServerSideProps(context) {
-    const jwt = checkJWTcookie(context);
-    if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
+    // const jwt = checkJWTcookie(context);
+    // if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
 
-    const { data, error } = await getAll({
-        hostname: context.req.headers.host,
-        type: "image",
-        token: jwt,
-        filter: `active=true&folder=${context.query.collectionId}`,
-    });
-    console.log(data);
-    if (error) return ServerSideErrorHandler(context, error);
+    // const { data, error } = await getAll({
+    //     hostname: context.req.headers.host,
+    //     type: "image",
+    //     token: jwt,
+    //     filter: `active=true&folder=${context.query.collectionId}`,
+    // });
+    // if (error) return ServerSideErrorHandler(context, error);
     return {
         props: {
-            models: data || [],
+            models: [],
             swipeRef: context.query?.swipeRef || null,
         }, // will be passed to the page component as props
     };

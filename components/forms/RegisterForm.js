@@ -10,17 +10,17 @@ export default function RegisterForm({ onFinish }) {
             </div>
             <div className="font-bold pb-2 capitalize">{langData.name}</div>
             <Form.Item
-                autoComplete="name"
+                autoComplete="username"
                 name="name"
                 required
                 className="font-bold"
             >
                 <Input className="rounded" required />
             </Form.Item>
-            <div className="font-bold pb-2 capitalize">{langData.email}</div>
+            {/* <div className="font-bold pb-2 capitalize">{langData.email}</div>
             <Form.Item name="email" autoComplete="email" className="font-bold">
                 <Input className="rounded" required />
-            </Form.Item>
+            </Form.Item> */}
             <div className="font-bold pb-2 capitalize">{langData.password}</div>
             <Form.Item name="password" className="font-bold">
                 <Input

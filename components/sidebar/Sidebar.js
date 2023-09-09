@@ -4,11 +4,11 @@ import { Menu } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context";
 import { useDimensions, useFetch } from "../../hooks";
 import Loading from "../ui/Loading/Loading";
 import Message from "../ui/Message";
 import { motion } from "framer-motion";
+import { useUser } from "../../context/UserProvider";
 
 const Sidebar = ({ className }) => {
     const getWidth = () => {
@@ -17,53 +17,53 @@ const Sidebar = ({ className }) => {
         if (width > 600) return "35%";
         return "50%";
     };
-    const { user } = useAuth();
+    const { user } = useUser();
     const { width } = useDimensions();
     const router = useRouter();
     const [isCollapsed, setIsColapsed] = useState(true);
     const [groups, setGroups] = useState([]);
     const { isLoading, msg, handleGetAll } = useFetch();
-    useEffect(() => {
-        handleGetAll("folder", "active=true").then(({ data, error }) => {
-            if (error) router.replace("/login");
-            else {
-                let allGroups = [];
-                data.forEach((folder, i) => {
-                    const group = allGroups.find((grp) => {
-                        return grp.label === folder.group;
-                    });
-                    if (group) {
-                        group.children.push({
-                            label: (
-                                <Link href={`/collections/${folder.name}`}>
-                                    {folder.name}
-                                </Link>
-                            ),
-                            key: folder.id,
-                        });
-                    } else {
-                        allGroups.push({
-                            label: folder.group,
-                            key: folder.group + i,
-                            children: [
-                                {
-                                    label: (
-                                        <Link
-                                            href={`/collections/${folder.name}`}
-                                        >
-                                            {folder.name}
-                                        </Link>
-                                    ),
-                                    key: folder._id,
-                                },
-                            ],
-                        });
-                    }
-                });
-                setGroups(allGroups);
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    // handleGetAll("folder", "active=true").then(({ data, error }) => {
+    //     if (error) router.replace("/login");
+    //     else {
+    //         let allGroups = [];
+    //         data.forEach((folder, i) => {
+    //             const group = allGroups.find((grp) => {
+    //                 return grp.label === folder.group;
+    //             });
+    //             if (group) {
+    //                 group.children.push({
+    //                     label: (
+    //                         <Link href={`/collections/${folder.name}`}>
+    //                             {folder.name}
+    //                         </Link>
+    //                     ),
+    //                     key: folder.id,
+    //                 });
+    //             } else {
+    //                 allGroups.push({
+    //                     label: folder.group,
+    //                     key: folder.group + i,
+    //                     children: [
+    //                         {
+    //                             label: (
+    //                                 <Link
+    //                                     href={`/collections/${folder.name}`}
+    //                                 >
+    //                                     {folder.name}
+    //                                 </Link>
+    //                             ),
+    //                             key: folder._id,
+    //                         },
+    //                     ],
+    //                 });
+    //             }
+    //         });
+    //         setGroups(allGroups);
+    //     }
+    // });
+    // }, []);
 
     return (
         <motion.div
@@ -84,7 +84,9 @@ const Sidebar = ({ className }) => {
                 <div className="bg-gray-400 p-3 flex w-max rounded-full">
                     <span icon={faUser} className="text-gray-100 " size="sm" />
                 </div>
-                <span className="text-white text-lg">{user?.name || "Username"}</span>
+                <span className="text-white text-lg">
+                    {user?.name || "USER"}
+                </span>
             </div>
             <Loading isLoading={isLoading} />
             <Menu mode="inline" theme="dark" items={groups} />

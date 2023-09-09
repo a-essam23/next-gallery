@@ -13,73 +13,72 @@ import { checkJWTcookie, ServerSideErrorHandler } from "../lib";
 import { getOne } from "../services";
 
 export async function getServerSideProps(context) {
-    const jwt = checkJWTcookie(context);
-    if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
-    const { data, error } = await getOne({
-        hostname: context.req.headers.host,
-        type: "main",
-        name: "main",
-        token: jwt,
-    });
-    if (error) return ServerSideErrorHandler(context, error);
+    // const jwt = checkJWTcookie(context);
+    // if (!jwt) return ServerSideErrorHandler(context, { status: 401 });
+    // const { data, error } = await getOne({
+    //     hostname: context.req.headers.host,
+    //     type: "main",
+    //     name: "main",
+    // });
+    // if (error) return ServerSideErrorHandler(context, error);
 
-    // const models = [
-    //     {
-    //         image: "/imgs/placeholder.jpg",
-    //         folder: "Collection1",
-    //         name: `Model1`,
-    //         _id: 0,
-    //     },
-    //     {
-    //         image: "/imgs/placeholder.jpg",
-    //         folder: "Collection1",
-    //         name: `Model2`,
-    //         _id: 1,
-    //     },
-    //     {
-    //         image: "/imgs/placeholder.jpg",
-    //         folder: "Collection1",
-    //         name: `Model3`,
-    //         _id: 2,
-    //     },
-    //     {
-    //         image: "/imgs/placeholder.jpg",
-    //         folder: "Collection1",
-    //         name: `Model4`,
-    //         _id: 3,
-    //     },
-    // ];
+    const models = [
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model1`,
+            _id: 0,
+        },
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model2`,
+            _id: 1,
+        },
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model3`,
+            _id: 2,
+        },
+        {
+            image: "/imgs/placeholder.jpg",
+            folder: "Collection1",
+            name: `Model4`,
+            _id: 3,
+        },
+    ];
 
-    // const imageList = [
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    //     "/imgs/blank.jpg",
-    //     "/imgs/blank-blue.jpg",
-    // ];
+    const imageList = [
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+        "/imgs/blank.jpg",
+        "/imgs/blank-blue.jpg",
+    ];
     return {
         props: {
-            pageData: data.data || { groups: [], models: [], data: {} },
+            pageData: { groups: [], models, data: {} },
         },
     };
 }

@@ -8,9 +8,9 @@ export default function LoginForm({ onFinish }) {
             <div className="text-3xl font-bold pb-6 capitalize">
                 {langData.login}
             </div>
-            <div className="font-bold pb-2 capitalize">{langData.email}</div>
-            <Form.Item name="email" className="font-bold">
-                <Input autoComplete="email" className="rounded" required />
+            <div className="font-bold pb-2 capitalize">{langData.name}</div>
+            <Form.Item name="name" className="font-bold">
+                <Input autoComplete="name" className="rounded" required />
             </Form.Item>
             <div className="font-bold pb-2 capitalize">{langData.password}</div>
             <Form.Item name="password" className="font-bold">

@@ -1,38 +1,34 @@
-const mongoose = require("mongoose");
-require("dotenv").config({ path: ".env.local" });
-
-let port = process.env.PORT || 3000;
-let hostname = process.env.HOST || "localhost";
+const db = require("./mongoose");
 const app = require("./app");
-const DB = process.env.DATABASE.replace(
-  "<password>",
-  process.env.DATABASE_PASSWORD
-  // console.log("Online database reported")
-);
+const http = require("http");
+const { startmMetricsServer } = require("./server-metrics");
+const PORT = process.env.PORT || 3000;
+const server = http.createServer(app);
+const io = require("./io")(server);
+const { logger, log } = require("./utils/logger");
 
-mongoose
-  .connect(
-    process.env.NODE_ENV === "development" ? process.env.DATABASE_LOCAL : DB,
-    { dbName: "roman" }
-  )
-  .then(() => {
-    console.log("DB connection successful!".cyan);
-  });
+//* init preferences
+const initPreferences = require('./misc/init-preferences')
 
-app.listen(port, hostname, function () {
-  console.log(`Server running on ${hostname + ":" + port}`.green);
+
+db.connect(async () => {
+    await initPreferences()
+     server.listen(PORT, () => {
+        startmMetricsServer();
+        log.info(`Server is up on port ${PORT}`, { task: "SERVER" });
+    });
 });
 
 process.on("unhandledRejection", (err) => {
-  console.log("UNHANDLED REJECTION!");
-  console.log(err.stack);
+    log.error(err, { task: "SERVER" });
 });
 
 process.on("uncaughtException", (err) => {
-  console.log("Uncaught expection!");
-  console.log(err.stack);
-  process.exit(1);
+    log.error(err, { task: "SERVER" });
 });
 
-module.exports = app;
-//TEST
+process.on("warning", (err) => {
+    log.warning(err, { task: "SERVER" });
+});
+
+module.exports = { app, io };

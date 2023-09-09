@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useAuth, useLang } from "../../../context";
 import Router from "next/router";
 import { Sidebar } from "../../../components";
+import { useUser } from "../../../context/UserProvider";
 
 function NavBar() {
     ////TODO tailwind themes...
     const { langData } = useLang();
-    const { user } = useAuth();
+    const { user } = useUser();
     return (
         <div
             className={`h-full container flex items-center p-5 md:py-1 lg:py-2 gap-4 justify-between text-xs sm:text-sm md:text-lg xl:text-xl`}

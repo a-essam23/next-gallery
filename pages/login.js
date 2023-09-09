@@ -11,6 +11,7 @@ import {
 } from "../components";
 import { useAuth, useLang } from "../context";
 import { useFetch } from "../hooks";
+import { useUser } from "../context/UserProvider";
 
 export const getServerSideProps = async (context) => {
     return {
@@ -23,8 +24,9 @@ export const getServerSideProps = async (context) => {
 export default function Loginpage({}) {
     const [isRegister, setIsRegister] = useState(false);
     const router = useRouter();
-    const { isLoading, msg, handleRegister, handleLogin } = useFetch();
-    const { user } = useAuth();
+    const { user, setUser } = useUser();
+    const [msg, setMsg] = useState({});
+    const { post, isLoading } = useFetch();
     const { langData } = useLang();
     return (
         <Layout className={"items-center"} title={"Login"}>
@@ -32,13 +34,45 @@ export default function Loginpage({}) {
                 {isRegister ? (
                     <RegisterForm
                         onFinish={async (d) => {
-                            if (await handleRegister(d)) router.replace("/");
+                            setMsg({});
+                            const { data, error } = await post(
+                                "/api/v1/auth/register",
+                                d
+                            );
+                            if (error)
+                                setMsg({
+                                    content: error.message,
+                                    status: "failed",
+                                });
+                            setUser(data);
+                            setMsg({
+                                content:
+                                    "Successfully logged in... redirecting...",
+                                status: "success",
+                            });
+                            if (data) router.replace("/");
                         }}
                     />
                 ) : (
                     <LoginForm
                         onFinish={async (d) => {
-                            if (await handleLogin(d)) router.replace("/");
+                            setMsg({});
+                            const { data, error } = await post(
+                                "/api/v1/auth/login",
+                                d
+                            );
+                            if (error)
+                                setMsg({
+                                    content: error.message,
+                                    status: "failed",
+                                });
+                            setUser(data);
+                            setMsg({
+                                content:
+                                    "Successfully registered... redirecting...",
+                                status: "success",
+                            });
+                            if (data) router.replace("/");
                         }}
                     />
                 )}
