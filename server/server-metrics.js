@@ -45,7 +45,7 @@ module.exports.startmMetricsServer = function () {
         res.set("Content-Type", client.register.contentType);
         return res.send(await client.register.metrics());
     });
-    app.listen(9110, () => {
+    app.listen(process.env.METRICS_PORT || 9110, () => {
         console.log(chalk.yellow("Metrics server up on port 9110"));
     });
 };
