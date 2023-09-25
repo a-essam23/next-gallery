@@ -1,9 +1,0 @@
-const { SocketControllerFactory } = require("../utils/ControllerFactory");
-const Category = require("../models/Category");
-const Group = require("../models/Group");
-const Album = require("../models/Album");
-const Image = require("../models/Image");
-module.exports.CategorySocketController = new SocketControllerFactory(Category);
-module.exports.GroupSocketController = new SocketControllerFactory(Group);
-module.exports.AlbumSocketController = new SocketControllerFactory(Album);
-module.exports.ImageSocketController = new SocketControllerFactory(Image);

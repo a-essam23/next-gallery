@@ -24,6 +24,8 @@ module.exports = {
                     "-5px 5px 10px -5px rgb(0 0 0 / 10%), 0px 0px 0px 1px rgb(0 0 0 / 10%)",
                 boxRight:
                     "5px 5px 10px -5px rgb(0 0 0 / 10%), 0px 0px 0px 1px rgb(0 0 0 / 10%)",
+                card: "10px 10px 0px 0px rgba(0,0,0,0.75)",
+                "card-offset": "20px 20px 0px 0px rgba(0,0,0,0.75)",
             },
             spacing: {
                 88: "22rem",
@@ -45,9 +47,97 @@ module.exports = {
                 280: "70rem",
             },
         },
-        aspectRatio: {
-            "3/4": "3 / 4",
-        },
+        aspectRatio: { "4/3": "4 / 3", "3/4": "3 / 4", "1/2": "1 / 2" },
     },
-    plugins: [],
+    plugins: [
+        ({ addUtilities, theme, variants }) => {
+            const textTitle = {
+                ".text-title": {
+                    fontSize: theme("fontSize.4xl"),
+                    letterSpacing: theme("letterSpacing.wide"),
+                    "@screen sm": {
+                        fontSize: theme("fontSize.5xl"),
+                    },
+                    "@screen xl": {
+                        fontSize: theme("fontSize.6xl"),
+                        letterSpacing: theme("tracking.wider"),
+                    },
+                },
+            };
+
+            const textH1 = {
+                ".text-h1": {
+                    fontSize: theme("fontSize.3xl"),
+                    "@screen sm": {
+                        fontSize: theme("fontSize.4xl"),
+                    },
+                    "@screen xl": {
+                        fontSize: theme("fontSize.5xl"),
+                    },
+                },
+            };
+
+            const textH2 = {
+                ".text-h2": {
+                    fontSize: theme("fontSize.2xl"),
+                    "@screen sm": {
+                        fontSize: theme("fontSize.3xl"),
+                    },
+                    "@screen xl": {
+                        fontSize: theme("fontSize.4xl"),
+                    },
+                },
+            };
+
+            const textH3 = {
+                ".text-h3": {
+                    fontSize: theme("fontSize.xl"),
+                    "@screen sm": {
+                        fontSize: theme("fontSize.2xl"),
+                    },
+                    "@screen xl": {
+                        fontSize: theme("fontSize.3xl"),
+                    },
+                },
+            };
+
+            const textH4 = {
+                ".text-h4": {
+                    fontSize: theme("fontSize.lg"),
+                    "@screen sm": {
+                        fontSize: theme("fontSize.xl"),
+                    },
+                    "@screen xl": {
+                        fontSize: theme("fontSize.2xl"),
+                    },
+                },
+            };
+
+            const textH5 = {
+                ".text-h5": {
+                    fontSize: theme("fontSize.base"),
+                    "@screen sm": {
+                        fontSize: theme("fontSize.lg"),
+                    },
+                    "@screen xl": {
+                        fontSize: theme("fontSize.xl"),
+                    },
+                },
+            };
+
+            const textNormal = {
+                ".text-normal": {
+                    fontSize: theme("fontSize.base"),
+                    "@screen xl": {
+                        fontSize: theme("fontSize.lg"),
+                    },
+                },
+            };
+
+            addUtilities(
+                [textTitle, textH1, textH2, textH3, textH4, textH5, textNormal],
+                variants("text")
+            );
+        },
+    ],
 };

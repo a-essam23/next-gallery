@@ -1,30 +1,26 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 
-function Collection({
-    data: {
-        name = "",
-        sizes = { original: "/imgs/blank.jpg", small: "/imgs/blank.jpg" },
-    },
-}) {
+function Collection({ data: { name = "", details } }) {
     const router = useRouter();
     return (
         <div
-            className="flex w-full h-full relative bg-slate-50 rounded-2xl flex-col cursor-pointer shadow
-            hover:scale-110 transition ease-in-out 
-            "
+            className="flex w-full h-full relative bg-slate-50 rounded-2xl flex-col cursor-pointer shadow-sm hover:shadow-xl border overflow-hidden
+            hover:scale-[102%] transition ease-linear"
             onClick={() => {
-                router.push(`/collections/${name}`);
+                router.push(`/explore/${name}`);
             }}
         >
-            <img
-                src={sizes.small}
+            <Image
+                width={650}
+                height={600}
+                src={details?.cover || "/missing.jpg"}
                 alt={name}
-                className="object-cover w-full h-full hover:brightness-75 rounded-2xl "
+                className="object-cover"
             />
-
-            <div className="flex pointer-events-none rounded-2xl p-2 max-w-full">
-                <div className="text-black text-xl  overflow-clip ">
-                    {name.toUpperCase()}
+            <div className="flex pointer-events-none rounded-2xl p-2 max-w-full items-center justify-center">
+                <div className="text-black capitalize text-normal text-center overflow-hidden">
+                    {name}
                 </div>
             </div>
         </div>

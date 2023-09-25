@@ -1,0 +1,49 @@
+{
+    "ts-node": {
+        "require": ["tsconfig-paths/register"],
+        "transpileOnly": true,
+        "swc": true
+    },
+    "compilerOptions": {
+        "incremental": true /* Save .tsbuildinfo files to allow for incremental compilation of projects. */,
+        "target": "ES2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+        "lib": ["es6"],
+        "module": "CommonJS" /* Specify what module code is generated. */,
+        "moduleResolution": "Node" /* Specify how TypeScript looks up a file from a given module specifier. */,
+        "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
+        "paths": {
+            "@utils": ["src/utils"],
+            "@utils/*": ["src/utils/*"],
+            "@middlewares": ["src/middlewares"],
+            "@middlewares/*": ["src/middlewares/*"],
+            "@models": ["src/models"],
+            "@models/*": ["src/models/*"],
+            "@controllers": ["src/controllers"],
+            "@controllers/*": ["src/controllers/*"],
+            "@routers": ["src/routers"],
+            "@routers/*": ["src/routers/*"],
+            "@services": ["src/services"],
+            "@services/*": ["src/services/*"],
+            "@database": ["src/database"],
+            "@database/*": ["src/database/*"],
+            "@types": ["src/types"],
+            "@types/*": ["src/types/*"],
+            "@misc": ["src/misc"],
+            "@misc/*": ["src/misc/*"],
+            "@factory": ["src/factory"],
+            "@factory/*": ["src/factory/*"]
+        },
+        "resolveJsonModule": true /* Enable importing .json files. */,
+        "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
+        "outDir": "./dist" /* Specify an output folder for all emitted files. */,
+        "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
+        "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+        "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+        "strict": true /* Enable all strict type-checking options. */,
+        "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+        "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+        "strictPropertyInitialization": false
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules"]
+}

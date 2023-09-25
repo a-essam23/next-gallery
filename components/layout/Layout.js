@@ -8,15 +8,12 @@ import {
     LanguageSelection,
 } from "../../components";
 import { useLang } from "../../context";
-import Sidebar from "../sidebar/Sidebar";
-import { Inter, Noto_Sans_Arabic } from "@next/font/google";
+import { Inter, Noto_Sans_Arabic } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 const NotoSansArabic = Noto_Sans_Arabic({ subsets: ["arabic"] });
 
 export default function Layout({ children, className, title }) {
     const { language, dir } = useLang();
-    console.log(language === "ar");
-    //// TODO FIX COMPONENTS
     return (
         <ConfigProvider
             theme={{
@@ -37,7 +34,7 @@ export default function Layout({ children, className, title }) {
             >
                 <Header title={title} />
                 <LanguageSelection />
-                <AntHeader className="h-auto p-0 m-0 flex justify-center main-theme sticky z-10 top-0 shadow-gray-700 shadow-md ">
+                <AntHeader className="h-auto p-0 m-0 flex justify-center main-theme z-10 top-0 shadow-gray-700 shadow-md ">
                     <NavBar />
                 </AntHeader>
                 <Breadcrumb />

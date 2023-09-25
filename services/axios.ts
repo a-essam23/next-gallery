@@ -16,7 +16,7 @@ class Axios {
             const res: AxiosResponse = await axios_.get(url, {
                 ...config,
             });
-            payload.data = res.data.data;
+            payload.data = res.data;
             return payload;
         } catch (e: any) {
             payload.error = {

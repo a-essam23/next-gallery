@@ -32,16 +32,18 @@ export default function CollectionMasonic({ collections = [], amount = 10 }) {
             {collections.length > amount ? (
                 <Masonry
                     columnGutter={16}
-                    columnWidth={245}
+                    // columnWidth={245}
                     items={items}
                     render={Collection}
+                    maxColumnCount={3}
                     onRender={maybeLoadMore}
                 />
             ) : (
                 <Masonry
                     columnGutter={16}
                     items={items}
-                    columnWidth={245}
+                    // columnWidth={245}
+                    maxColumnCount={3}
                     render={Collection}
                 />
             )}

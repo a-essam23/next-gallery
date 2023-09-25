@@ -21,9 +21,9 @@ function NavBar() {
                     alt="logo"
                 />
             </Link>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className="flex gap-4 h-full">
-                <Link className={`${classes.item} `} href="/collections">
+                <Link className={`${classes.item} `} href="/explore">
                     {langData.explore}
                 </Link>
                 <Link href="/#about" className={classes.item}>
